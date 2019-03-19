@@ -1,0 +1,14 @@
+name: "tutorials"
+author: "Lisa DeBruine"
+output_dir: "docs"
+include: [""]
+exclude: [""]
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    toc_depth: 4
+    df_print: paged
+    theme: flatly
+    highlight: tango
+    css: style.css
