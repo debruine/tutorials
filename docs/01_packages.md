@@ -1,0 +1,237 @@
+
+# Your first R package with unit tests
+
+**This page is under construction**
+
+## Learning Objectives
+
+* Create an R package
+* Create a function
+* Document the function
+* Include error checking in the function
+* Write unit tests for the function
+* Run automatic checks on your package
+* Use your package in a script
+
+## Resources
+
+* [R Packages](http://r-pkgs.had.co.nz/) by Hadley Wickham
+
+## Setting Up
+
+You will need to install the following packages:
+
+
+```r
+install.packages(c("devtools", "roxygen2", "testthat", "usethis", "knitr"))
+```
+
+
+## Create your R package
+
+Use the following command to create the framework for a new package called `demopckg`. Set the argment to the path where you want to save your package. The last section of the path should be the name of the package.
+
+
+```r
+usethis::create_package("~/rstuff/demopckg")
+```
+
+<div class="warning">
+<p>Package names can only be letters, numbers, and full stops.</p>
+</div>
+
+You'll see the following output, and a new RStudio project will open up. You can close the old window now and just work in this project.
+
+```
+✔ Setting active project to '~/rstuff/demopckg'
+✔ Creating 'R/'
+✔ Creating 'man/'
+✔ Writing 'DESCRIPTION'
+✔ Writing 'NAMESPACE'
+✔ Writing 'demopckg.Rproj'
+✔ Adding '.Rproj.user' to '.gitignore'
+✔ Adding '^demopckg\\.Rproj$', '^\\.Rproj\\.user$' to '.Rbuildignore'
+✔ Opening new project 'demopckg' in RStudio
+```
+
+### Edit the DESCRIPTION file
+
+Open the `DESCRIPTION` file. It should look like this:
+
+```
+Package: demopckg
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com")
+Description: What the package does (one paragraph).
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+```
+
+Change the title, authors, and description to your own information.
+
+
+### Create a LICENSE
+
+Add a license using one of the following options:
+
+
+```r
+usethis::use_mit_license(name = "YOUR NAME")  # permissive sharing
+usethis::use_cc0_license(name = "YOUR NAME")  # public domain - use for data packages
+usethis::use_gpl3_license(name = "YOUR NAME") # derivatives must be open
+```
+
+## Creating a function
+
+Create a new R script from the File menu (**`New File`** > **`R Script`**).
+
+Paste the following template into your file:
+
+
+```r
+#' My function.
+#'
+#' `myfunction` does something.
+#'
+#' @param arg1 The first argument
+#' @return \code{arg1}
+#' @examples
+#'
+#' myfunction(1) # returns 1
+#' 
+myfunction <- function(arg1) { arg1 }
+```
+
+We're going to create a function that reports a p-value in APA style, named `report_p`. It will take two arguments, the p-value (`p`) and the number of digits to round to (`digits`). 
+
+<div class="try">
+<p>Replace <code>myfunction</code> with <code>report_p</code> and change the arguments. Should <code>p</code> have a default value? Should <code>digits</code>?</p>
+</div>
+
+The first thing we should do in the function is check whether `p` is less than 0.001, and if it is, return the value "p < .001".
+
+
+```r
+report_p <- function(p, digits = 3) {
+  if (p < .001) return("p < .001")
+}
+```
+
+<div class="info">
+<p>Once you run the <code>return()</code> function, your function stops running.</p>
+</div>
+
+If `p` is greater than 0.001, then we should round it to the specified number of `digits`, paste it into the string "p = ?", and return it.
+
+
+```r
+report_p <- function(p, digits = 3) {
+  if (p < .001) return("p < .001")
+  
+  round_p <- round(p, digits)
+  p_string <- paste("p =", p_round)
+  
+  return(p_string)
+}
+```
+
+<div class="try">
+<p>Run your function and test it with a few different p-values and digits. Try <code>report_p(0.01034)</code>. Does this look exactly like you expect?</p>
+</div>
+
+APA style omits the leading zero and pads the number out to three digits. We can do this by converting our rounded p-value into a character
+
+
+```r
+report_p <- function(p, digits = 3) {
+  if (p < .001) return("p < .001")
+
+  p_round <- round(p, digits) %>%
+    as.character() %>%
+    # omit leading zero for APA-style
+    stringr::str_replace("0.", ".") %>%
+    # pad right with zeros
+    stringr::str_pad(digits+1, "right", 0)
+
+  p_string <- paste("p =", p_round)
+  
+  return(p_string)
+}
+```
+
+### `report_p` function
+
+
+```r
+#' Report p-value.
+#'
+#' `report_p` reports a p-value.
+#'
+#' @param p The p-value
+#' @param digits The number of digits to round to (default = 3)
+#'
+#' @return A string with the format "p = .040" or "p < .001"
+#' @examples
+#' report_p(0.02018) # returns "p = .020"
+#' report_p(0.00028) # returns "p < .001"
+#'
+report_p <- function(p, digits = 3) {
+  if (p < .001) return("p < .001")
+
+  p_round <- round(p, digits) %>%
+    as.character() %>%
+    # omit leading zero for APA-style
+    stringr::str_replace("0.", ".") %>%
+    # pad right with zeros
+    stringr::str_pad(digits+1, "right", 0)
+
+  p_string <- paste("p =", p_round)
+  
+  return(p_string)
+}
+```
+
+### Imports
+
+You can "import" any packages you used in your function by running `usethis::use_package` for each package you want to include. 
+
+
+```r
+usethis::use_package("stringr")
+```
+
+<div class="warning">
+<p>You can't import the whole <code>tidyverse</code>, but you can import each package separately. Import just the packages you actually need.</p>
+<p>tidyverse = ggplot2, purrr, tibble, dplyr, tidyr, stringr, readr, forcats</p>
+</div>
+
+<div class="info">
+<p>If you use pipes (even if you've imported <code>dplyr</code>), you also need to run <code>usethis::use_pipe()</code>.</p>
+</div>
+
+## Documentation
+
+Roxygen creates automatic documentation. You enable it with the following command:
+
+
+```r
+usethis::use_roxygen_md()
+```
+
+## Error checking
+
+## Unit tests
+
+## Automatic checks
+
+## Use your package in a script
+
+## Share your package
+
+You can do package development without a [GitHub](https://github.com) account, but this is one of the easiest ways to share your package.

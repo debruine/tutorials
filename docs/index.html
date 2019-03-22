@@ -1,310 +1,302 @@
 <!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html >
 
 <head>
 
-<meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="pandoc" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Tutorials</title>
+  <meta name="description" content="Tutorial materials">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Tutorials" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Tutorial materials" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Tutorials" />
+  
+  <meta name="twitter:description" content="Tutorial materials" />
+  
+
+<meta name="author" content="Lisa DeBruine">
+
+
+<meta name="date" content="2019-03-20">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+
+<link rel="next" href="your-first-r-package-with-unit-tests.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 
 
 
 
-<title>Tutorials</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 
 
 <style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
-
+<link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
+<link rel="stylesheet" href="include/style.css" type="text/css" />
 </head>
 
 <body>
 
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
-img {
-  max-width:100%;
-  height: auto;
-}
-.tabbed-pane {
-  padding-top: 12px;
-}
-.html-widget {
-  margin-bottom: 20px;
-}
-button.code-folding-btn:focus {
-  outline: none;
-}
-summary {
-  display: list-item;
-}
-</style>
 
 
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
 
-<div class="container-fluid main-container">
+    <div class="book-summary">
+      <nav role="navigation">
 
-<!-- tabsets -->
+<ul class="summary">
+<li><a href="./">Tutorials</a></li>
 
-<style type="text/css">
-.tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html"><i class="fa fa-check"></i><b>1</b> Your first R package with unit tests</a><ul>
+<li class="chapter" data-level="1.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#learning-objectives"><i class="fa fa-check"></i><b>1.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="1.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#resources"><i class="fa fa-check"></i><b>1.2</b> Resources</a></li>
+<li class="chapter" data-level="1.3" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#setting-up"><i class="fa fa-check"></i><b>1.3</b> Setting Up</a></li>
+<li class="chapter" data-level="1.4" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#create-your-r-package"><i class="fa fa-check"></i><b>1.4</b> Create your R package</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#edit-the-description-file"><i class="fa fa-check"></i><b>1.4.1</b> Edit the DESCRIPTION file</a></li>
+<li class="chapter" data-level="1.4.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#create-a-license"><i class="fa fa-check"></i><b>1.4.2</b> Create a LICENSE</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#creating-a-function"><i class="fa fa-check"></i><b>1.5</b> Creating a function</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#report_p-function"><i class="fa fa-check"></i><b>1.5.1</b> <code>report_p</code> function</a></li>
+<li class="chapter" data-level="1.5.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#imports"><i class="fa fa-check"></i><b>1.5.2</b> Imports</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#documentation"><i class="fa fa-check"></i><b>1.6</b> Documentation</a></li>
+<li class="chapter" data-level="1.7" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#error-checking"><i class="fa fa-check"></i><b>1.7</b> Error checking</a></li>
+<li class="chapter" data-level="1.8" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#unit-tests"><i class="fa fa-check"></i><b>1.8</b> Unit tests</a></li>
+<li class="chapter" data-level="1.9" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#automatic-checks"><i class="fa fa-check"></i><b>1.9</b> Automatic checks</a></li>
+<li class="chapter" data-level="1.10" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#use-your-package-in-a-script"><i class="fa fa-check"></i><b>1.10</b> Use your package in a script</a></li>
+<li class="chapter" data-level="1.11" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#share-your-package"><i class="fa fa-check"></i><b>1.11</b> Share your package</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="divider"></li>
+<li><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" 
+    target="blank"><img alt="Creative Commons License" 
+    style="border-width:0" 
+    src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><li>
+<li><a href="https://psyteachr.github.io/" target="blank">PsyTeachR</a></li>
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs > li.active {
-  display: block;
-}
-
-.tabset-dropdown > .nav-tabs > li > a,
-.tabset-dropdown > .nav-tabs > li > a:focus,
-.tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
-}
-
-.tabset-dropdown > .nav-tabs > li {
-  display: none;
-}
-</style>
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
-
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3,h4",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
-
-
-
-
-<div class="fluid-row" id="header">
-
-
-
-<h1 class="title toc-ignore">Tutorials</h1>
-
-</div>
-
-
-<ul>
-<li><a href="packages.html">Your first R package with unit tests</a></li>
 </ul>
 
+      </nav>
+    </div>
 
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Tutorials</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Tutorials</h1>
+<p class="author"><em>Lisa DeBruine</em></p>
+<p class="date"><em>2019-03-20</em></p>
+</div>
+<div id="overview" class="section level1 unnumbered">
+<h1>Overview</h1>
+<p>I'm going to move all of my code tutorials here eventually.</p>
 
 </div>
+<div class="psyteachr_footer">
+  
 </div>
-
-</div>
-
 <script>
 
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+/* update total correct if #total_correct exists */
+update_total_correct = function() {
+  if (t = document.getElementById("total_correct")) {
+    t.innerHTML =
+      document.getElementsByClassName("correct").length + " of " +
+      document.getElementsByClassName("solveme").length + " correct";
+  }
 }
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
 
+/* solution button toggling function */
+b_func = function() {
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "");
+  }
+  
+  if (my_answer !== "" & real_answers.includes(my_answer)) {
+    cl.add("correct");
+  } else {
+    cl.remove("correct");
+  }
+  update_total_correct();
+}
+
+window.onload = function() {
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+  
+  /* set up solveme inputs */
+  var solveme = document.getElementsByClassName("solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off"); 
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+    
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+    
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+  
+  update_total_correct();
+}
 
 </script>
+            </section>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
+          </div>
+        </div>
+      </div>
+
+<a href="your-first-r-package-with-unit-tests.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": {},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
 </script>
 
 </body>
+
 </html>
