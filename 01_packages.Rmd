@@ -90,14 +90,15 @@ Use the following code to set up a README document that will explain your packag
 usethis::use_readme_rmd() 
 ```
 
-We'll eventually put this on github, so change the installation instructions to the following (change `yourusername` to your github username). Delete the example for now.
-```
-You can install the released version of demopckg from [GitHub](https://github.com) with:
+We'll eventually put this on github, so change the installation instructions to the following (change `yourusername` to your github username). 
+
+<pre><code>You can install the released version of demopckg from [GitHub](https://github.com) with:
 
 &#96;&#96;&#96; r
 devtools::install_github("yourusername/demopckg")
-&#96;&#96;&#96;
-```
+&#96;&#96;&#96;</code></pre>
+
+Delete the example for now.
 
 Make sure you knit your README.Rmd file when you update it and never edit the README.md file (that's just for github).
 
