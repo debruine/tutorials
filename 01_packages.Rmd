@@ -14,6 +14,7 @@
 
 * [R Packages](http://r-pkgs.had.co.nz/) by Hadley Wickham
 * [usethis](https://usethis.r-lib.org/) by Jenny Bryan
+* [Workflow for package development](https://www.hvitfeldt.me/blog/usethis-workflow-for-package-development/#creating-minimal-functional-package) by Emil Hvitfeldt
 
 ## Setting Up
 
