@@ -315,7 +315,9 @@ When you set up a new package, you need to set up the testing structure using `u
 
 ### New unit tests
 
-Create a new .R file and save it as `test-report_p.R` in the `/tests/testthat/` directory. Copy the following text into the file:
+Create a new test file for the `report_p` function using `usethis::use_test("report_p")`. It will create a new file called **`test-report_p.R`** in the  **`tests/testhat/`** directory.
+
+Replace the text in that file with the text below.
 
 ```{r testthat-stub, eval = FALSE}
 context("report_p")

@@ -415,7 +415,8 @@ Restart R and open a new .R or .Rmd file. Load your new package at the top of th
 </div>
 <div id="new-unit-tests" class="section level3">
 <h3><span class="header-section-number">1.8.2</span> New unit tests</h3>
-<p>Create a new .R file and save it as <code>test-report_p.R</code> in the <code>/tests/testthat/</code> directory. Copy the following text into the file:</p>
+<p>Create a new test file for the <code>report_p</code> function using <code>usethis::use_test(&quot;report_p&quot;)</code>. It will create a new file called <strong><code>test-report_p.R</code></strong> in the <strong><code>tests/testhat/</code></strong> directory.</p>
+<p>Replace the text in that file with the text below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">context</span>(<span class="st">&quot;report_p&quot;</span>)
 
 testthat<span class="op">::</span><span class="kw">test_that</span>(<span class="st">&quot;errors&quot;</span>, {
