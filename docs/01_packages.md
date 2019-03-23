@@ -372,6 +372,8 @@ Now add another `testthat::test_that` block called "default values". Use the fun
   )
 ```
 
+### Run all tests
+
 Run `devtools::test()` after you add each test to make sure your tests work as expected.
 
 ## Share your package
