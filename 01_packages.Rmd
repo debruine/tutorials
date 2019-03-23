@@ -99,6 +99,8 @@ devtools::install_github("yourusername/demopckg")
 &#96;&#96;&#96;
 ```
 
+Make sure you knit your README.Rmd file when you update it and never edit the README.md file (that's just for github).
+
 ## Creating a function
 
 Create a new R script from the File menu (**`New File`** > **`R Script`**).
