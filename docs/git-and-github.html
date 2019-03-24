@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Tutorials</title>
+  <title>B Git and GitHub | Tutorials</title>
   <meta name="description" content="Tutorial materials">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Tutorials" />
+  <meta property="og:title" content="B Git and GitHub | Tutorials" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Tutorials" />
+  <meta name="twitter:title" content="B Git and GitHub | Tutorials" />
   
   <meta name="twitter:description" content="Tutorial materials" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="your-first-r-package-with-unit-tests.html">
+<link rel="prev" href="installing-r.html">
+<link rel="next" href="pipes.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -186,15 +186,79 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Tutorials</h1>
-<p class="author"><em>Lisa DeBruine</em></p>
-<p class="date"><em>2019-03-24</em></p>
+<div id="git-and-github" class="section level1">
+<h1><span class="header-section-number">B</span> Git and GitHub</h1>
+<p>There are many reasons to use version control. Git is one option and it is well-integrated into RStudio. GitHub is a free service to store your version controlled projects in the cloud and (optionally) share them with others.</p>
+<div id="get-a-github-account" class="section level2">
+<h2><span class="header-section-number">B.1</span> Get a GitHub account</h2>
+<p>Go to <a href="https://github.com/">GitHub</a> and create a new account.</p>
+<ul>
+<li>Make sure your username is professional</li>
+<li>Use an email address that you won't lose access to (e.g., gmail)</li>
+</ul>
 </div>
-<div id="overview" class="section level1 unnumbered">
-<h1>Overview</h1>
-<p>I'm going to move all of my code tutorials here eventually.</p>
+<div id="set-up-rstudio" class="section level2">
+<h2><span class="header-section-number">B.2</span> Set up RStudio</h2>
+<p>If you are a UofG INP staff/student, you can access the <a href="http://rstudio1.psy.gla.ac.uk">Glasgow Psychology RStudio</a> site and skip to <a href="git-and-github.html#github-info">Set your GitHub info</a>.</p>
+<p>If you are working from your own computer, follow the next 2 sub-steps:</p>
+<div id="install-git" class="section level3">
+<h3><span class="header-section-number">B.2.1</span> Install git</h3>
+<p>You can check if git is already installed on your computer by going to <code>Shell...</code> under the <code>Tools</code> menu (or just open a terminal window) and typing <code>which git</code>. If you get an answer like <code>/usr/local/bin/git</code> then git is already installed. If not, <a href="https://gist.github.com/derhuerst/1b15ff4652a867391f03">install git</a> and then use <code>which git</code> to check where it is installed.</p>
+</div>
+<div id="enable-version-control-in-rstudio" class="section level3">
+<h3><span class="header-section-number">B.2.2</span> Enable version control in RStudio</h3>
+<p>Go to <code>Global Options...</code> from the <code>Tools</code> menu and set the location of your git executable to the location from the previous step.</p>
+<div class="figure" style="text-align: center"><span id="fig:git-path"></span>
+<img src="images/git_path.png" alt="Set the location of git" width="500px" />
+<p class="caption">
+Figure B.1: Set the location of git
+</p>
+</div>
+</div>
+</div>
+<div id="github-info" class="section level2">
+<h2><span class="header-section-number">B.3</span> Set your GitHub info</h2>
+<p>Run <code>usethis::edit_git_config()</code> in the console pane; it will open a file called <code>.gitconfig</code>. Replace <code>GITHUB_EMAIL</code> with the email address you used for github and <code>GITHUB_USERNAME</code> with your github username.</p>
+<pre><code>[user]
+    email = GITHUB_EMAIL
+    name = GITHUB_USERNAME</code></pre>
+<div class="warning">
+<p>
+You can skip the rest of the steps if you are using your own computer because you can use <strong><code>https</code></strong> to access github. If you are using an RStudio server or just want to use <strong><code>SSH</code></strong>, follow the steps below.
+</p>
+</div>
+</div>
+<div id="create-an-ssh-key-on-rstudio" class="section level2">
+<h2><span class="header-section-number">B.4</span> Create an SSH Key on RStudio</h2>
+<ol style="list-style-type: decimal">
+<li>Go to <code>Global Options...</code> from the <code>Tools</code> menu</li>
+<li>Click <strong><code>Create RSA Key...</code></strong> and enter a passphrase
+<div class="figure" style="text-align: center"><span id="fig:git-options"></span>
+<img src="images/git_options.png" alt="Global options" width="500px" />
+<p class="caption">
+Figure B.2: Global options
+</p>
+</div></li>
+<li>Click on <code>View public key</code> and copy the contents of the box</li>
+</ol>
+</div>
+<div id="create-an-ssh-key-on-github" class="section level2">
+<h2><span class="header-section-number">B.5</span> Create an SSH Key on GitHub</h2>
+<ol style="list-style-type: decimal">
+<li>Go to <a href="https://github.com/settings/keys">GitHub &gt; Settings &gt; SSH and GPG keys</a></li>
+<li>Click <strong><code>New SSH Key</code></strong></li>
+<li>Put <code>RStudio server</code> as the title (or <code>My Computer Name</code> if on your own computer)</li>
+<li>Paste your public key into the <code>Key</code> box</li>
+<li>Click <strong><code>Add SSH key</code></strong>
+<div class="figure" style="text-align: center"><span id="fig:github-key"></span>
+<img src="images/github_ssh_key.png" alt="Add SSH key" width="500px" />
+<p class="caption">
+Figure B.3: Add SSH key
+</p>
+</div></li>
+</ol>
 
+</div>
 </div>
 <div class="psyteachr_footer">
   
@@ -286,8 +350,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-
-<a href="your-first-r-package-with-unit-tests.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="installing-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pipes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

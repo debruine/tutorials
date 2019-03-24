@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Tutorials</title>
+  <title>C Pipes | Tutorials</title>
   <meta name="description" content="Tutorial materials">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Tutorials" />
+  <meta property="og:title" content="C Pipes | Tutorials" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Tutorials" />
+  <meta name="twitter:title" content="C Pipes | Tutorials" />
   
   <meta name="twitter:description" content="Tutorial materials" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="your-first-r-package-with-unit-tests.html">
+<link rel="prev" href="git-and-github.html">
+<link rel="next" href="symbols.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -186,14 +186,162 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Tutorials</h1>
-<p class="author"><em>Lisa DeBruine</em></p>
-<p class="date"><em>2019-03-24</em></p>
-</div>
-<div id="overview" class="section level1 unnumbered">
-<h1>Overview</h1>
-<p>I'm going to move all of my code tutorials here eventually.</p>
+<div id="pipes" class="section level1">
+<h1><span class="header-section-number">C</span> Pipes</h1>
+<p><img src="images/pipe_sticker.png" style="width: 200px; float: right;"></p>
+<p>Pipes are a way to order your code in a more readable format.</p>
+<p>Let's say you have a small data table with 10 participant IDs, two columns with variable type A, and 2 columns with variable type B. You want to calculate the mean of the A variables and the mean of the B variables and return a table with 10 rows (1 for each participant) and 3 columns (<code>id</code>, <code>A_mean</code> and <code>B_mean</code>).</p>
+<p>One way you could do this is by creating a new object at every step and using that object in the next step. This is pretty clear, but you've created 6 unnecessary data objects in your environment. This can get confusing in very long scripts.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+
+<span class="co"># make a data table with 10 subjects</span>
+data_original &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,
+  <span class="dt">A1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">0</span>),
+  <span class="dt">A2 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">1</span>),
+  <span class="dt">B1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">2</span>),
+  <span class="dt">B2 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">3</span>)
+)
+
+<span class="co"># gather columns A1 to B2 into &quot;variable&quot; and &quot;value&quot; columns</span>
+data_gathered &lt;-<span class="st"> </span><span class="kw">gather</span>(data_original, variable, value, A1<span class="op">:</span>B2)
+
+<span class="co"># separate the variable column at the _ into &quot;var&quot; and &quot;var_n&quot; columns</span>
+data_separated &lt;-<span class="st"> </span><span class="kw">separate</span>(data_gathered, variable, <span class="kw">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;var_n&quot;</span>), <span class="dt">sep =</span> <span class="dv">1</span>)
+
+<span class="co"># group the data by id and var</span>
+data_grouped &lt;-<span class="st"> </span><span class="kw">group_by</span>(data_separated, id, var)
+
+<span class="co"># calculate the mean value for each id/var </span>
+data_summarised &lt;-<span class="st"> </span><span class="kw">summarise</span>(data_grouped, <span class="dt">mean =</span> <span class="kw">mean</span>(value))
+
+<span class="co"># spread the mean column into A and B columns</span>
+data_spread &lt;-<span class="st"> </span><span class="kw">spread</span>(data_summarised, var, mean)
+
+<span class="co"># rename A and B to A_mean and B_mean</span>
+data &lt;-<span class="st"> </span><span class="kw">rename</span>(data_spread, <span class="dt">A_mean =</span> A, <span class="dt">B_mean =</span> B)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">A_mean</th>
+<th align="right">B_mean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1.1900023</td>
+<td align="right">2.572540</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">1.1687166</td>
+<td align="right">2.199980</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">1.1936370</td>
+<td align="right">2.418911</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.2438949</td>
+<td align="right">2.042144</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">1.1772874</td>
+<td align="right">2.678885</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">0.4112864</td>
+<td align="right">3.238902</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">1.4636496</td>
+<td align="right">2.406382</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">-0.4176630</td>
+<td align="right">2.810287</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="right">1.0461369</td>
+<td align="right">2.278880</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">0.6336704</td>
+<td align="right">1.836810</td>
+</tr>
+</tbody>
+</table>
+<p class="warning">
+You <em>can</em> name each object <code>data</code> and keep replacing the old data object with the new one at each step. This will keep you environment clean, but I don't recommend it because it makes it too easy to accidentally run your code out of order when you are running line-by-line for development or debugging.
+</p>
+<p>One way to avoid extra objects is to nest your functions, literally replacing each data object with the code that generated it in the previous step. This can be fine for very short chains.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_petal_width &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">mean</span>(iris<span class="op">$</span>Petal.Width), <span class="dv">2</span>)</code></pre></div>
+<p>But it gets extremely confusing for long chains:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># do not ever do this!!</span>
+data &lt;-<span class="st"> </span><span class="kw">rename</span>(
+  <span class="kw">spread</span>(
+    <span class="kw">summarise</span>(
+      <span class="kw">group_by</span>(
+        <span class="kw">separate</span>(
+          <span class="kw">gather</span>(
+            <span class="kw">tibble</span>(
+              <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,
+              <span class="dt">A1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">0</span>),
+              <span class="dt">A2 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">1</span>),
+              <span class="dt">B1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">2</span>),
+              <span class="dt">B2 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">3</span>)), 
+            variable, value, A1<span class="op">:</span>B2), 
+          variable, <span class="kw">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;var_n&quot;</span>), <span class="dt">sep =</span> <span class="dv">1</span>), 
+        id, var), 
+      <span class="dt">mean =</span> <span class="kw">mean</span>(value)), 
+    var, mean), 
+  <span class="dt">A_mean =</span> A, <span class="dt">B_mean =</span> B)</code></pre></div>
+<p>The pipe lets you &quot;pipe&quot; the result of each function into the next function, allowing you to put your code in a logical order without creating too many extra objects.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate mean of A and B variables for each participant</span>
+data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,
+  <span class="dt">A1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">0</span>),
+  <span class="dt">A2 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">1</span>),
+  <span class="dt">B1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">2</span>),
+  <span class="dt">B2 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">3</span>)
+) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(variable, value, A1<span class="op">:</span>B2) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">separate</span>(variable, <span class="kw">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;var_n&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(id, var) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(value)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spread</span>(var, mean) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">A_mean =</span> A, <span class="dt">B_mean =</span> B)</code></pre></div>
+<p>You can read this code from top to bottom as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Make a tibble called <code>data</code> with
+<ul>
+<li><code>id</code> of 1 to 10,</li>
+<li><code>A1</code> of 10 random numbers from a normal distribution with a mean of 0,</li>
+<li><code>A2</code> of 10 random numbers from a normal distribution with a mean of 1,</li>
+<li><code>B1</code> of 10 random numbers from a normal distribution with a mean of 2,</li>
+<li><code>B2</code> of 10 random numbers from a normal distribution with a mean of 3; and then</li>
+</ul></li>
+<li>Gather to create <code>variable</code> and <code>value</code> column from columns <code>A_1</code> to <code>B_2</code>; and then</li>
+<li>Separate the column <code>variable</code> into 2 new columns called <code>var</code>and <code>var_n</code>, separate at character 1; and then</li>
+<li>Group by columns <code>id</code> and <code>var</code>; and then</li>
+<li>Summarise and new column called <code>mean</code> as the mean of the <code>value</code> column for each group; and then</li>
+<li>Spread to make new columns with the key names in <code>var</code> and values in <code>mean</code>; and then</li>
+<li>Rename to make columns called <code>A_mean</code> (old <code>A</code>) and <code>B_mean</code> (old <code>B</code>)</li>
+</ol>
+<p>You can make intermediate objects whenever you need to break up your code because it's getting too complicated or you need to debug something.</p>
+<p class="info">
+You can debug a pipe by running just the first few functions by highlighting from the beginning to just before the pipe you want to stop at. Try this by highlighting from <code>data &lt;-</code> to the end of the <code>separate</code> function and typing cmd-return. What does <code>data</code> look like now?
+</p>
 
 </div>
 <div class="psyteachr_footer">
@@ -286,8 +434,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-
-<a href="your-first-r-package-with-unit-tests.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="git-and-github.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="symbols.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

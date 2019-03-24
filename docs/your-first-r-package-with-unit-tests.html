@@ -25,7 +25,7 @@
 <meta name="author" content="Lisa DeBruine">
 
 
-<meta name="date" content="2019-03-23">
+<meta name="date" content="2019-03-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="index.html">
-
+<link rel="next" href="installing-r.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -108,38 +108,60 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a></li>
 <li class="chapter" data-level="1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html"><i class="fa fa-check"></i><b>1</b> Your first R package with unit tests</a><ul>
 <li class="chapter" data-level="1.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#learning-objectives"><i class="fa fa-check"></i><b>1.1</b> Learning Objectives</a></li>
-<li class="chapter" data-level="1.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#resources"><i class="fa fa-check"></i><b>1.2</b> Resources</a></li>
-<li class="chapter" data-level="1.3" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#setting-up"><i class="fa fa-check"></i><b>1.3</b> Setting Up</a></li>
-<li class="chapter" data-level="1.4" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#create-your-r-package"><i class="fa fa-check"></i><b>1.4</b> Create your R package</a><ul>
-<li class="chapter" data-level="1.4.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#edit-the-description-file"><i class="fa fa-check"></i><b>1.4.1</b> Edit the DESCRIPTION file</a></li>
-<li class="chapter" data-level="1.4.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#create-a-license"><i class="fa fa-check"></i><b>1.4.2</b> Create a LICENSE</a></li>
-<li class="chapter" data-level="1.4.3" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#create-a-readme"><i class="fa fa-check"></i><b>1.4.3</b> Create a README</a></li>
+<li class="chapter" data-level="1.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#setting-up"><i class="fa fa-check"></i><b>1.2</b> Setting Up</a></li>
+<li class="chapter" data-level="1.3" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#create-your-r-package"><i class="fa fa-check"></i><b>1.3</b> Create your R package</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#edit-the-description-file"><i class="fa fa-check"></i><b>1.3.1</b> Edit the DESCRIPTION file</a></li>
+<li class="chapter" data-level="1.3.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#create-a-license"><i class="fa fa-check"></i><b>1.3.2</b> Create a LICENSE</a></li>
+<li class="chapter" data-level="1.3.3" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#create-a-readme"><i class="fa fa-check"></i><b>1.3.3</b> Create a README</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#creating-a-function"><i class="fa fa-check"></i><b>1.5</b> Creating a function</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#documentation"><i class="fa fa-check"></i><b>1.5.1</b> Documentation</a></li>
-<li class="chapter" data-level="1.5.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#imports"><i class="fa fa-check"></i><b>1.5.2</b> Imports</a></li>
+<li class="chapter" data-level="1.4" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#creating-a-function"><i class="fa fa-check"></i><b>1.4</b> Creating a function</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#template-function"><i class="fa fa-check"></i><b>1.4.1</b> Template function</a></li>
+<li class="chapter" data-level="1.4.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#edit-the-function"><i class="fa fa-check"></i><b>1.4.2</b> Edit the function</a></li>
+<li class="chapter" data-level="1.4.3" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#imports"><i class="fa fa-check"></i><b>1.4.3</b> Imports</a></li>
+<li class="chapter" data-level="1.4.4" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#documentation"><i class="fa fa-check"></i><b>1.4.4</b> Documentation</a></li>
 </ul></li>
-<li class="chapter" data-level="1.6" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#build-your-package"><i class="fa fa-check"></i><b>1.6</b> Build your package</a><ul>
-<li class="chapter" data-level="1.6.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#check"><i class="fa fa-check"></i><b>1.6.1</b> Check</a></li>
-<li class="chapter" data-level="1.6.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#build"><i class="fa fa-check"></i><b>1.6.2</b> Build</a></li>
-<li class="chapter" data-level="1.6.3" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#install"><i class="fa fa-check"></i><b>1.6.3</b> Install</a></li>
-<li class="chapter" data-level="1.6.4" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#test"><i class="fa fa-check"></i><b>1.6.4</b> Test</a></li>
+<li class="chapter" data-level="1.5" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#build-your-package"><i class="fa fa-check"></i><b>1.5</b> Build your package</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#check"><i class="fa fa-check"></i><b>1.5.1</b> Check</a></li>
+<li class="chapter" data-level="1.5.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#build"><i class="fa fa-check"></i><b>1.5.2</b> Build</a></li>
+<li class="chapter" data-level="1.5.3" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#install"><i class="fa fa-check"></i><b>1.5.3</b> Install</a></li>
+<li class="chapter" data-level="1.5.4" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#test"><i class="fa fa-check"></i><b>1.5.4</b> Test</a></li>
 </ul></li>
-<li class="chapter" data-level="1.7" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#error-checking"><i class="fa fa-check"></i><b>1.7</b> Error checking</a></li>
-<li class="chapter" data-level="1.8" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#unit-tests"><i class="fa fa-check"></i><b>1.8</b> Unit tests</a><ul>
-<li class="chapter" data-level="1.8.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#setup"><i class="fa fa-check"></i><b>1.8.1</b> Setup</a></li>
-<li class="chapter" data-level="1.8.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#new-unit-tests"><i class="fa fa-check"></i><b>1.8.2</b> New unit tests</a></li>
-<li class="chapter" data-level="1.8.3" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#run-all-tests"><i class="fa fa-check"></i><b>1.8.3</b> Run all tests</a></li>
+<li class="chapter" data-level="1.6" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#error-checking"><i class="fa fa-check"></i><b>1.6</b> Error checking</a></li>
+<li class="chapter" data-level="1.7" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#unit-tests"><i class="fa fa-check"></i><b>1.7</b> Unit tests</a><ul>
+<li class="chapter" data-level="1.7.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#setup"><i class="fa fa-check"></i><b>1.7.1</b> Setup</a></li>
+<li class="chapter" data-level="1.7.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#new-unit-tests"><i class="fa fa-check"></i><b>1.7.2</b> New unit tests</a></li>
+<li class="chapter" data-level="1.7.3" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#run-all-tests"><i class="fa fa-check"></i><b>1.7.3</b> Run all tests</a></li>
 </ul></li>
-<li class="chapter" data-level="1.9" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#share-your-package"><i class="fa fa-check"></i><b>1.9</b> Share your package</a><ul>
-<li class="chapter" data-level="1.9.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#set-up-git-for-this-project"><i class="fa fa-check"></i><b>1.9.1</b> Set up git for this project</a></li>
-<li class="chapter" data-level="1.9.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#github-access-token"><i class="fa fa-check"></i><b>1.9.2</b> GitHub access token</a></li>
-<li class="chapter" data-level="1.9.3" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#make-a-new-github-repository"><i class="fa fa-check"></i><b>1.9.3</b> Make a new GitHub repository</a></li>
-<li class="chapter" data-level="1.9.4" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#install-your-package-from-github"><i class="fa fa-check"></i><b>1.9.4</b> Install your package from GitHub</a></li>
+<li class="chapter" data-level="1.8" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#share-your-package"><i class="fa fa-check"></i><b>1.8</b> Share your package</a><ul>
+<li class="chapter" data-level="1.8.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#git-on-rstudio"><i class="fa fa-check"></i><b>1.8.1</b> Git on RStudio</a></li>
+<li class="chapter" data-level="1.8.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#set-up-git-for-this-project"><i class="fa fa-check"></i><b>1.8.2</b> Set up git for this project</a></li>
+<li class="chapter" data-level="1.8.3" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#github-access-token"><i class="fa fa-check"></i><b>1.8.3</b> GitHub access token</a></li>
+<li class="chapter" data-level="1.8.4" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#make-a-new-github-repository"><i class="fa fa-check"></i><b>1.8.4</b> Make a new GitHub repository</a></li>
+<li class="chapter" data-level="1.8.5" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#install-your-package-from-github"><i class="fa fa-check"></i><b>1.8.5</b> Install your package from GitHub</a></li>
 </ul></li>
-<li class="chapter" data-level="1.10" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#the-full-report_p-function"><i class="fa fa-check"></i><b>1.10</b> The full <code>report_p</code> function</a></li>
+<li class="chapter" data-level="1.9" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#further-resources"><i class="fa fa-check"></i><b>1.9</b> Further resources</a><ul>
+<li class="chapter" data-level="1.9.1" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#workflow"><i class="fa fa-check"></i><b>1.9.1</b> Workflow</a></li>
+<li class="chapter" data-level="1.9.2" data-path="your-first-r-package-with-unit-tests.html"><a href="your-first-r-package-with-unit-tests.html#the-full-report_p-function"><i class="fa fa-check"></i><b>1.9.2</b> The full <code>report_p</code> function</a></li>
+</ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="installing-r.html"><a href="installing-r.html"><i class="fa fa-check"></i><b>A</b> Installing <code>R</code></a><ul>
+<li class="chapter" data-level="A.1" data-path="installing-r.html"><a href="installing-r.html#installing-base-r"><i class="fa fa-check"></i><b>A.1</b> Installing Base R</a></li>
+<li class="chapter" data-level="A.2" data-path="installing-r.html"><a href="installing-r.html#installing-rstudio"><i class="fa fa-check"></i><b>A.2</b> Installing RStudio</a></li>
+<li class="chapter" data-level="A.3" data-path="installing-r.html"><a href="installing-r.html#installing-latex"><i class="fa fa-check"></i><b>A.3</b> Installing LaTeX</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="git-and-github.html"><a href="git-and-github.html"><i class="fa fa-check"></i><b>B</b> Git and GitHub</a><ul>
+<li class="chapter" data-level="B.1" data-path="git-and-github.html"><a href="git-and-github.html#get-a-github-account"><i class="fa fa-check"></i><b>B.1</b> Get a GitHub account</a></li>
+<li class="chapter" data-level="B.2" data-path="git-and-github.html"><a href="git-and-github.html#set-up-rstudio"><i class="fa fa-check"></i><b>B.2</b> Set up RStudio</a><ul>
+<li class="chapter" data-level="B.2.1" data-path="git-and-github.html"><a href="git-and-github.html#install-git"><i class="fa fa-check"></i><b>B.2.1</b> Install git</a></li>
+<li class="chapter" data-level="B.2.2" data-path="git-and-github.html"><a href="git-and-github.html#enable-version-control-in-rstudio"><i class="fa fa-check"></i><b>B.2.2</b> Enable version control in RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="B.3" data-path="git-and-github.html"><a href="git-and-github.html#github-info"><i class="fa fa-check"></i><b>B.3</b> Set your GitHub info</a></li>
+<li class="chapter" data-level="B.4" data-path="git-and-github.html"><a href="git-and-github.html#create-an-ssh-key-on-rstudio"><i class="fa fa-check"></i><b>B.4</b> Create an SSH Key on RStudio</a></li>
+<li class="chapter" data-level="B.5" data-path="git-and-github.html"><a href="git-and-github.html#create-an-ssh-key-on-github"><i class="fa fa-check"></i><b>B.5</b> Create an SSH Key on GitHub</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="pipes.html"><a href="pipes.html"><i class="fa fa-check"></i><b>C</b> Pipes</a></li>
+<li class="chapter" data-level="D" data-path="symbols.html"><a href="symbols.html"><i class="fa fa-check"></i><b>D</b> Symbols</a></li>
 <li class="divider"></li>
 <li><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" 
     target="blank"><img alt="Creative Commons License" 
@@ -178,21 +200,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Share your package through GitHub</li>
 </ul>
 </div>
-<div id="resources" class="section level2">
-<h2><span class="header-section-number">1.2</span> Resources</h2>
-<ul>
-<li><a href="http://r-pkgs.had.co.nz/">R Packages</a> by Hadley Wickham</li>
-<li><a href="https://usethis.r-lib.org/">usethis</a> by Jenny Bryan</li>
-<li><a href="https://www.hvitfeldt.me/blog/usethis-workflow-for-package-development/#creating-minimal-functional-package">Workflow for package development</a> by Emil Hvitfeldt</li>
-</ul>
-</div>
 <div id="setting-up" class="section level2">
-<h2><span class="header-section-number">1.3</span> Setting Up</h2>
+<h2><span class="header-section-number">1.2</span> Setting Up</h2>
 <p>You will need to install the following packages:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;devtools&quot;</span>, <span class="st">&quot;roxygen2&quot;</span>, <span class="st">&quot;testthat&quot;</span>, <span class="st">&quot;usethis&quot;</span>, <span class="st">&quot;knitr&quot;</span>))</code></pre></div>
 </div>
 <div id="create-your-r-package" class="section level2">
-<h2><span class="header-section-number">1.4</span> Create your R package</h2>
+<h2><span class="header-section-number">1.3</span> Create your R package</h2>
 <p>Use the following command to create the framework for a new package called <code>demopckg</code>. Set the argment to the path where you want to save your package. The last section of the path should be the name of the package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">usethis<span class="op">::</span><span class="kw">create_package</span>(<span class="st">&quot;~/rstuff/demopckg&quot;</span>)</code></pre></div>
 <div class="warning">
@@ -211,7 +225,7 @@ Package names can only be letters, numbers, and full stops.
 ✔ Adding &#39;^demopckg\\.Rproj$&#39;, &#39;^\\.Rproj\\.user$&#39; to &#39;.Rbuildignore&#39;
 ✔ Opening new project &#39;demopckg&#39; in RStudio</code></pre>
 <div id="edit-the-description-file" class="section level3">
-<h3><span class="header-section-number">1.4.1</span> Edit the DESCRIPTION file</h3>
+<h3><span class="header-section-number">1.3.1</span> Edit the DESCRIPTION file</h3>
 <p>Open the <code>DESCRIPTION</code> file. It should look like this:</p>
 <pre><code>Package: demopckg
 Title: What the Package Does (One Line, Title Case)
@@ -228,14 +242,14 @@ LazyData: true</code></pre>
 <p>Change the title, authors, and description to your own information.</p>
 </div>
 <div id="create-a-license" class="section level3">
-<h3><span class="header-section-number">1.4.2</span> Create a LICENSE</h3>
+<h3><span class="header-section-number">1.3.2</span> Create a LICENSE</h3>
 <p>Add a license using one of the following options:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">usethis<span class="op">::</span><span class="kw">use_mit_license</span>(<span class="dt">name =</span> <span class="st">&quot;YOUR NAME&quot;</span>)  <span class="co"># permissive sharing</span>
 usethis<span class="op">::</span><span class="kw">use_cc0_license</span>(<span class="dt">name =</span> <span class="st">&quot;YOUR NAME&quot;</span>)  <span class="co"># public domain - use for data packages</span>
 usethis<span class="op">::</span><span class="kw">use_gpl3_license</span>(<span class="dt">name =</span> <span class="st">&quot;YOUR NAME&quot;</span>) <span class="co"># derivatives must be open</span></code></pre></div>
 </div>
 <div id="create-a-readme" class="section level3">
-<h3><span class="header-section-number">1.4.3</span> Create a README</h3>
+<h3><span class="header-section-number">1.3.3</span> Create a README</h3>
 <p>Use the following code to set up a README document that will explain your package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">usethis<span class="op">::</span><span class="kw">use_readme_rmd</span>() </code></pre></div>
 <p>We'll eventually put this on github, so change the installation instructions to the following (change <code>yourusername</code> to your github username).</p>
@@ -249,22 +263,30 @@ devtools::install_github("yourusername/demopckg")
 </div>
 </div>
 <div id="creating-a-function" class="section level2">
-<h2><span class="header-section-number">1.5</span> Creating a function</h2>
-<p>Create a new R script from the File menu (<strong><code>New File</code></strong> &gt; <strong><code>R Script</code></strong>).</p>
+<h2><span class="header-section-number">1.4</span> Creating a function</h2>
+<p>Function definitions are saved in the <code>R</code> folder. You don't have to, but I like to save each function in its own file and name the file after the function.</p>
+<div id="template-function" class="section level3">
+<h3><span class="header-section-number">1.4.1</span> Template function</h3>
+<p>Create a new R script from the File menu (<strong><code>New File &gt; R Script</code></strong>).</p>
 <p>Paste the following template into your file:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; My function</span>
 <span class="co">#&#39;</span>
 <span class="co">#&#39; `myfunction` does something.</span>
 <span class="co">#&#39;</span>
-<span class="co">#&#39; @param arg1 The first argument</span>
-<span class="co">#&#39; @return \code{arg1}</span>
+<span class="co">#&#39; @param arg1 A value to return</span>
+<span class="co">#&#39; @return Returns the value of \code{arg1}</span>
 <span class="co">#&#39; @examples</span>
 <span class="co">#&#39;</span>
 <span class="co">#&#39; myfunction(1) # returns 1</span>
 <span class="co">#&#39; </span>
 <span class="co">#&#39; @export</span>
 
-myfunction &lt;-<span class="st"> </span><span class="cf">function</span>(arg1) { arg1 }</code></pre></div>
+myfunction &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">arg1 =</span> <span class="st">&quot;Change me&quot;</span>) { 
+  arg1 
+}</code></pre></div>
+</div>
+<div id="edit-the-function" class="section level3">
+<h3><span class="header-section-number">1.4.2</span> Edit the function</h3>
 <p>We're going to create a function that reports a p-value in APA style, named <code>report_p</code>. It will take two arguments, the p-value (<code>p</code>) and the number of digits to round to (<code>digits</code>).</p>
 <div class="try">
 <p>
@@ -295,6 +317,12 @@ Run your function and test it with a few different p-values and digits. Try <cod
 </p>
 </div>
 <p>APA style omits the leading zero and pads the number out to three digits. We can do this by converting our rounded p-value into a character string, replacing the string &quot;0.&quot; with &quot;.&quot;, and making sure to pad the right side with enough zeros. The <code>stringr</code> package has useful functions for this.</p>
+<p>When you use R functions from a package (not base R), you normally load the package using the <code>library()</code> function. When you're developing your own package, you need to preface every function with its package name and two colons instead, so in the code below we'll use <code>stringr::str_replace()</code> and <code>stringr::str_pad()</code>, not <code>str_replace()</code> and <code>str_pad()</code>.</p>
+<div class="info">
+<p>
+One function you can't preface with the package name is the <a href="pipes.html#pipes">pipe</a>. While you're testing your function, load the pipe by typing <code>library(magrittr)</code> in the console.
+</p>
+</div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">report_p &lt;-<span class="st"> </span><span class="cf">function</span>(p, <span class="dt">digits =</span> <span class="dv">3</span>) {
   <span class="cf">if</span> (p <span class="op">&lt;</span><span class="st"> </span>.<span class="dv">001</span>) <span class="kw">return</span>(<span class="st">&quot;p &lt; .001&quot;</span>)
 
@@ -309,8 +337,20 @@ Run your function and test it with a few different p-values and digits. Try <cod
   
   <span class="kw">return</span>(p_string)
 }</code></pre></div>
+</div>
+<div id="imports" class="section level3">
+<h3><span class="header-section-number">1.4.3</span> Imports</h3>
+<p>You need to &quot;import&quot; any packages you used in your function by running <code>usethis::use_package</code> for each package you want to include.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">usethis<span class="op">::</span><span class="kw">use_package</span>(<span class="st">&quot;stringr&quot;</span>)</code></pre></div>
+<p>You can't import the whole <code>tidyverse</code>, but you can import each package separately (i.e., ggplot2, purrr, tibble, dplyr, tidyr, stringr, readr, forcats). Import just the packages you actually need.</p>
+<div class="warning">
+<p>
+<img src="images/pipe_sticker.png" style="float:right; width:100px"> If you use pipes (even if you've imported <code>dplyr</code>), you also need to run <code>usethis::use_pipe()</code>. It will add a file called <code>utils-pipe.R</code> to your <code>R</code> directory and add <code>magrittr</code> to your Imports.
+</p>
+</div>
+</div>
 <div id="documentation" class="section level3">
-<h3><span class="header-section-number">1.5.1</span> Documentation</h3>
+<h3><span class="header-section-number">1.4.4</span> Documentation</h3>
 <p>Now edit the commented part before your function. The <code>#'</code> is special to <code>roxygen2</code> documentation, which we'll enable below. This generates what you see in the Help viewer. Type <code>?mean</code> into the console pane and have a look at the Help pane.</p>
 <ul>
 <li>The first line is the name of the function in title case</li>
@@ -336,35 +376,17 @@ Loading demopckg
 Writing report_p.Rd</code></pre>
 <p>You don't need to worry about these files, they'll be added to your package to show Help documentation.</p>
 </div>
-<div id="imports" class="section level3">
-<h3><span class="header-section-number">1.5.2</span> Imports</h3>
-<p>You need to &quot;import&quot; any packages you used in your function by running <code>usethis::use_package</code> for each package you want to include.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">usethis<span class="op">::</span><span class="kw">use_package</span>(<span class="st">&quot;stringr&quot;</span>)</code></pre></div>
-<div class="warning">
-<p>
-You can't import the whole <code>tidyverse</code>, but you can import each package separately. Import just the packages you actually need.
-</p>
-<p>
-tidyverse = ggplot2, purrr, tibble, dplyr, tidyr, stringr, readr, forcats
-</p>
-</div>
-<div class="info">
-<p>
-<img src="images/pipe_sticker.png" style="float:right; width:100px"> If you use pipes (even if you've imported <code>dplyr</code>), you also need to run <code>usethis::use_pipe()</code>. It will add a file called <code>utils-pipe.R</code> to your <code>R</code> directory and add <code>magrittr</code> to your Imports.
-</p>
-</div>
-</div>
 </div>
 <div id="build-your-package" class="section level2">
-<h2><span class="header-section-number">1.6</span> Build your package</h2>
+<h2><span class="header-section-number">1.5</span> Build your package</h2>
 <p>Now you're ready to check and build your package for installation.</p>
 <div id="check" class="section level3">
-<h3><span class="header-section-number">1.6.1</span> Check</h3>
+<h3><span class="header-section-number">1.5.1</span> Check</h3>
 <p>First, check everything by running <code>devtools::check()</code>. You'll get a lot of output, but don't worry unless you have an error message. Hopefully, you'll get this message:</p>
 <pre><code>0 errors ✔ | 0 warnings ✔ | 0 notes ✔</code></pre>
 </div>
 <div id="build" class="section level3">
-<h3><span class="header-section-number">1.6.2</span> Build</h3>
+<h3><span class="header-section-number">1.5.2</span> Build</h3>
 <p>Next, run <code>devtools::build()</code>. You'll get a message that looks like this:</p>
 <pre><code>✔  checking for file ‘/Users/lisad/rproj/demopckg/DESCRIPTION’ ...
 ─  preparing ‘demopckg’:
@@ -376,14 +398,14 @@ tidyverse = ggplot2, purrr, tibble, dplyr, tidyr, stringr, readr, forcats
 [1] &quot;/Users/lisad/rproj/demopckg_0.0.0.9000.tar.gz&quot;</code></pre>
 </div>
 <div id="install" class="section level3">
-<h3><span class="header-section-number">1.6.3</span> Install</h3>
+<h3><span class="header-section-number">1.5.3</span> Install</h3>
 <p>Next, install your new package with the following code (<code>../</code> means to go up one directory to look for the <code>demopckg</code> install file).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">install</span>(<span class="st">&quot;../demopckg&quot;</span>)</code></pre></div>
 <p>You'll see a bunch of output that should end in:</p>
 <pre><code>* DONE (demopckg)</code></pre>
 </div>
 <div id="test" class="section level3">
-<h3><span class="header-section-number">1.6.4</span> Test</h3>
+<h3><span class="header-section-number">1.5.4</span> Test</h3>
 <p>To make sure it's all gone well, restart R and try to use the function <code>report_p(0.00039)</code>. You should get an error message.</p>
 <p>Then load your new package with <code>library(demopckg)</code> are retry the example above.</p>
 <p>Type <code>?report_p</code> in the console and look at your Help documentation.</p>
@@ -395,7 +417,7 @@ Restart R and open a new .R or .Rmd file. Load your new package at the top of th
 </div>
 </div>
 <div id="error-checking" class="section level2">
-<h2><span class="header-section-number">1.7</span> Error checking</h2>
+<h2><span class="header-section-number">1.6</span> Error checking</h2>
 <p>Try running your function with different values for <code>p</code>. What happens if you use invalid values, like 1.07, -0.05, or &quot;A&quot;?</p>
 <p>We can add error checking to a function to quit and give a message if the error is fatal, or just warn them if the error is recoverable, but probably wrong.</p>
 <p>P-values can't ever be less than 0 or greater than 1, so we can just quit and give an error message if that happens. Add the following code to the beginning of your function, rerun the code to update the function, and test it on some values of p that are less than 0 or greater than 1.</p>
@@ -408,14 +430,14 @@ Restart R and open a new .R or .Rmd file. Load your new package at the top of th
   }</code></pre></div>
 </div>
 <div id="unit-tests" class="section level2">
-<h2><span class="header-section-number">1.8</span> Unit tests</h2>
+<h2><span class="header-section-number">1.7</span> Unit tests</h2>
 <p>Up until now, we've just tested our function in an ad hoc way every time we made changes. We can make this process more formal by using unit tests. These will make sure that your function is working properly if you make any changes. This seems like overkill for simple functions, but is absolutely essential for big projects, so best to get into good habits now.</p>
 <div id="setup" class="section level3">
-<h3><span class="header-section-number">1.8.1</span> Setup</h3>
+<h3><span class="header-section-number">1.7.1</span> Setup</h3>
 <p>When you set up a new package, you need to set up the testing structure using <code>usethis::use_testthat()</code>. You only need to do this once for each package and you will know it has been done if a new directory called <code>tests</code> is made.</p>
 </div>
 <div id="new-unit-tests" class="section level3">
-<h3><span class="header-section-number">1.8.2</span> New unit tests</h3>
+<h3><span class="header-section-number">1.7.2</span> New unit tests</h3>
 <p>Create a new test file for the <code>report_p</code> function using <code>usethis::use_test(&quot;report_p&quot;)</code>. It will create a new file called <strong><code>test-report_p.R</code></strong> in the <strong><code>tests/testhat/</code></strong> directory.</p>
 <p>Replace the text in that file with the text below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">context</span>(<span class="st">&quot;report_p&quot;</span>)
@@ -451,19 +473,23 @@ Skipped:  0</code></pre>
   )</code></pre></div>
 </div>
 <div id="run-all-tests" class="section level3">
-<h3><span class="header-section-number">1.8.3</span> Run all tests</h3>
+<h3><span class="header-section-number">1.7.3</span> Run all tests</h3>
 <p>Run <code>devtools::test()</code> after you add each test to make sure your tests work as expected.</p>
 </div>
 </div>
 <div id="share-your-package" class="section level2">
-<h2><span class="header-section-number">1.9</span> Share your package</h2>
+<h2><span class="header-section-number">1.8</span> Share your package</h2>
 <p>You can do package development without a <a href="https://github.com">GitHub</a> account, but this is one of the easiest ways to share your package.</p>
+<div id="git-on-rstudio" class="section level3">
+<h3><span class="header-section-number">1.8.1</span> Git on RStudio</h3>
+<p>If you don't have git installed on your computer, don't have it integrated with RStudio, and/or don't have a github account, follow the instructions in Appendix @ref(#git).</p>
+</div>
 <div id="set-up-git-for-this-project" class="section level3">
-<h3><span class="header-section-number">1.9.1</span> Set up git for this project</h3>
+<h3><span class="header-section-number">1.8.2</span> Set up git for this project</h3>
 <p>If you aren't already using version control for this project, make sure all of your files are saved and type <code>usethis::use_git()</code> into the console. Choose Yes to commit and Yes to restart R.</p>
 </div>
 <div id="github-access-token" class="section level3">
-<h3><span class="header-section-number">1.9.2</span> GitHub access token</h3>
+<h3><span class="header-section-number">1.8.3</span> GitHub access token</h3>
 <p>Now set up a github access token with <code>usethis::browse_github_pat()</code>. Your web browser will open and you'll be asked to log into your github account and then asked to authorise a new token. Accept the defaults and click OK at the bottom of the page.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
 <img src="images/github_new_token.png" alt="Authorise a github token so you can create new github repositories from RStudio" width="100%" />
@@ -483,7 +509,7 @@ Figure 1.2: Copy your github token
 <p>Save and close the file, then restart R.</p>
 </div>
 <div id="make-a-new-github-repository" class="section level3">
-<h3><span class="header-section-number">1.9.3</span> Make a new GitHub repository</h3>
+<h3><span class="header-section-number">1.8.4</span> Make a new GitHub repository</h3>
 <p>Type <code>usethis::use_github(protocol=&quot;https&quot;)</code> into the console window and check that the suggested title and description are OK.</p>
 <pre><code>✔ Setting active project to &#39;/Users/lisad/rproj/demopckg&#39;
 ● Check title and description
@@ -502,13 +528,54 @@ Figure 1.3: Your new github repository
 </div>
 </div>
 <div id="install-your-package-from-github" class="section level3">
-<h3><span class="header-section-number">1.9.4</span> Install your package from GitHub</h3>
+<h3><span class="header-section-number">1.8.5</span> Install your package from GitHub</h3>
 <p>Install your package using the following code (replacing <code>debruine</code> with your github username).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;debruine/demopckg&quot;</span>)</code></pre></div>
 </div>
 </div>
-<div id="the-full-report_p-function" class="section level2">
-<h2><span class="header-section-number">1.10</span> The full <code>report_p</code> function</h2>
+<div id="further-resources" class="section level2">
+<h2><span class="header-section-number">1.9</span> Further resources</h2>
+<p>There is a lot more to learn about package development, including writing vignettes to help users understand your functions and getting your package ready to submit to CRAN.</p>
+<ul>
+<li><a href="http://r-pkgs.had.co.nz/">R Packages</a> by Hadley Wickham</li>
+<li><a href="https://usethis.r-lib.org/">usethis</a></li>
+<li><a href="https://www.hvitfeldt.me/blog/usethis-workflow-for-package-development/#creating-minimal-functional-package">Workflow for package development</a> by Emil Hvitfeldt</li>
+</ul>
+<div id="workflow" class="section level3">
+<h3><span class="header-section-number">1.9.1</span> Workflow</h3>
+<p>The following script has all of the functions you'll need to start a new package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pckg &lt;-<span class="st"> &quot;mynewpackage&quot;</span>
+pckgdir &lt;-<span class="st"> &quot;~/rproj/&quot;</span>
+me &lt;-<span class="st"> &quot;Lisa DeBruine&quot;</span>
+
+<span class="co"># run once at start of package</span>
+usethis<span class="op">::</span><span class="kw">create_package</span>(<span class="kw">paste0</span>(pckgdir, pckg))
+usethis<span class="op">::</span><span class="kw">use_mit_license</span>(<span class="dt">name =</span> me)
+usethis<span class="op">::</span><span class="kw">use_readme_rmd</span>()
+usethis<span class="op">::</span><span class="kw">use_testthat</span>()
+usethis<span class="op">::</span><span class="kw">use_roxygen_md</span>()
+usethis<span class="op">::</span><span class="kw">use_pipe</span>() <span class="co"># everyone needs pipes</span>
+
+<span class="co"># code for new functions</span>
+funcname &lt;-<span class="st"> &quot;newfunction&quot;</span>
+imports &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;tidyr&quot;</span>)
+usethis<span class="op">::</span><span class="kw">edit_file</span>(<span class="kw">paste0</span>(<span class="st">&quot;R/&quot;</span>, funcname, <span class="st">&quot;.R&quot;</span>))
+usethis<span class="op">::</span><span class="kw">use_test</span>(funcname)
+<span class="cf">for</span> (import <span class="cf">in</span> imports) usethis<span class="op">::</span><span class="kw">use_package</span>(import)
+
+<span class="co"># building the package</span>
+devtools<span class="op">::</span><span class="kw">check</span>() <span class="co"># can take a long time</span>
+devtools<span class="op">::</span><span class="kw">build</span>()
+devtools<span class="op">::</span><span class="kw">install</span>(<span class="kw">paste0</span>(<span class="st">&quot;../&quot;</span>, pckg))
+
+<span class="co"># use these for specific tasks </span>
+<span class="co"># if check takes too long</span>
+devtools<span class="op">::</span><span class="kw">document</span>()
+devtools<span class="op">::</span><span class="kw">test</span>()
+devtools<span class="op">::</span><span class="kw">run_examples</span>()</code></pre></div>
+</div>
+<div id="the-full-report_p-function" class="section level3">
+<h3><span class="header-section-number">1.9.2</span> The full <code>report_p</code> function</h3>
 <p>Here's what the full function should look like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; Report p-value</span>
 <span class="co">#&#39;</span>
@@ -547,6 +614,7 @@ report_p &lt;-<span class="st"> </span><span class="cf">function</span>(p, <span
   <span class="kw">return</span>(p_string)
 }</code></pre></div>
 
+</div>
 </div>
 </div>
 
@@ -643,8 +711,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="installing-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -11,12 +11,6 @@
 * Use your package in a script
 * Share your package through GitHub
 
-## Resources
-
-* [R Packages](http://r-pkgs.had.co.nz/) by Hadley Wickham
-* [usethis](https://usethis.r-lib.org/) by Jenny Bryan
-* [Workflow for package development](https://www.hvitfeldt.me/blog/usethis-workflow-for-package-development/#creating-minimal-functional-package) by Emil Hvitfeldt
-
 ## Setting Up
 
 You will need to install the following packages:
@@ -110,7 +104,11 @@ Make sure you knit your README.Rmd file when you update it and never edit the RE
 
 ## Creating a function
 
-Create a new R script from the File menu (**`New File`** > **`R Script`**).
+Function definitions are saved in the `R` folder. You don't have to, but I like to save each function in its own file and name the file after the function.
+
+### Template function
+
+Create a new R script from the File menu (**`New File > R Script`**).
 
 Paste the following template into your file:
 
@@ -120,16 +118,21 @@ Paste the following template into your file:
 #'
 #' `myfunction` does something.
 #'
-#' @param arg1 The first argument
-#' @return \code{arg1}
+#' @param arg1 A value to return
+#' @return Returns the value of \code{arg1}
 #' @examples
 #'
 #' myfunction(1) # returns 1
 #' 
 #' @export
 
-myfunction <- function(arg1) { arg1 }
+myfunction <- function(arg1 = "Change me") { 
+  arg1 
+}
 ```
+
+
+### Edit the function
 
 We're going to create a function that reports a p-value in APA style, named `report_p`. It will take two arguments, the p-value (`p`) and the number of digits to round to (`digits`). 
 
@@ -170,6 +173,12 @@ report_p <- function(p, digits = 3) {
 
 APA style omits the leading zero and pads the number out to three digits. We can do this by converting our rounded p-value into a character string, replacing the string "0." with ".", and making sure to pad the right side with enough zeros. The `stringr` package has useful functions for this.
 
+When you use R functions from a package (not base R), you normally load the package using the `library()` function. When you're developing your own package, you need to preface every function with its package name and two colons instead, so in the code below we'll use `stringr::str_replace()` and `stringr::str_pad()`, not `str_replace()` and `str_pad()`.
+
+<div class="info">
+<p>One function you can't preface with the package name is the <a href="#pipes">pipe</a>. While you're testing your function, load the pipe by typing <code>library(magrittr)</code> in the console.</p>
+</div>
+
 
 ```r
 report_p <- function(p, digits = 3) {
@@ -187,6 +196,21 @@ report_p <- function(p, digits = 3) {
   return(p_string)
 }
 ```
+
+### Imports
+
+You need to "import" any packages you used in your function by running `usethis::use_package` for each package you want to include. 
+
+
+```r
+usethis::use_package("stringr")
+```
+
+You can't import the whole `tidyverse`, but you can import each package separately (i.e., ggplot2, purrr, tibble, dplyr, tidyr, stringr, readr, forcats). Import just the packages you actually need.
+
+<div class="warning">
+<p><img src="images/pipe_sticker.png" style="float:right; width:100px"> If you use pipes (even if you've imported <code>dplyr</code>), you also need to run <code>usethis::use_pipe()</code>. It will add a file called <code>utils-pipe.R</code> to your <code>R</code> directory and add <code>magrittr</code> to your Imports.</p>
+</div>
 
 ### Documentation
 
@@ -224,23 +248,7 @@ Writing report_p.Rd
 
 You don't need to worry about these files, they'll be added to your package to show Help documentation.
 
-### Imports
 
-You need to "import" any packages you used in your function by running `usethis::use_package` for each package you want to include. 
-
-
-```r
-usethis::use_package("stringr")
-```
-
-<div class="warning">
-<p>You can't import the whole <code>tidyverse</code>, but you can import each package separately. Import just the packages you actually need.</p>
-<p>tidyverse = ggplot2, purrr, tibble, dplyr, tidyr, stringr, readr, forcats</p>
-</div>
-
-<div class="info">
-<p><img src="images/pipe_sticker.png" style="float:right; width:100px"> If you use pipes (even if you've imported <code>dplyr</code>), you also need to run <code>usethis::use_pipe()</code>. It will add a file called <code>utils-pipe.R</code> to your <code>R</code> directory and add <code>magrittr</code> to your Imports.</p>
-</div>
 
 ## Build your package
 
@@ -386,6 +394,10 @@ Run `devtools::test()` after you add each test to make sure your tests work as e
 
 You can do package development without a [GitHub](https://github.com) account, but this is one of the easiest ways to share your package.
 
+### Git on RStudio
+
+If you don't have git installed on your computer, don't have it integrated with RStudio, and/or don't have a github account, follow the instructions in Appendix \@ref(#git).
+
 ### Set up git for this project
 
 If you aren't already using version control for this project, make sure all of your files are saved and type `usethis::use_git()` into the console. Choose Yes to commit and Yes to restart R.
@@ -445,7 +457,55 @@ Install your package using the following code (replacing `debruine` with your gi
 devtools::install_github("debruine/demopckg")
 ```
 
-## The full `report_p` function
+
+## Further resources
+
+There is a lot more to learn about package development, including writing vignettes to help users understand your functions and getting your package ready to submit to CRAN.
+
+* [R Packages](http://r-pkgs.had.co.nz/) by Hadley Wickham
+* [usethis](https://usethis.r-lib.org/)
+* [Workflow for package development](https://www.hvitfeldt.me/blog/usethis-workflow-for-package-development/#creating-minimal-functional-package) by Emil Hvitfeldt
+
+### Workflow
+
+The following script has all of the functions you'll need to start a new package.
+
+
+```r
+pckg <- "mynewpackage"
+pckgdir <- "~/rproj/"
+me <- "Lisa DeBruine"
+
+# run once at start of package
+usethis::create_package(paste0(pckgdir, pckg))
+usethis::use_mit_license(name = me)
+usethis::use_readme_rmd()
+usethis::use_testthat()
+usethis::use_roxygen_md()
+usethis::use_pipe() # everyone needs pipes
+
+# code for new functions
+funcname <- "newfunction"
+imports <- c("dplyr", "tidyr")
+usethis::edit_file(paste0("R/", funcname, ".R"))
+usethis::use_test(funcname)
+for (import in imports) usethis::use_package(import)
+
+# building the package
+devtools::check() # can take a long time
+devtools::build()
+devtools::install(paste0("../", pckg))
+
+# use these for specific tasks 
+# if check takes too long
+devtools::document()
+devtools::test()
+devtools::run_examples()
+```
+
+
+
+### The full `report_p` function
 
 Here's what the full function should look like.
 

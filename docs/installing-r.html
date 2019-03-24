@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Tutorials</title>
+  <title>A Installing R | Tutorials</title>
   <meta name="description" content="Tutorial materials">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Tutorials" />
+  <meta property="og:title" content="A Installing R | Tutorials" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Tutorials" />
+  <meta name="twitter:title" content="A Installing R | Tutorials" />
   
   <meta name="twitter:description" content="Tutorial materials" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="your-first-r-package-with-unit-tests.html">
+<link rel="prev" href="your-first-r-package-with-unit-tests.html">
+<link rel="next" href="git-and-github.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -186,15 +186,34 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Tutorials</h1>
-<p class="author"><em>Lisa DeBruine</em></p>
-<p class="date"><em>2019-03-24</em></p>
+<div id="installing-r" class="section level1">
+<h1><span class="header-section-number">A</span> Installing <code>R</code></h1>
+<p>Installing R and RStudio is usually straightforward. The sections below explain how and <a href="https://www.youtube.com/watch?v=lVKMsaWju8w">there is a helpful YouTube video here</a>.</p>
+<div id="installing-base-r" class="section level2">
+<h2><span class="header-section-number">A.1</span> Installing Base R</h2>
+<p>Install base R from <a href="https://cran.rstudio.com/" class="uri">https://cran.rstudio.com/</a>. Choose the download link for your operating system (Linux, Mac OS X, or Windows).</p>
+<p>If you have a Mac, install the latest release from the newest <code>R-x.x.x.pkg</code> link (or a legacy version if you have an older operating system). After you install R, you should also install <a href="http://xquartz.macosforge.org/">XQuartz</a> to be able to use some visualisation packages.</p>
+<p>If you are installing the Windows version, choose the &quot;<a href="https://cran.rstudio.com/bin/windows/base/">base</a>&quot; subdirectory and click on the download link at the top of the page. After you install R, you should also install <a href="https://cran.rstudio.com/bin/windows/Rtools/">RTools</a>; use the &quot;recommended&quot; version highlighted near the top of the list.</p>
+<p>If you are using Linux, choose your specific operating system and follow the installation instructions.</p>
 </div>
-<div id="overview" class="section level1 unnumbered">
-<h1>Overview</h1>
-<p>I'm going to move all of my code tutorials here eventually.</p>
+<div id="installing-rstudio" class="section level2">
+<h2><span class="header-section-number">A.2</span> Installing RStudio</h2>
+<p>Go to <a href="https://www.rstudio.com/products/rstudio/download/#download">rstudio.com</a> and download the RStudio Desktop (Open Source License) version for your operating system under the list titled <strong>Installers for Supported Platforms</strong>.</p>
+</div>
+<div id="installing-latex" class="section level2">
+<h2><span class="header-section-number">A.3</span> Installing LaTeX</h2>
+<p>You can install the LaTeX typesetting system to produce PDF reports from RStudio. Without this additional installation, you will be able to produce reports in HTML but not PDF. To generate PDF reports, you will additionally need:</p>
+<ol style="list-style-type: decimal">
+<li><a href="http://pandoc.org/installing.html">pandoc</a>, and</li>
+<li>LaTeX, a typesetting language, available for
+<ul>
+<li>WINDOWS: <a href="http://miktex.org/">MikTeX</a></li>
+<li>Mac OS: <a href="https://tug.org/mactex/downloading.html">MacTex</a> (3.2GB download) or <a href="http://ww.tug.org/mactex/morepackages.html">BasicTeX</a> (78MB download, but should work fine)</li>
+<li>Linux: <a href="https://www.tug.org/texlive/">TeX Live</a></li>
+</ul></li>
+</ol>
 
+</div>
 </div>
 <div class="psyteachr_footer">
   
@@ -286,8 +305,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-
-<a href="your-first-r-package-with-unit-tests.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="your-first-r-package-with-unit-tests.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="git-and-github.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
