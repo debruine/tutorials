@@ -1,5 +1,5 @@
 
-# Your first R package with unit tests
+# Your first R package with unit tests {#packages}
 
 ## Learning Objectives
 
