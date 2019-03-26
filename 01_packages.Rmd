@@ -12,7 +12,7 @@
 
 ## Setting Up
 
-You will need to install the following packages:
+You will need to install the following `r glossary("package", "community-written functions")`s:
 
 ```{r install, eval = FALSE}
 install.packages(c("devtools", "roxygen2", "testthat", "usethis", "knitr"))
@@ -31,7 +31,7 @@ usethis::create_package("~/rstuff/demopckg")
 Package names can only be letters, numbers, and full stops.
 ```
 
-You'll see the following output, and a new RStudio project will open up. You can close the old window now and just work in this project.
+You'll see the following output, and a new RStudio `r glossary("project", "way to organise related files")` will open up. You can close the old window now and just work in this project.
 
 ```
 ✔ Setting active project to '~/rstuff/demopckg'
@@ -128,7 +128,7 @@ myfunction <- function(arg1 = "Change me") {
 
 ### Edit the function
 
-We're going to create a function that reports a p-value in APA style, named `report_p`. It will take two arguments, the p-value (`p`) and the number of digits to round to (`digits`). 
+We're going to create a `r glossary("function", "a named section of code that can be reused")` that reports a p-value in APA style, named `report_p`. It will take two `r glossary("arguments", "a variable that provides input to a function")`, the p-value (`p`) and the number of digits to round to (`digits`). 
 
 ```{block, type="try"}
 Replace `myfunction` with `report_p` and change the arguments. Should `p` have a default value? Should `digits`?
@@ -163,7 +163,7 @@ report_p <- function(p, digits = 3) {
 Run your function and test it with a few different p-values and digits. Try `report_p(0.01034)`. Does this look exactly like you expect?
 ```
 
-APA style omits the leading zero and pads the number out to three digits. We can do this by converting our rounded p-value into a character string, replacing the string "0." with ".", and making sure to pad the right side with enough zeros. The `stringr` package has useful functions for this.
+APA style omits the leading zero and pads the number out to three digits. We can do this by converting our rounded p-value into a `r glossary("character", "a data type representing text")` string, replacing the string "0." with ".", and making sure to pad the right side with enough zeros. The `stringr` package has useful functions for this.
 
 When you use R functions from a package (not base R), you normally load the package using the `library()` function. When you're developing your own package, you need to preface every function with its package name and two colons instead, so in the code below we'll use `stringr::str_replace()` and `stringr::str_pad()`, not `str_replace()` and `str_pad()`.
 
@@ -385,7 +385,7 @@ If you don't have git installed on your computer, don't have it integrated with 
 
 ### Set up git for this project
 
-If you aren't already using version control for this project, make sure all of your files are saved and type `usethis::use_git()` into the console. Choose Yes to commit and Yes to restart R.
+If you aren't already using `r glossary("version control", "a way to save a record of changes to your files")` for this project, make sure all of your files are saved and type `usethis::use_git()` into the console. Choose Yes to commit and Yes to restart R.
 
 ### GitHub access token
 

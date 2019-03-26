@@ -13,7 +13,7 @@
 
 ## Setting Up
 
-You will need to install the following packages:
+You will need to install the following <a class='glossary' target='_blank' title='community-written functions' href='https://psyteachr.github.io/glossary/p#package'>package</a>s:
 
 
 ```r
@@ -34,7 +34,7 @@ usethis::create_package("~/rstuff/demopckg")
 <p>Package names can only be letters, numbers, and full stops.</p>
 </div>
 
-You'll see the following output, and a new RStudio project will open up. You can close the old window now and just work in this project.
+You'll see the following output, and a new RStudio <a class='glossary' target='_blank' title='way to organise related files' href='https://psyteachr.github.io/glossary/p#project'>project</a> will open up. You can close the old window now and just work in this project.
 
 ```
 ✔ Setting active project to '~/rstuff/demopckg'
@@ -134,7 +134,7 @@ myfunction <- function(arg1 = "Change me") {
 
 ### Edit the function
 
-We're going to create a function that reports a p-value in APA style, named `report_p`. It will take two arguments, the p-value (`p`) and the number of digits to round to (`digits`). 
+We're going to create a <a class='glossary' target='_blank' title='a named section of code that can be reused' href='https://psyteachr.github.io/glossary/f#function'>function</a> that reports a p-value in APA style, named `report_p`. It will take two <a class='glossary' target='_blank' title='a variable that provides input to a function' href='https://psyteachr.github.io/glossary/a#arguments'>arguments</a>, the p-value (`p`) and the number of digits to round to (`digits`). 
 
 <div class="try">
 <p>Replace <code>myfunction</code> with <code>report_p</code> and change the arguments. Should <code>p</code> have a default value? Should <code>digits</code>?</p>
@@ -171,7 +171,7 @@ report_p <- function(p, digits = 3) {
 <p>Run your function and test it with a few different p-values and digits. Try <code>report_p(0.01034)</code>. Does this look exactly like you expect?</p>
 </div>
 
-APA style omits the leading zero and pads the number out to three digits. We can do this by converting our rounded p-value into a character string, replacing the string "0." with ".", and making sure to pad the right side with enough zeros. The `stringr` package has useful functions for this.
+APA style omits the leading zero and pads the number out to three digits. We can do this by converting our rounded p-value into a <a class='glossary' target='_blank' title='a data type representing text' href='https://psyteachr.github.io/glossary/c#character'>character</a> string, replacing the string "0." with ".", and making sure to pad the right side with enough zeros. The `stringr` package has useful functions for this.
 
 When you use R functions from a package (not base R), you normally load the package using the `library()` function. When you're developing your own package, you need to preface every function with its package name and two colons instead, so in the code below we'll use `stringr::str_replace()` and `stringr::str_pad()`, not `str_replace()` and `str_pad()`.
 
@@ -400,7 +400,7 @@ If you don't have git installed on your computer, don't have it integrated with 
 
 ### Set up git for this project
 
-If you aren't already using version control for this project, make sure all of your files are saved and type `usethis::use_git()` into the console. Choose Yes to commit and Yes to restart R.
+If you aren't already using <a class='glossary' target='_blank' title='a way to save a record of changes to your files' href='https://psyteachr.github.io/glossary/v#version-control'>version control</a> for this project, make sure all of your files are saved and type `usethis::use_git()` into the console. Choose Yes to commit and Yes to restart R.
 
 ### GitHub access token
 

@@ -25,7 +25,7 @@
 <meta name="author" content="Lisa DeBruine">
 
 
-<meta name="date" content="2019-03-25">
+<meta name="date" content="2019-03-26">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -202,7 +202,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="setting-up" class="section level2">
 <h2><span class="header-section-number">1.2</span> Setting Up</h2>
-<p>You will need to install the following packages:</p>
+<p>You will need to install the following <a class='glossary' target='_blank' title='community-written functions' href='https://psyteachr.github.io/glossary/p#package'>package</a>s:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;devtools&quot;</span>, <span class="st">&quot;roxygen2&quot;</span>, <span class="st">&quot;testthat&quot;</span>, <span class="st">&quot;usethis&quot;</span>, <span class="st">&quot;knitr&quot;</span>))</code></pre></div>
 </div>
 <div id="create-your-r-package" class="section level2">
@@ -214,7 +214,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 Package names can only be letters, numbers, and full stops.
 </p>
 </div>
-<p>You'll see the following output, and a new RStudio project will open up. You can close the old window now and just work in this project.</p>
+<p>You'll see the following output, and a new RStudio <a class='glossary' target='_blank' title='way to organise related files' href='https://psyteachr.github.io/glossary/p#project'>project</a> will open up. You can close the old window now and just work in this project.</p>
 <pre><code>✔ Setting active project to &#39;~/rstuff/demopckg&#39;
 ✔ Creating &#39;R/&#39;
 ✔ Creating &#39;man/&#39;
@@ -287,7 +287,7 @@ myfunction &lt;-<span class="st"> </span><span class="cf">function</span>(<span 
 </div>
 <div id="edit-the-function" class="section level3">
 <h3><span class="header-section-number">1.4.2</span> Edit the function</h3>
-<p>We're going to create a function that reports a p-value in APA style, named <code>report_p</code>. It will take two arguments, the p-value (<code>p</code>) and the number of digits to round to (<code>digits</code>).</p>
+<p>We're going to create a <a class='glossary' target='_blank' title='a named section of code that can be reused' href='https://psyteachr.github.io/glossary/f#function'>function</a> that reports a p-value in APA style, named <code>report_p</code>. It will take two <a class='glossary' target='_blank' title='a variable that provides input to a function' href='https://psyteachr.github.io/glossary/a#arguments'>arguments</a>, the p-value (<code>p</code>) and the number of digits to round to (<code>digits</code>).</p>
 <div class="try">
 <p>
 Replace <code>myfunction</code> with <code>report_p</code> and change the arguments. Should <code>p</code> have a default value? Should <code>digits</code>?
@@ -316,7 +316,7 @@ Once you run the <code>return()</code> function, your function stops running.
 Run your function and test it with a few different p-values and digits. Try <code>report_p(0.01034)</code>. Does this look exactly like you expect?
 </p>
 </div>
-<p>APA style omits the leading zero and pads the number out to three digits. We can do this by converting our rounded p-value into a character string, replacing the string &quot;0.&quot; with &quot;.&quot;, and making sure to pad the right side with enough zeros. The <code>stringr</code> package has useful functions for this.</p>
+<p>APA style omits the leading zero and pads the number out to three digits. We can do this by converting our rounded p-value into a <a class='glossary' target='_blank' title='a data type representing text' href='https://psyteachr.github.io/glossary/c#character'>character</a> string, replacing the string &quot;0.&quot; with &quot;.&quot;, and making sure to pad the right side with enough zeros. The <code>stringr</code> package has useful functions for this.</p>
 <p>When you use R functions from a package (not base R), you normally load the package using the <code>library()</code> function. When you're developing your own package, you need to preface every function with its package name and two colons instead, so in the code below we'll use <code>stringr::str_replace()</code> and <code>stringr::str_pad()</code>, not <code>str_replace()</code> and <code>str_pad()</code>.</p>
 <div class="info">
 <p>
@@ -486,7 +486,7 @@ Skipped:  0</code></pre>
 </div>
 <div id="set-up-git-for-this-project" class="section level3">
 <h3><span class="header-section-number">1.8.2</span> Set up git for this project</h3>
-<p>If you aren't already using version control for this project, make sure all of your files are saved and type <code>usethis::use_git()</code> into the console. Choose Yes to commit and Yes to restart R.</p>
+<p>If you aren't already using <a class='glossary' target='_blank' title='a way to save a record of changes to your files' href='https://psyteachr.github.io/glossary/v#version-control'>version control</a> for this project, make sure all of your files are saved and type <code>usethis::use_git()</code> into the console. Choose Yes to commit and Yes to restart R.</p>
 </div>
 <div id="github-access-token" class="section level3">
 <h3><span class="header-section-number">1.8.3</span> GitHub access token</h3>
