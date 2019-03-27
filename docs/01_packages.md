@@ -13,7 +13,7 @@
 
 ## Setting Up
 
-You will need to install the following <a class='glossary' target='_blank' title='community-written functions' href='https://psyteachr.github.io/glossary/p#package'>package</a>s:
+You will need to install the following <a class='glossary' target='_blank' title='A group of R functions.' href='https://psyteachr.github.io/glossary/p#package'>packages</a>:
 
 
 ```r
@@ -34,7 +34,7 @@ usethis::create_package("~/rstuff/demopckg")
 <p>Package names can only be letters, numbers, and full stops.</p>
 </div>
 
-You'll see the following output, and a new RStudio <a class='glossary' target='_blank' title='way to organise related files' href='https://psyteachr.github.io/glossary/p#project'>project</a> will open up. You can close the old window now and just work in this project.
+You'll see the following output, and a new RStudio <a class='glossary' target='_blank' title='A way to organise related files in RStudio' href='https://psyteachr.github.io/glossary/p#project'>project</a> will open up. You can close the old window now and just work in this project.
 
 ```
 ✔ Setting active project to '~/rstuff/demopckg'
@@ -90,7 +90,7 @@ Use the following code to set up a README document that will explain your packag
 usethis::use_readme_rmd() 
 ```
 
-We'll eventually put this on github, so change the installation instructions to the following (change `yourusername` to your github username). 
+We'll eventually put this on <a class='glossary' target='_blank' title='A cloud-based service for storing and sharing your version controlled files.' href='https://psyteachr.github.io/glossary/g#github'>github</a>, so change the installation instructions to the following (change `yourusername` to your github username). 
 
 <pre><code>You can install the released version of demopckg from [GitHub](https://github.com) with:
 
@@ -134,7 +134,7 @@ myfunction <- function(arg1 = "Change me") {
 
 ### Edit the function
 
-We're going to create a <a class='glossary' target='_blank' title='a named section of code that can be reused' href='https://psyteachr.github.io/glossary/f#function'>function</a> that reports a p-value in APA style, named `report_p`. It will take two <a class='glossary' target='_blank' title='a variable that provides input to a function' href='https://psyteachr.github.io/glossary/a#arguments'>arguments</a>, the p-value (`p`) and the number of digits to round to (`digits`). 
+We're going to create a <a class='glossary' target='_blank' title='A named section of code that can be reused.' href='https://psyteachr.github.io/glossary/f#function'>function</a> that reports a p-value in APA style, named `report_p`. It will take two <a class='glossary' target='_blank' title='A variable that provides input to a function.' href='https://psyteachr.github.io/glossary/a#argument'>arguments</a>, the p-value (`p`) and the number of digits to round to (`digits`). 
 
 <div class="try">
 <p>Replace <code>myfunction</code> with <code>report_p</code> and change the arguments. Should <code>p</code> have a default value? Should <code>digits</code>?</p>
@@ -171,7 +171,7 @@ report_p <- function(p, digits = 3) {
 <p>Run your function and test it with a few different p-values and digits. Try <code>report_p(0.01034)</code>. Does this look exactly like you expect?</p>
 </div>
 
-APA style omits the leading zero and pads the number out to three digits. We can do this by converting our rounded p-value into a <a class='glossary' target='_blank' title='a data type representing text' href='https://psyteachr.github.io/glossary/c#character'>character</a> string, replacing the string "0." with ".", and making sure to pad the right side with enough zeros. The `stringr` package has useful functions for this.
+APA style omits the leading zero and pads the number out to three digits. We can do this by converting our rounded p-value into a <a class='glossary' target='_blank' title='A data type representing strings of text.' href='https://psyteachr.github.io/glossary/c#character'>character</a> string, replacing the string "0." with ".", and making sure to pad the right side with enough zeros. The `stringr` package has useful functions for this.
 
 When you use R functions from a package (not base R), you normally load the package using the `library()` function. When you're developing your own package, you need to preface every function with its package name and two colons instead, so in the code below we'll use `stringr::str_replace()` and `stringr::str_pad()`, not `str_replace()` and `str_pad()`.
 
@@ -396,11 +396,11 @@ You can do package development without a [GitHub](https://github.com) account, b
 
 ### Git on RStudio
 
-If you don't have git installed on your computer, don't have it integrated with RStudio, and/or don't have a github account, follow the instructions in Appendix \@ref(#git).
+If you don't have <a class='glossary' target='_blank' title='One type of version control software.' href='https://psyteachr.github.io/glossary/g#git'>git</a> installed on your computer, don't have it integrated with RStudio, and/or don't have a github account, follow the instructions in Appendix \@ref(#git).
 
 ### Set up git for this project
 
-If you aren't already using <a class='glossary' target='_blank' title='a way to save a record of changes to your files' href='https://psyteachr.github.io/glossary/v#version-control'>version control</a> for this project, make sure all of your files are saved and type `usethis::use_git()` into the console. Choose Yes to commit and Yes to restart R.
+If you aren't already using <a class='glossary' target='_blank' title='A way to save a record of changes to your files.' href='https://psyteachr.github.io/glossary/v#version-control'>version control</a> for this project, make sure all of your files are saved and type `usethis::use_git()` into the console. Choose Yes to commit and Yes to restart R.
 
 ### GitHub access token
 
@@ -548,3 +548,20 @@ report_p <- function(p, digits = 3) {
   return(p_string)
 }
 ```
+
+## Glossary
+
+
+
+term                                                                                                                    definition                                                                   
+----------------------------------------------------------------------------------------------------------------------  -----------------------------------------------------------------------------
+<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/a#argument'>argument</a>                 A variable that provides input to a function.                                
+<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/c#character'>character</a>               A data type representing strings of text.                                    
+<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/f#function.'>function </a>               A named section of code that can be reused.                                  
+<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/g#git'>git</a>                           One type of version control software.                                        
+<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/g#github'>github</a>                     A cloud-based service for storing and sharing your version controlled files. 
+<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/p#package'>package</a>                   A group of R functions.                                                      
+<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/p#project'>project</a>                   A way to organise related files in RStudio                                   
+<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/v#version.control'>version control</a>   A way to save a record of changes to your files.                             
+
+

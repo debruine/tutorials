@@ -25,7 +25,7 @@
 <meta name="author" content="Lisa DeBruine">
 
 
-<meta name="date" content="2019-03-26">
+<meta name="date" content="2019-03-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -143,6 +143,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.9.1" data-path="packages.html"><a href="packages.html#workflow"><i class="fa fa-check"></i><b>1.9.1</b> Workflow</a></li>
 <li class="chapter" data-level="1.9.2" data-path="packages.html"><a href="packages.html#the-full-report_p-function"><i class="fa fa-check"></i><b>1.9.2</b> The full <code>report_p</code> function</a></li>
 </ul></li>
+<li class="chapter" data-level="1.10" data-path="packages.html"><a href="packages.html#glossary"><i class="fa fa-check"></i><b>1.10</b> Glossary</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendices</b></span></li>
 <li class="chapter" data-level="A" data-path="installing-r.html"><a href="installing-r.html"><i class="fa fa-check"></i><b>A</b> Installing <code>R</code></a><ul>
@@ -202,7 +203,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="setting-up" class="section level2">
 <h2><span class="header-section-number">1.2</span> Setting Up</h2>
-<p>You will need to install the following <a class='glossary' target='_blank' title='community-written functions' href='https://psyteachr.github.io/glossary/p#package'>package</a>s:</p>
+<p>You will need to install the following <a class='glossary' target='_blank' title='A group of R functions.' href='https://psyteachr.github.io/glossary/p#package'>packages</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;devtools&quot;</span>, <span class="st">&quot;roxygen2&quot;</span>, <span class="st">&quot;testthat&quot;</span>, <span class="st">&quot;usethis&quot;</span>, <span class="st">&quot;knitr&quot;</span>))</code></pre></div>
 </div>
 <div id="create-your-r-package" class="section level2">
@@ -214,7 +215,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 Package names can only be letters, numbers, and full stops.
 </p>
 </div>
-<p>You'll see the following output, and a new RStudio <a class='glossary' target='_blank' title='way to organise related files' href='https://psyteachr.github.io/glossary/p#project'>project</a> will open up. You can close the old window now and just work in this project.</p>
+<p>You'll see the following output, and a new RStudio <a class='glossary' target='_blank' title='A way to organise related files in RStudio' href='https://psyteachr.github.io/glossary/p#project'>project</a> will open up. You can close the old window now and just work in this project.</p>
 <pre><code>✔ Setting active project to &#39;~/rstuff/demopckg&#39;
 ✔ Creating &#39;R/&#39;
 ✔ Creating &#39;man/&#39;
@@ -252,7 +253,7 @@ usethis<span class="op">::</span><span class="kw">use_gpl3_license</span>(<span 
 <h3><span class="header-section-number">1.3.3</span> Create a README</h3>
 <p>Use the following code to set up a README document that will explain your package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">usethis<span class="op">::</span><span class="kw">use_readme_rmd</span>() </code></pre></div>
-<p>We'll eventually put this on github, so change the installation instructions to the following (change <code>yourusername</code> to your github username).</p>
+<p>We'll eventually put this on <a class='glossary' target='_blank' title='A cloud-based service for storing and sharing your version controlled files.' href='https://psyteachr.github.io/glossary/g#github'>github</a>, so change the installation instructions to the following (change <code>yourusername</code> to your github username).</p>
 <pre><code>You can install the released version of demopckg from [GitHub](https://github.com) with:
 
 &#96;&#96;&#96; r
@@ -287,7 +288,7 @@ myfunction &lt;-<span class="st"> </span><span class="cf">function</span>(<span 
 </div>
 <div id="edit-the-function" class="section level3">
 <h3><span class="header-section-number">1.4.2</span> Edit the function</h3>
-<p>We're going to create a <a class='glossary' target='_blank' title='a named section of code that can be reused' href='https://psyteachr.github.io/glossary/f#function'>function</a> that reports a p-value in APA style, named <code>report_p</code>. It will take two <a class='glossary' target='_blank' title='a variable that provides input to a function' href='https://psyteachr.github.io/glossary/a#arguments'>arguments</a>, the p-value (<code>p</code>) and the number of digits to round to (<code>digits</code>).</p>
+<p>We're going to create a <a class='glossary' target='_blank' title='A named section of code that can be reused.' href='https://psyteachr.github.io/glossary/f#function'>function</a> that reports a p-value in APA style, named <code>report_p</code>. It will take two <a class='glossary' target='_blank' title='A variable that provides input to a function.' href='https://psyteachr.github.io/glossary/a#argument'>arguments</a>, the p-value (<code>p</code>) and the number of digits to round to (<code>digits</code>).</p>
 <div class="try">
 <p>
 Replace <code>myfunction</code> with <code>report_p</code> and change the arguments. Should <code>p</code> have a default value? Should <code>digits</code>?
@@ -316,7 +317,7 @@ Once you run the <code>return()</code> function, your function stops running.
 Run your function and test it with a few different p-values and digits. Try <code>report_p(0.01034)</code>. Does this look exactly like you expect?
 </p>
 </div>
-<p>APA style omits the leading zero and pads the number out to three digits. We can do this by converting our rounded p-value into a <a class='glossary' target='_blank' title='a data type representing text' href='https://psyteachr.github.io/glossary/c#character'>character</a> string, replacing the string &quot;0.&quot; with &quot;.&quot;, and making sure to pad the right side with enough zeros. The <code>stringr</code> package has useful functions for this.</p>
+<p>APA style omits the leading zero and pads the number out to three digits. We can do this by converting our rounded p-value into a <a class='glossary' target='_blank' title='A data type representing strings of text.' href='https://psyteachr.github.io/glossary/c#character'>character</a> string, replacing the string &quot;0.&quot; with &quot;.&quot;, and making sure to pad the right side with enough zeros. The <code>stringr</code> package has useful functions for this.</p>
 <p>When you use R functions from a package (not base R), you normally load the package using the <code>library()</code> function. When you're developing your own package, you need to preface every function with its package name and two colons instead, so in the code below we'll use <code>stringr::str_replace()</code> and <code>stringr::str_pad()</code>, not <code>str_replace()</code> and <code>str_pad()</code>.</p>
 <div class="info">
 <p>
@@ -482,11 +483,11 @@ Skipped:  0</code></pre>
 <p>You can do package development without a <a href="https://github.com">GitHub</a> account, but this is one of the easiest ways to share your package.</p>
 <div id="git-on-rstudio" class="section level3">
 <h3><span class="header-section-number">1.8.1</span> Git on RStudio</h3>
-<p>If you don't have git installed on your computer, don't have it integrated with RStudio, and/or don't have a github account, follow the instructions in Appendix @ref(#git).</p>
+<p>If you don't have <a class='glossary' target='_blank' title='One type of version control software.' href='https://psyteachr.github.io/glossary/g#git'>git</a> installed on your computer, don't have it integrated with RStudio, and/or don't have a github account, follow the instructions in Appendix @ref(#git).</p>
 </div>
 <div id="set-up-git-for-this-project" class="section level3">
 <h3><span class="header-section-number">1.8.2</span> Set up git for this project</h3>
-<p>If you aren't already using <a class='glossary' target='_blank' title='a way to save a record of changes to your files' href='https://psyteachr.github.io/glossary/v#version-control'>version control</a> for this project, make sure all of your files are saved and type <code>usethis::use_git()</code> into the console. Choose Yes to commit and Yes to restart R.</p>
+<p>If you aren't already using <a class='glossary' target='_blank' title='A way to save a record of changes to your files.' href='https://psyteachr.github.io/glossary/v#version-control'>version control</a> for this project, make sure all of your files are saved and type <code>usethis::use_git()</code> into the console. Choose Yes to commit and Yes to restart R.</p>
 </div>
 <div id="github-access-token" class="section level3">
 <h3><span class="header-section-number">1.8.3</span> GitHub access token</h3>
@@ -613,8 +614,53 @@ report_p &lt;-<span class="st"> </span><span class="cf">function</span>(p, <span
   
   <span class="kw">return</span>(p_string)
 }</code></pre></div>
-
 </div>
+</div>
+<div id="glossary" class="section level2">
+<h2><span class="header-section-number">1.10</span> Glossary</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="left">definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/a#argument'>argument</a></td>
+<td align="left">A variable that provides input to a function.</td>
+</tr>
+<tr class="even">
+<td align="left"><a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/c#character'>character</a></td>
+<td align="left">A data type representing strings of text.</td>
+</tr>
+<tr class="odd">
+<td align="left"><a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/f#function.'>function </a></td>
+<td align="left">A named section of code that can be reused.</td>
+</tr>
+<tr class="even">
+<td align="left"><a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/g#git'>git</a></td>
+<td align="left">One type of version control software.</td>
+</tr>
+<tr class="odd">
+<td align="left"><a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/g#github'>github</a></td>
+<td align="left">A cloud-based service for storing and sharing your version controlled files.</td>
+</tr>
+<tr class="even">
+<td align="left"><a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/p#package'>package</a></td>
+<td align="left">A group of R functions.</td>
+</tr>
+<tr class="odd">
+<td align="left"><a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/p#project'>project</a></td>
+<td align="left">A way to organise related files in RStudio</td>
+</tr>
+<tr class="even">
+<td align="left"><a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/v#version.control'>version control</a></td>
+<td align="left">A way to save a record of changes to your files.</td>
+</tr>
+</tbody>
+</table>
+
 </div>
 </div>
 
