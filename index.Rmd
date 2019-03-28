@@ -14,7 +14,7 @@ description: "Tutorial materials"
 # automatically create a bib database for R packages
 # add any packages you want to cite here
 knitr::write_bib(c(
-  .packages(), 'bookdown', 'tidyverse'
+  .packages(), 'bookdown', 'tidyverse', 'faux', 'lmer', 'lmerTest'
 ), 'packages.bib')
 
 ```
@@ -23,4 +23,4 @@ knitr::write_bib(c(
 
 # Overview {-}
 
-I'm going to move all of my code tutorials here eventually.
+I'm slowly moving my code tutorials here.

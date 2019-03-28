@@ -160,7 +160,7 @@ If `p` is greater than 0.001, then we should round it to the specified number of
 report_p <- function(p, digits = 3) {
   if (p < .001) return("p < .001")
   
-  round_p <- round(p, digits)
+  p_round <- round(p, digits)
   p_string <- paste("p =", p_round)
   
   return(p_string)
@@ -197,20 +197,6 @@ report_p <- function(p, digits = 3) {
 }
 ```
 
-### Imports
-
-You need to "import" any packages you used in your function by running `usethis::use_package` for each package you want to include. 
-
-
-```r
-usethis::use_package("stringr")
-```
-
-You can't import the whole `tidyverse`, but you can import each package separately (i.e., ggplot2, purrr, tibble, dplyr, tidyr, stringr, readr, forcats). Import just the packages you actually need.
-
-<div class="warning">
-<p><img src="images/pipe_sticker.png" style="float:right; width:100px"> If you use pipes (even if you've imported <code>dplyr</code>), you also need to run <code>usethis::use_pipe()</code>. It will add a file called <code>utils-pipe.R</code> to your <code>R</code> directory and add <code>magrittr</code> to your Imports.</p>
-</div>
 
 ### Documentation
 
@@ -248,6 +234,21 @@ Writing report_p.Rd
 
 You don't need to worry about these files, they'll be added to your package to show Help documentation.
 
+
+### Imports
+
+You need to "import" any packages you used in your function by running `usethis::use_package` for each package you want to include. 
+
+
+```r
+usethis::use_package("stringr")
+```
+
+You can't import the whole `tidyverse`, but you can import each package separately (i.e., ggplot2, purrr, tibble, dplyr, tidyr, stringr, readr, forcats). Import just the packages you actually need.
+
+<div class="warning">
+<p><img src="images/pipe_sticker.png" style="float:right; width:100px"> If you use pipes (even if you've imported <code>dplyr</code>), you also need to run <code>usethis::use_pipe()</code>. It will add a file called <code>utils-pipe.R</code> to your <code>R</code> directory and add <code>magrittr</code> to your Imports.</p>
+</div>
 
 
 ## Build your package

@@ -25,7 +25,7 @@
 <meta name="author" content="Lisa DeBruine">
 
 
-<meta name="date" content="2019-03-27">
+<meta name="date" content="2019-03-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="index.html">
-<link rel="next" href="installing-r.html">
+<link rel="next" href="sim-lmer.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -117,8 +117,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4" data-path="packages.html"><a href="packages.html#creating-a-function"><i class="fa fa-check"></i><b>1.4</b> Creating a function</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="packages.html"><a href="packages.html#template-function"><i class="fa fa-check"></i><b>1.4.1</b> Template function</a></li>
 <li class="chapter" data-level="1.4.2" data-path="packages.html"><a href="packages.html#edit-the-function"><i class="fa fa-check"></i><b>1.4.2</b> Edit the function</a></li>
-<li class="chapter" data-level="1.4.3" data-path="packages.html"><a href="packages.html#imports"><i class="fa fa-check"></i><b>1.4.3</b> Imports</a></li>
-<li class="chapter" data-level="1.4.4" data-path="packages.html"><a href="packages.html#documentation"><i class="fa fa-check"></i><b>1.4.4</b> Documentation</a></li>
+<li class="chapter" data-level="1.4.3" data-path="packages.html"><a href="packages.html#documentation"><i class="fa fa-check"></i><b>1.4.3</b> Documentation</a></li>
+<li class="chapter" data-level="1.4.4" data-path="packages.html"><a href="packages.html#imports"><i class="fa fa-check"></i><b>1.4.4</b> Imports</a></li>
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="packages.html"><a href="packages.html#build-your-package"><i class="fa fa-check"></i><b>1.5</b> Build your package</a><ul>
 <li class="chapter" data-level="1.5.1" data-path="packages.html"><a href="packages.html#check"><i class="fa fa-check"></i><b>1.5.1</b> Check</a></li>
@@ -144,6 +144,34 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.9.2" data-path="packages.html"><a href="packages.html#the-full-report_p-function"><i class="fa fa-check"></i><b>1.9.2</b> The full <code>report_p</code> function</a></li>
 </ul></li>
 <li class="chapter" data-level="1.10" data-path="packages.html"><a href="packages.html#glossary"><i class="fa fa-check"></i><b>1.10</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="sim-lmer.html"><a href="sim-lmer.html"><i class="fa fa-check"></i><b>2</b> Simulating Mixed Effects</a><ul>
+<li class="chapter" data-level="2.1" data-path="sim-lmer.html"><a href="sim-lmer.html#setup-1"><i class="fa fa-check"></i><b>2.1</b> Setup</a></li>
+<li class="chapter" data-level="2.2" data-path="sim-lmer.html"><a href="sim-lmer.html#simulate-random-intercepts"><i class="fa fa-check"></i><b>2.2</b> Simulate Random Intercepts</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-subjects"><i class="fa fa-check"></i><b>2.2.1</b> Subjects</a></li>
+<li class="chapter" data-level="2.2.2" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-stimuli"><i class="fa fa-check"></i><b>2.2.2</b> Stimuli</a></li>
+<li class="chapter" data-level="2.2.3" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-trials"><i class="fa fa-check"></i><b>2.2.3</b> Trials</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-dv"><i class="fa fa-check"></i><b>2.3</b> Calculate DV</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="sim-lmer.html"><a href="sim-lmer.html#simulating-fixed-effects"><i class="fa fa-check"></i><b>2.3.1</b> Simulating Fixed Effects</a></li>
+<li class="chapter" data-level="2.3.2" data-path="sim-lmer.html"><a href="sim-lmer.html#simulating-interactions"><i class="fa fa-check"></i><b>2.3.2</b> Simulating Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-analysis"><i class="fa fa-check"></i><b>2.4</b> Analysis</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-sense-checks"><i class="fa fa-check"></i><b>2.4.1</b> Sense Checks</a></li>
+<li class="chapter" data-level="2.4.2" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-ranef"><i class="fa fa-check"></i><b>2.4.2</b> Random Effects</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-function"><i class="fa fa-check"></i><b>2.5</b> Function</a></li>
+<li class="chapter" data-level="2.6" data-path="sim-lmer.html"><a href="sim-lmer.html#simulating-random-slopes"><i class="fa fa-check"></i><b>2.6</b> Simulating Random Slopes</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-subjects"><i class="fa fa-check"></i><b>2.6.1</b> Subjects</a></li>
+<li class="chapter" data-level="2.6.2" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-stimuli"><i class="fa fa-check"></i><b>2.6.2</b> Stimuli</a></li>
+<li class="chapter" data-level="2.6.3" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-trials"><i class="fa fa-check"></i><b>2.6.3</b> Trials</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-dv"><i class="fa fa-check"></i><b>2.7</b> Calculate DV</a></li>
+<li class="chapter" data-level="2.8" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-analysis"><i class="fa fa-check"></i><b>2.8</b> Analysis</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-sense-checks"><i class="fa fa-check"></i><b>2.8.1</b> Sense Checks</a></li>
+<li class="chapter" data-level="2.8.2" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-ranef"><i class="fa fa-check"></i><b>2.8.2</b> Random effects</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-function"><i class="fa fa-check"></i><b>2.9</b> Function</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendices</b></span></li>
 <li class="chapter" data-level="A" data-path="installing-r.html"><a href="installing-r.html"><i class="fa fa-check"></i><b>A</b> Installing <code>R</code></a><ul>
@@ -307,7 +335,7 @@ Once you run the <code>return()</code> function, your function stops running.
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">report_p &lt;-<span class="st"> </span><span class="cf">function</span>(p, <span class="dt">digits =</span> <span class="dv">3</span>) {
   <span class="cf">if</span> (p <span class="op">&lt;</span><span class="st"> </span>.<span class="dv">001</span>) <span class="kw">return</span>(<span class="st">&quot;p &lt; .001&quot;</span>)
   
-  round_p &lt;-<span class="st"> </span><span class="kw">round</span>(p, digits)
+  p_round &lt;-<span class="st"> </span><span class="kw">round</span>(p, digits)
   p_string &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;p =&quot;</span>, p_round)
   
   <span class="kw">return</span>(p_string)
@@ -339,19 +367,8 @@ One function you can't preface with the package name is the <a href="pipes.html#
   <span class="kw">return</span>(p_string)
 }</code></pre></div>
 </div>
-<div id="imports" class="section level3">
-<h3><span class="header-section-number">1.4.3</span> Imports</h3>
-<p>You need to &quot;import&quot; any packages you used in your function by running <code>usethis::use_package</code> for each package you want to include.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">usethis<span class="op">::</span><span class="kw">use_package</span>(<span class="st">&quot;stringr&quot;</span>)</code></pre></div>
-<p>You can't import the whole <code>tidyverse</code>, but you can import each package separately (i.e., ggplot2, purrr, tibble, dplyr, tidyr, stringr, readr, forcats). Import just the packages you actually need.</p>
-<div class="warning">
-<p>
-<img src="images/pipe_sticker.png" style="float:right; width:100px"> If you use pipes (even if you've imported <code>dplyr</code>), you also need to run <code>usethis::use_pipe()</code>. It will add a file called <code>utils-pipe.R</code> to your <code>R</code> directory and add <code>magrittr</code> to your Imports.
-</p>
-</div>
-</div>
 <div id="documentation" class="section level3">
-<h3><span class="header-section-number">1.4.4</span> Documentation</h3>
+<h3><span class="header-section-number">1.4.3</span> Documentation</h3>
 <p>Now edit the commented part before your function. The <code>#'</code> is special to <code>roxygen2</code> documentation, which we'll enable below. This generates what you see in the Help viewer. Type <code>?mean</code> into the console pane and have a look at the Help pane.</p>
 <ul>
 <li>The first line is the name of the function in title case</li>
@@ -376,6 +393,17 @@ Writing NAMESPACE
 Loading demopckg
 Writing report_p.Rd</code></pre>
 <p>You don't need to worry about these files, they'll be added to your package to show Help documentation.</p>
+</div>
+<div id="imports" class="section level3">
+<h3><span class="header-section-number">1.4.4</span> Imports</h3>
+<p>You need to &quot;import&quot; any packages you used in your function by running <code>usethis::use_package</code> for each package you want to include.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">usethis<span class="op">::</span><span class="kw">use_package</span>(<span class="st">&quot;stringr&quot;</span>)</code></pre></div>
+<p>You can't import the whole <code>tidyverse</code>, but you can import each package separately (i.e., ggplot2, purrr, tibble, dplyr, tidyr, stringr, readr, forcats). Import just the packages you actually need.</p>
+<div class="warning">
+<p>
+<img src="images/pipe_sticker.png" style="float:right; width:100px"> If you use pipes (even if you've imported <code>dplyr</code>), you also need to run <code>usethis::use_pipe()</code>. It will add a file called <code>utils-pipe.R</code> to your <code>R</code> directory and add <code>magrittr</code> to your Imports.
+</p>
+</div>
 </div>
 </div>
 <div id="build-your-package" class="section level2">
@@ -663,10 +691,6 @@ report_p &lt;-<span class="st"> </span><span class="cf">function</span>(p, <span
 
 </div>
 </div>
-
-
-
-</div>
 <div class="psyteachr_footer">
   
 </div>
@@ -758,7 +782,7 @@ window.onload = function() {
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="installing-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="sim-lmer.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

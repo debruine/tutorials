@@ -2,7 +2,7 @@
 --- 
 title: "Tutorials"
 author: "Lisa DeBruine"
-date: "2019-03-27"
+date: "2019-03-28"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -17,4 +17,4 @@ description: "Tutorial materials"
 
 # Overview {-}
 
-I'm going to move all of my code tutorials here eventually.
+I'm slowly moving my code tutorials here.

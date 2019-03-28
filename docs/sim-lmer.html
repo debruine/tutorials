@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 2 Simulating Mixed Effects | Tutorials</title>
+  <meta name="description" content="Tutorial materials">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 2 Simulating Mixed Effects | Tutorials" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Tutorial materials" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Simulating Mixed Effects | Tutorials" />
+  
+  <meta name="twitter:description" content="Tutorial materials" />
+  
+
+<meta name="author" content="Lisa DeBruine">
+
+
+<meta name="date" content="2019-03-28">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="packages.html">
+<link rel="next" href="installing-r.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
+<link rel="stylesheet" href="include/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Tutorials</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1</b> Your first R package with unit tests</a><ul>
+<li class="chapter" data-level="1.1" data-path="packages.html"><a href="packages.html#learning-objectives"><i class="fa fa-check"></i><b>1.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="1.2" data-path="packages.html"><a href="packages.html#setting-up"><i class="fa fa-check"></i><b>1.2</b> Setting Up</a></li>
+<li class="chapter" data-level="1.3" data-path="packages.html"><a href="packages.html#create-your-r-package"><i class="fa fa-check"></i><b>1.3</b> Create your R package</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="packages.html"><a href="packages.html#edit-the-description-file"><i class="fa fa-check"></i><b>1.3.1</b> Edit the DESCRIPTION file</a></li>
+<li class="chapter" data-level="1.3.2" data-path="packages.html"><a href="packages.html#create-a-license"><i class="fa fa-check"></i><b>1.3.2</b> Create a LICENSE</a></li>
+<li class="chapter" data-level="1.3.3" data-path="packages.html"><a href="packages.html#create-a-readme"><i class="fa fa-check"></i><b>1.3.3</b> Create a README</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="packages.html"><a href="packages.html#creating-a-function"><i class="fa fa-check"></i><b>1.4</b> Creating a function</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="packages.html"><a href="packages.html#template-function"><i class="fa fa-check"></i><b>1.4.1</b> Template function</a></li>
+<li class="chapter" data-level="1.4.2" data-path="packages.html"><a href="packages.html#edit-the-function"><i class="fa fa-check"></i><b>1.4.2</b> Edit the function</a></li>
+<li class="chapter" data-level="1.4.3" data-path="packages.html"><a href="packages.html#documentation"><i class="fa fa-check"></i><b>1.4.3</b> Documentation</a></li>
+<li class="chapter" data-level="1.4.4" data-path="packages.html"><a href="packages.html#imports"><i class="fa fa-check"></i><b>1.4.4</b> Imports</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="packages.html"><a href="packages.html#build-your-package"><i class="fa fa-check"></i><b>1.5</b> Build your package</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="packages.html"><a href="packages.html#check"><i class="fa fa-check"></i><b>1.5.1</b> Check</a></li>
+<li class="chapter" data-level="1.5.2" data-path="packages.html"><a href="packages.html#build"><i class="fa fa-check"></i><b>1.5.2</b> Build</a></li>
+<li class="chapter" data-level="1.5.3" data-path="packages.html"><a href="packages.html#install"><i class="fa fa-check"></i><b>1.5.3</b> Install</a></li>
+<li class="chapter" data-level="1.5.4" data-path="packages.html"><a href="packages.html#test"><i class="fa fa-check"></i><b>1.5.4</b> Test</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="packages.html"><a href="packages.html#error-checking"><i class="fa fa-check"></i><b>1.6</b> Error checking</a></li>
+<li class="chapter" data-level="1.7" data-path="packages.html"><a href="packages.html#unit-tests"><i class="fa fa-check"></i><b>1.7</b> Unit tests</a><ul>
+<li class="chapter" data-level="1.7.1" data-path="packages.html"><a href="packages.html#setup"><i class="fa fa-check"></i><b>1.7.1</b> Setup</a></li>
+<li class="chapter" data-level="1.7.2" data-path="packages.html"><a href="packages.html#new-unit-tests"><i class="fa fa-check"></i><b>1.7.2</b> New unit tests</a></li>
+<li class="chapter" data-level="1.7.3" data-path="packages.html"><a href="packages.html#run-all-tests"><i class="fa fa-check"></i><b>1.7.3</b> Run all tests</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="packages.html"><a href="packages.html#share-your-package"><i class="fa fa-check"></i><b>1.8</b> Share your package</a><ul>
+<li class="chapter" data-level="1.8.1" data-path="packages.html"><a href="packages.html#git-on-rstudio"><i class="fa fa-check"></i><b>1.8.1</b> Git on RStudio</a></li>
+<li class="chapter" data-level="1.8.2" data-path="packages.html"><a href="packages.html#set-up-git-for-this-project"><i class="fa fa-check"></i><b>1.8.2</b> Set up git for this project</a></li>
+<li class="chapter" data-level="1.8.3" data-path="packages.html"><a href="packages.html#github-access-token"><i class="fa fa-check"></i><b>1.8.3</b> GitHub access token</a></li>
+<li class="chapter" data-level="1.8.4" data-path="packages.html"><a href="packages.html#make-a-new-github-repository"><i class="fa fa-check"></i><b>1.8.4</b> Make a new GitHub repository</a></li>
+<li class="chapter" data-level="1.8.5" data-path="packages.html"><a href="packages.html#install-your-package-from-github"><i class="fa fa-check"></i><b>1.8.5</b> Install your package from GitHub</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="packages.html"><a href="packages.html#further-resources"><i class="fa fa-check"></i><b>1.9</b> Further resources</a><ul>
+<li class="chapter" data-level="1.9.1" data-path="packages.html"><a href="packages.html#workflow"><i class="fa fa-check"></i><b>1.9.1</b> Workflow</a></li>
+<li class="chapter" data-level="1.9.2" data-path="packages.html"><a href="packages.html#the-full-report_p-function"><i class="fa fa-check"></i><b>1.9.2</b> The full <code>report_p</code> function</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="packages.html"><a href="packages.html#glossary"><i class="fa fa-check"></i><b>1.10</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="sim-lmer.html"><a href="sim-lmer.html"><i class="fa fa-check"></i><b>2</b> Simulating Mixed Effects</a><ul>
+<li class="chapter" data-level="2.1" data-path="sim-lmer.html"><a href="sim-lmer.html#setup-1"><i class="fa fa-check"></i><b>2.1</b> Setup</a></li>
+<li class="chapter" data-level="2.2" data-path="sim-lmer.html"><a href="sim-lmer.html#simulate-random-intercepts"><i class="fa fa-check"></i><b>2.2</b> Simulate Random Intercepts</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-subjects"><i class="fa fa-check"></i><b>2.2.1</b> Subjects</a></li>
+<li class="chapter" data-level="2.2.2" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-stimuli"><i class="fa fa-check"></i><b>2.2.2</b> Stimuli</a></li>
+<li class="chapter" data-level="2.2.3" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-trials"><i class="fa fa-check"></i><b>2.2.3</b> Trials</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-dv"><i class="fa fa-check"></i><b>2.3</b> Calculate DV</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="sim-lmer.html"><a href="sim-lmer.html#simulating-fixed-effects"><i class="fa fa-check"></i><b>2.3.1</b> Simulating Fixed Effects</a></li>
+<li class="chapter" data-level="2.3.2" data-path="sim-lmer.html"><a href="sim-lmer.html#simulating-interactions"><i class="fa fa-check"></i><b>2.3.2</b> Simulating Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-analysis"><i class="fa fa-check"></i><b>2.4</b> Analysis</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-sense-checks"><i class="fa fa-check"></i><b>2.4.1</b> Sense Checks</a></li>
+<li class="chapter" data-level="2.4.2" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-ranef"><i class="fa fa-check"></i><b>2.4.2</b> Random Effects</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-function"><i class="fa fa-check"></i><b>2.5</b> Function</a></li>
+<li class="chapter" data-level="2.6" data-path="sim-lmer.html"><a href="sim-lmer.html#simulating-random-slopes"><i class="fa fa-check"></i><b>2.6</b> Simulating Random Slopes</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-subjects"><i class="fa fa-check"></i><b>2.6.1</b> Subjects</a></li>
+<li class="chapter" data-level="2.6.2" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-stimuli"><i class="fa fa-check"></i><b>2.6.2</b> Stimuli</a></li>
+<li class="chapter" data-level="2.6.3" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-trials"><i class="fa fa-check"></i><b>2.6.3</b> Trials</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-dv"><i class="fa fa-check"></i><b>2.7</b> Calculate DV</a></li>
+<li class="chapter" data-level="2.8" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-analysis"><i class="fa fa-check"></i><b>2.8</b> Analysis</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-sense-checks"><i class="fa fa-check"></i><b>2.8.1</b> Sense Checks</a></li>
+<li class="chapter" data-level="2.8.2" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-ranef"><i class="fa fa-check"></i><b>2.8.2</b> Random effects</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-function"><i class="fa fa-check"></i><b>2.9</b> Function</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="installing-r.html"><a href="installing-r.html"><i class="fa fa-check"></i><b>A</b> Installing <code>R</code></a><ul>
+<li class="chapter" data-level="A.1" data-path="installing-r.html"><a href="installing-r.html#installing-base-r"><i class="fa fa-check"></i><b>A.1</b> Installing Base R</a></li>
+<li class="chapter" data-level="A.2" data-path="installing-r.html"><a href="installing-r.html#installing-rstudio"><i class="fa fa-check"></i><b>A.2</b> Installing RStudio</a></li>
+<li class="chapter" data-level="A.3" data-path="installing-r.html"><a href="installing-r.html#installing-latex"><i class="fa fa-check"></i><b>A.3</b> Installing LaTeX</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="git-and-github.html"><a href="git-and-github.html"><i class="fa fa-check"></i><b>B</b> Git and GitHub</a><ul>
+<li class="chapter" data-level="B.1" data-path="git-and-github.html"><a href="git-and-github.html#get-a-github-account"><i class="fa fa-check"></i><b>B.1</b> Get a GitHub account</a></li>
+<li class="chapter" data-level="B.2" data-path="git-and-github.html"><a href="git-and-github.html#set-up-rstudio"><i class="fa fa-check"></i><b>B.2</b> Set up RStudio</a><ul>
+<li class="chapter" data-level="B.2.1" data-path="git-and-github.html"><a href="git-and-github.html#install-git"><i class="fa fa-check"></i><b>B.2.1</b> Install git</a></li>
+<li class="chapter" data-level="B.2.2" data-path="git-and-github.html"><a href="git-and-github.html#enable-version-control-in-rstudio"><i class="fa fa-check"></i><b>B.2.2</b> Enable version control in RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="B.3" data-path="git-and-github.html"><a href="git-and-github.html#github-info"><i class="fa fa-check"></i><b>B.3</b> Set your GitHub info</a></li>
+<li class="chapter" data-level="B.4" data-path="git-and-github.html"><a href="git-and-github.html#create-an-ssh-key-on-rstudio"><i class="fa fa-check"></i><b>B.4</b> Create an SSH Key on RStudio</a></li>
+<li class="chapter" data-level="B.5" data-path="git-and-github.html"><a href="git-and-github.html#create-an-ssh-key-on-github"><i class="fa fa-check"></i><b>B.5</b> Create an SSH Key on GitHub</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="pipes.html"><a href="pipes.html"><i class="fa fa-check"></i><b>C</b> Pipes</a></li>
+<li class="chapter" data-level="D" data-path="symbols.html"><a href="symbols.html"><i class="fa fa-check"></i><b>D</b> Symbols</a></li>
+<li class="divider"></li>
+<li><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" 
+    target="blank"><img alt="Creative Commons License" 
+    style="border-width:0" 
+    src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><li>
+<li><a href="https://psyteachr.github.io/" target="blank">PsyTeachR</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Tutorials</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sim_lmer" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Simulating Mixed Effects</h1>
+<p>I'm going to walk through one example of simulating a dataset with random effects. I'll generate data for a Stroop task where people (<code>subjects</code>) say the colour of colour words (<code>stimuli</code>) shown in each of two versions (<code>congruent</code> and <code>incongruent</code>). Subjects are in one of two conditions (<code>hard</code> and <code>easy</code>). The dependent variable (<code>DV</code>) is reaction time.</p>
+<ul>
+<li>congruent: <span style="color: red;">RED</span>, <span style="color: orange;">ORANGE</span>, <span style="color: #ead21e;">YELLOW</span>, <span style="color: green;">GREEN</span>, <span style="color: blue;">BLUE</span>, <span style="color: purple;">PURPLE</span></li>
+<li>incongruent: <span style="color: #ead21e;">RED</span>, <span style="color: green;">ORANGE</span>, <span style="color: blue;">YELLOW</span>, <span style="color: purple;">GREEN</span>, <span style="color: red;">BLUE</span>, <span style="color: orange;">PURPLE</span></li>
+</ul>
+<p>We expect people to have faster reaction times for congruent stimuli than incongruent stimuli (main effect of version) and to be faster in the easy condition than the hard condition (main effect of condition). We'll look at some different interaction patterns below.</p>
+<div id="setup-1" class="section level2">
+<h2><span class="header-section-number">2.1</span> Setup</h2>
+<p>We'll use the <code>tidyverse</code> to manipulate data frames and <code>lmerTest</code> (which includes <code>lmer</code>) to run the mixed effects models. I also like to set the <code>scipen</code> and <code>digits</code> options to get rid of scientific notation in lmer output.</p>
+<p>When you're simulating data, you should start your script by setting a seed. You can use any number you like, this just makes sure that you get the same results every time you run the script. (Thanks for reminding me to add and explain this, <a href="https://twitter.com/tmorris_mrc">Tim Morris</a>!)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse) <span class="co"># for data wrangling, pipes, and good dataviz</span>
+<span class="kw">library</span>(lmerTest)  <span class="co"># for mixed effect models</span>
+<span class="kw">library</span>(GGally)    <span class="co"># makes it easy to plot relationships between variables</span>
+<span class="co"># devtools::install_github(&quot;debruine/faux&quot;)</span>
+<span class="kw">library</span>(faux)      <span class="co"># for simulating correlated variables</span>
+
+<span class="kw">options</span>(<span class="st">&quot;scipen&quot;</span>=<span class="dv">10</span>, <span class="st">&quot;digits&quot;</span>=<span class="dv">4</span>) <span class="co"># control scientific notation</span>
+<span class="kw">set.seed</span>(<span class="dv">8675309</span>) <span class="co"># Jenny, I&#39;ve got your number</span></code></pre></div>
+<div class="warning">
+<p>
+If you are running repeated simulations (e.g., for a power calculation), make sure you never use <code>set.seed</code> inside of a function that creates random numbers, or the function will always give you the exact same numbers.
+</p>
+</div>
+</div>
+<div id="simulate-random-intercepts" class="section level2">
+<h2><span class="header-section-number">2.2</span> Simulate Random Intercepts</h2>
+<div id="rint-subjects" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Subjects</h3>
+<p>First, we need to generate a sample of subjects. Each subject will have slightly faster or slower reaction times on average; this is their random intercept (<code>sub_i</code>). We'll model it from a normal distribution with a mean of 0 and SD of 100ms.</p>
+<p>We also add between-subject variables here. Each subject is in only one condition, so assign half <code>easy</code> and half <code>hard</code>. Set the number of subjects as <code>sub_n</code> at the beginning so you can change this in the future with only one edit.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_n  &lt;-<span class="st"> </span><span class="dv">200</span> <span class="co"># number of subjects in this simulation</span>
+sub_sd &lt;-<span class="st"> </span><span class="dv">100</span> <span class="co"># SD for the subjects&#39; random intercept</span>
+
+sub &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,
+  <span class="dt">sub_i  =</span> <span class="kw">rnorm</span>(sub_n, <span class="dv">0</span>, sub_sd), <span class="co"># random intercept</span>
+  <span class="dt">sub_cond =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;easy&quot;</span>,<span class="st">&quot;hard&quot;</span>), <span class="dt">each =</span> sub_n<span class="op">/</span><span class="dv">2</span>) <span class="co"># between-subjects factor</span>
+)</code></pre></div>
+<div class="info">
+<p>
+If you already have <a href="/data/pilot_data.csv">pilot data</a>, you can estimate a realistic SD for the subjects' random intercepts using the following code.
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pilot_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;pilot_data.csv&quot;</span>)
+pilot_mod &lt;-<span class="st"> </span><span class="kw">lmer</span>(dv <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>sub_id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>stim_id), <span class="dt">data =</span> pilot_data)
+
+sub_sd &lt;-<span class="st"> </span><span class="kw">VarCorr</span>(pilot_mod) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(grp <span class="op">==</span><span class="st"> &quot;sub_id&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">pull</span>(sdcor)</code></pre></div>
+<p>I like to check my simulations at every step with a graph. We expect subjects in <code>hard</code> and <code>easy</code> conditions to have approximately equal intercepts.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(sub, <span class="kw">aes</span>(sub_i, <span class="dt">color =</span> sub_cond)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:plot-subject"></span>
+<img src="02_sim_lmer_files/figure-html/plot-subject-1.png" alt="Double-check subject intercepts" width="100%" />
+<p class="caption">
+Figure 2.1: Double-check subject intercepts
+</p>
+</div>
+</div>
+<div id="rint-stimuli" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Stimuli</h3>
+<p>Now, we generate a sample of stimuli. Each stimulus will have slightly faster or slower reaction times on average; this is their random intercept (<code>stim_i</code>). We'll model it from a normal distribution with a mean of 0 and SD of 50ms (it seems reasonable to expect less variability between words than people for this task). Stimulus version (<code>congruent</code> vs <code>incongruent</code>) is a within-stimulus variable, so we don't need to add it here.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stim_n  &lt;-<span class="st"> </span><span class="dv">50</span> <span class="co"># number of stimuli in this simulation</span>
+stim_sd &lt;-<span class="st"> </span><span class="dv">50</span> <span class="co"># SD for the stimuli&#39;s random intercept</span>
+
+stim &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">stim_id =</span> <span class="dv">1</span><span class="op">:</span>stim_n,
+  <span class="dt">stim_i =</span> <span class="kw">rnorm</span>(stim_n, <span class="dv">0</span>, stim_sd) <span class="co"># random intercept</span>
+)</code></pre></div>
+<div class="info">
+If you want to simulate data using the exact stimuli you already have pilot data for, you can calculate their random intercepts using the following code and use that instead of generating a random sample with the same SD.
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pilot_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;pilot_data.csv&quot;</span>)
+pilot_mod &lt;-<span class="st"> </span><span class="kw">lmer</span>(dv <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>sub_id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>stim_id), <span class="dt">data =</span> pilot_data)
+
+stim &lt;-<span class="st"> </span><span class="kw">ranef</span>(pilot_mod)<span class="op">$</span>stim_id <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&#39;stim_id&#39;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">stim_i =</span> <span class="st">`</span><span class="dt">(Intercept)</span><span class="st">`</span>)</code></pre></div>
+<p>Plot the random intercepts to double-check they look like you expect.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(stim, <span class="kw">aes</span>(stim_i)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:plot-stimuli"></span>
+<img src="02_sim_lmer_files/figure-html/plot-stimuli-1.png" alt="Double-check stimulus intercepts" width="100%" />
+<p class="caption">
+Figure 2.2: Double-check stimulus intercepts
+</p>
+</div>
+</div>
+<div id="rint-trials" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Trials</h3>
+<p>Now we put the subjects and stimuli together. In this study, all subjects respond to all stimuli in both upright and inverted versions, but subjects are in only one condition. The function <code>expand.grid</code> gives you a data frame with all possible combinations of the arguments. Add the data specific to each subject and stimulus by left joining the <code>sub</code> and <code>stim</code> data frames.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trials &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(
+  <span class="dt">sub_id =</span> sub<span class="op">$</span>sub_id, <span class="co"># get subject IDs from the sub data table</span>
+  <span class="dt">stim_id =</span> stim<span class="op">$</span>stim_id, <span class="co"># get stimulus IDs from the stim data table</span>
+  <span class="dt">stim_version =</span> <span class="kw">c</span>(<span class="st">&quot;congruent&quot;</span>, <span class="st">&quot;incongruent&quot;</span>) <span class="co"># all subjects see both congruent and incongruent versions of all stimuli</span>
+) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(sub, <span class="dt">by =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># includes the intercept and conditin for each subject</span>
+<span class="st">  </span><span class="kw">left_join</span>(stim, <span class="dt">by =</span> <span class="st">&quot;stim_id&quot;</span>)   <span class="co"># includes the intercept for each stimulus</span></code></pre></div>
+<table>
+<caption><span id="tab:expand-grid">Table 2.1: </span>Subject- and stimulus-specific random intercepts for 2 subjects and 2 stimuli</caption>
+<thead>
+<tr class="header">
+<th align="right">sub_id</th>
+<th align="right">stim_id</th>
+<th align="left">stim_version</th>
+<th align="right">sub_i</th>
+<th align="left">sub_cond</th>
+<th align="right">stim_i</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">congruent</td>
+<td align="right">-99.66</td>
+<td align="left">easy</td>
+<td align="right">-4.418</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">congruent</td>
+<td align="right">72.18</td>
+<td align="left">easy</td>
+<td align="right">-4.418</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="left">congruent</td>
+<td align="right">-99.66</td>
+<td align="left">easy</td>
+<td align="right">4.057</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="left">congruent</td>
+<td align="right">72.18</td>
+<td align="left">easy</td>
+<td align="right">4.057</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">incongruent</td>
+<td align="right">-99.66</td>
+<td align="left">easy</td>
+<td align="right">-4.418</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">incongruent</td>
+<td align="right">72.18</td>
+<td align="left">easy</td>
+<td align="right">-4.418</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="left">incongruent</td>
+<td align="right">-99.66</td>
+<td align="left">easy</td>
+<td align="right">4.057</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="left">incongruent</td>
+<td align="right">72.18</td>
+<td align="left">easy</td>
+<td align="right">4.057</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="rint-dv" class="section level2">
+<h2><span class="header-section-number">2.3</span> Calculate DV</h2>
+<p>Now we can calculate the DV by adding together an overall intercept (mean RT for all trials), the subject-specific intercept, the stimulus-specific intercept, the effect of subject condition, the interaction between condition and version (set to 0 for this first example), the effect of stimulus version, and an error term.</p>
+<div id="simulating-fixed-effects" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Simulating Fixed Effects</h3>
+<p>We set these effects in raw units (ms) and <a href="https://debruine.github.io/posts/coding-schemes.html">effect-code</a> the subject condition and stimulus version. It's usually easiest to interpret if you recode the level that you predict will be larger as +0.5 and the level you predict will be smaller as -0.5. So when we set the effect of subject condition (<code>sub_cond_eff</code>) to 50, that means the average difference between the easy and hard condition is 50ms. <code>Easy</code> is effect-coded as -0.5 and <code>hard</code> is effect-coded as +0.5, which means that trials in the easy condition have -0.5 * 50ms (i.e., -25ms) added to their reaction time, while trials in the hard condition have +0.5 * 50ms (i.e., +25ms) added to their reaction time.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set variables to use in calculations below</span>
+grand_i          &lt;-<span class="st"> </span><span class="dv">400</span> <span class="co"># overall mean DV</span>
+sub_cond_eff     &lt;-<span class="st"> </span><span class="dv">50</span>  <span class="co"># mean difference between conditions: hard - easy</span>
+stim_version_eff &lt;-<span class="st"> </span><span class="dv">50</span>  <span class="co"># mean difference between versions: incongruent - congruent</span>
+cond_version_ixn &lt;-<span class="st">  </span><span class="dv">0</span>  <span class="co"># interaction between version and condition</span>
+error_sd         &lt;-<span class="st"> </span><span class="dv">25</span>  <span class="co"># residual (error) SD</span></code></pre></div>
+<div class="info">
+<p>
+We set the error SD fairly low here so that it's easier to see how the parameters we set map onto the analysis output. You can calculate a realistic error SD from pilot data with the code below.
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pilot_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;pilot_data.csv&quot;</span>)
+pilot_mod &lt;-<span class="st"> </span><span class="kw">lmer</span>(dv <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>sub_id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>stim_id), <span class="dt">data =</span> pilot_data)
+
+error_sd &lt;-<span class="st"> </span><span class="kw">VarCorr</span>(pilot_mod) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(grp <span class="op">==</span><span class="st"> &quot;Residual&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">pull</span>(sdcor)</code></pre></div>
+<p>The code chunk below effect-codes the condition and version factors (important for the analysis below), generates an error term for each trial, and generates the DV.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>trials <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="co"># effect-code subject condition and stimulus version</span>
+    <span class="dt">sub_cond.e =</span> <span class="kw">recode</span>(sub_cond, <span class="st">&quot;hard&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>, <span class="st">&quot;easy&quot;</span> =<span class="st"> </span><span class="op">+</span><span class="fl">0.5</span>),
+    <span class="dt">stim_version.e =</span> <span class="kw">recode</span>(stim_version, <span class="st">&quot;congruent&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>, <span class="st">&quot;incongruent&quot;</span> =<span class="st"> </span><span class="op">+</span><span class="fl">0.5</span>),
+    <span class="co"># calculate error term (normally distributed residual with SD set above)</span>
+    <span class="dt">err =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, error_sd),
+    <span class="co"># calculate DV from intercepts, effects, and error</span>
+    <span class="dt">dv =</span> grand_i <span class="op">+</span><span class="st"> </span>sub_i <span class="op">+</span><span class="st"> </span>stim_i <span class="op">+</span><span class="st"> </span>err <span class="op">+</span>
+<span class="st">         </span>(sub_cond.e <span class="op">*</span><span class="st"> </span>sub_cond_eff) <span class="op">+</span><span class="st"> </span>
+<span class="st">         </span>(stim_version.e <span class="op">*</span><span class="st"> </span>stim_version_eff) <span class="op">+</span><span class="st"> </span>
+<span class="st">         </span>(sub_cond.e <span class="op">*</span><span class="st"> </span>stim_version.e <span class="op">*</span><span class="st"> </span>cond_version_ixn) <span class="co"># in this example, this is always 0 and could be omitted</span>
+  )</code></pre></div>
+<p>As always, graph to make sure you've simulated the general pattern you expected.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(sub_cond, dv, <span class="dt">color =</span> stim_version)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> grand_i) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_violin</span>(<span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.9</span>))</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:plot-dv"></span>
+<img src="02_sim_lmer_files/figure-html/plot-dv-1.png" alt="Double-check the simulated pattern" width="100%" />
+<p class="caption">
+Figure 2.3: Double-check the simulated pattern
+</p>
+</div>
+<p>Let's take a concrete example.</p>
+<table>
+<caption><span id="tab:plot-dv">Table 2.2: </span>Subject 1's reaction time to stimulus 1 in the congruent condition</caption>
+<thead>
+<tr class="header">
+<th align="right">sub_id</th>
+<th align="right">stim_id</th>
+<th align="left">stim_version</th>
+<th align="right">sub_i</th>
+<th align="left">sub_cond</th>
+<th align="right">stim_i</th>
+<th align="right">sub_cond.e</th>
+<th align="right">stim_version.e</th>
+<th align="right">err</th>
+<th align="right">dv</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">congruent</td>
+<td align="right">-99.66</td>
+<td align="left">easy</td>
+<td align="right">-4.418</td>
+<td align="right">0.5</td>
+<td align="right">-0.5</td>
+<td align="right">-8.318</td>
+<td align="right">287.6</td>
+</tr>
+</tbody>
+</table>
+<p>The DV is equal to the grand intercept (400) plus the subject's intercept (-99.6582) plus the stimulus' intercept (-4.4182) plus the effect code for the subject's condition (easy = -0.5) times the effect size for subject condition (50) plus the effect code for stimulus version (congruent = -0.5) times the effect size for stimulus version (50) plus some random error (-8.3181).</p>
+<p>400 + -99.6582 + -4.4182 + (-0.5 * 50) + (-0.5 * 50) + -8.3181 = 287.6054</p>
+<p>In this simulated dataset, the grand intercept is 401.6, the mean difference between subject conditions is 60.2, and the mean difference between stimulus versions is -49.5.</p>
+</div>
+<div id="simulating-interactions" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Simulating Interactions</h3>
+<p>If you want to simulate an interaction, it can be tricky to figure out what to set the main effects and interaction effect to. It can be easier to think about the simple main effects for each cell. Create four new variables and set them to the deviations from the overall mean you'd expect for each condition (so they should add up to 0). Here, we're simulating a small effect of version in the hard condition (50ms difference) and double that effect of version in the easy condition (100ms difference).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set variables to use in calculations below</span>
+grand_i    &lt;-<span class="st"> </span><span class="dv">400</span>
+hard_congr &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">25</span>
+hard_incon &lt;-<span class="st"> </span><span class="op">+</span><span class="dv">25</span>
+easy_congr &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">50</span>
+easy_incon &lt;-<span class="st"> </span><span class="op">+</span><span class="dv">50</span>
+error_sd   &lt;-<span class="st">  </span><span class="dv">25</span></code></pre></div>
+<p>Use the code below to transform the simple main effects above into main effects and interactions for use in the equations below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate main effects and interactions from simple effects above</span>
+
+<span class="co"># mean difference between easy and hard conditions</span>
+sub_cond_eff     &lt;-<span class="st"> </span>(easy_congr <span class="op">+</span><span class="st"> </span>easy_incon)<span class="op">/</span><span class="dv">2</span> <span class="op">-</span>
+<span class="st">                    </span>(hard_congr <span class="op">+</span><span class="st"> </span>hard_incon)<span class="op">/</span><span class="dv">2</span>
+<span class="co"># mean difference between incongruent and congruent versions</span>
+stim_version_eff &lt;-<span class="st"> </span>(hard_incon <span class="op">+</span><span class="st"> </span>easy_incon)<span class="op">/</span><span class="dv">2</span> <span class="op">-</span><span class="st"> </span>
+<span class="st">                    </span>(hard_congr <span class="op">+</span><span class="st"> </span>easy_congr)<span class="op">/</span><span class="dv">2</span>  
+<span class="co"># interaction between version and condition</span>
+cond_version_ixn &lt;-<span class="st"> </span>(easy_incon <span class="op">-</span><span class="st"> </span>easy_congr) <span class="op">-</span>
+<span class="st">                    </span>(hard_incon <span class="op">-</span><span class="st"> </span>hard_congr) </code></pre></div>
+<p>Then generate the DV the same way we did above, but also add the interaction effect multiplied by the effect-coded subject condition and stimulus version.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>trials <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="co"># effect-code subject condition and stimulus version</span>
+    <span class="dt">sub_cond.e =</span> <span class="kw">recode</span>(sub_cond, <span class="st">&quot;hard&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>, <span class="st">&quot;easy&quot;</span> =<span class="st"> </span><span class="op">+</span><span class="fl">0.5</span>),
+    <span class="dt">stim_version.e =</span> <span class="kw">recode</span>(stim_version, <span class="st">&quot;congruent&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>, <span class="st">&quot;incongruent&quot;</span> =<span class="st"> </span><span class="op">+</span><span class="fl">0.5</span>),
+    <span class="co"># calculate error term (normally distributed residual with SD set above)</span>
+    <span class="dt">err =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, error_sd),
+    <span class="co"># calculate DV from intercepts, effects, and error</span>
+    <span class="dt">dv =</span> grand_i <span class="op">+</span><span class="st"> </span>sub_i <span class="op">+</span><span class="st"> </span>stim_i <span class="op">+</span><span class="st"> </span>err <span class="op">+</span>
+<span class="st">         </span>(sub_cond.e <span class="op">*</span><span class="st"> </span>sub_cond_eff) <span class="op">+</span><span class="st"> </span>
+<span class="st">         </span>(stim_version.e <span class="op">*</span><span class="st"> </span>stim_version_eff) <span class="op">+</span><span class="st"> </span>
+<span class="st">         </span>(sub_cond.e <span class="op">*</span><span class="st"> </span>stim_version.e <span class="op">*</span><span class="st"> </span>cond_version_ixn)
+  )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(sub_cond, dv, <span class="dt">color =</span> stim_version)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> grand_i) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_violin</span>(<span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.9</span>))</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:plot-ixn"></span>
+<img src="02_sim_lmer_files/figure-html/plot-ixn-1.png" alt="Double-check the interaction between condition and version" width="100%" />
+<p class="caption">
+Figure 2.4: Double-check the interaction between condition and version
+</p>
+</div>
+<p>Let's look at subject 1's reaction time to stimulus 1 in the congruent condition in more detail again.</p>
+<table>
+<caption><span id="tab:plot-ixn">Table 2.3: </span>Subject 1's reaction time to stimulus 1 in the congruent condition</caption>
+<thead>
+<tr class="header">
+<th align="right">sub_id</th>
+<th align="right">stim_id</th>
+<th align="left">stim_version</th>
+<th align="right">sub_i</th>
+<th align="left">sub_cond</th>
+<th align="right">stim_i</th>
+<th align="right">sub_cond.e</th>
+<th align="right">stim_version.e</th>
+<th align="right">err</th>
+<th align="right">dv</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">congruent</td>
+<td align="right">-99.66</td>
+<td align="left">easy</td>
+<td align="right">-4.418</td>
+<td align="right">0.5</td>
+<td align="right">-0.5</td>
+<td align="right">-31.74</td>
+<td align="right">214.2</td>
+</tr>
+</tbody>
+</table>
+<p>The DV is equal to the grand intercept (400) plus the subject's intercept (-99.6582) plus the stimulus' intercept (-4.4182) plus the effect code for the subject's condition (easy = -0.5) times the effect size for subject condition (0) plus the effect code for stimulus version (congruent = -0.5) times the effect size for stimulus version(75) plus the effect code for the subject's condition (easy = -0.5) times the effect code for stimulus version (congruent = -0.5) times the effect size for the interaction (50) plus some random error (-31.7369).</p>
+<p>400 + -99.6582 + -4.4182 + (-0.5 * 0) + (-0.5 * 75) + (-0.5 * -0.5 * 50) + -31.7369 = 214.1866</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(dat, sub_cond, stim_version) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">m =</span> <span class="kw">mean</span>(dv) <span class="op">-</span><span class="st"> </span>grand_i <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">1</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spread</span>(stim_version, m) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">sub_cond</th>
+<th align="right">congruent</th>
+<th align="right">incongruent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">easy</td>
+<td align="right">-42.54</td>
+<td align="right">57.56</td>
+</tr>
+<tr class="even">
+<td align="left">hard</td>
+<td align="right">-28.16</td>
+<td align="right">20.89</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="rint-analysis" class="section level2">
+<h2><span class="header-section-number">2.4</span> Analysis</h2>
+<p>New we will run a linear mixed effects model with <code>lmer</code> and look at the summary.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod &lt;-<span class="st"> </span><span class="kw">lmer</span>(dv <span class="op">~</span><span class="st"> </span>sub_cond.e <span class="op">*</span><span class="st"> </span>stim_version.e <span class="op">+</span>
+<span class="st">              </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>sub_id) <span class="op">+</span><span class="st"> </span>
+<span class="st">              </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>stim_id),
+            <span class="dt">data =</span> dat)
+
+mod.sum &lt;-<span class="st"> </span><span class="kw">summary</span>(mod)
+
+mod.sum</code></pre></div>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
+## Formula: dv ~ sub_cond.e * stim_version.e + (1 | sub_id) + (1 | stim_id)
+##    Data: dat
+## 
+## REML criterion at convergence: 187441
+## 
+## Scaled residuals: 
+##    Min     1Q Median     3Q    Max 
+## -3.777 -0.664 -0.001  0.661  3.617 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  sub_id   (Intercept) 9180     95.8    
+##  stim_id  (Intercept) 3070     55.4    
+##  Residual              629     25.1    
+## Number of obs: 20000, groups:  sub_id, 200; stim_id, 50
+## 
+## Fixed effects:
+##                            Estimate Std. Error        df t value Pr(&gt;|t|)
+## (Intercept)                 401.937     10.360   131.411   38.80   &lt;2e-16
+## sub_cond.e                   11.146     13.555   198.000    0.82     0.41
+## stim_version.e               74.574      0.355 19749.000  210.31   &lt;2e-16
+## sub_cond.e:stim_version.e    51.053      0.709 19749.000   71.99   &lt;2e-16
+##                              
+## (Intercept)               ***
+## sub_cond.e                   
+## stim_version.e            ***
+## sub_cond.e:stim_version.e ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) sb_cn. stm_v.
+## sub_cond.e  0.000               
+## stim_versn. 0.000  0.000        
+## sb_cnd.:s_. 0.000  0.000  0.000</code></pre>
+<div id="rint-sense-checks" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Sense Checks</h3>
+<p>First, check that your groups make sense (<code>mod.sum$ngrps</code>).</p>
+<ul>
+<li>The number of obs should be the total number of trials analysed.</li>
+<li><code>sub_id</code> should be what we set <code>sub_n</code> to above (200).</li>
+<li><code>stim_id</code> should be what we set <code>stim_n</code> to above (50).</li>
+</ul>
+<pre><code>##  sub_id stim_id 
+##     200      50</code></pre>
+<p>Next, look at the random effects (<code>mod.sum$varcor</code>).</p>
+<ul>
+<li>The SD for <code>sub_id</code> should be near the <code>sub_sd</code> of 100.</li>
+<li>The SD for <code>stim_id</code> should be near the <code>stim_sd</code> off 50.</li>
+<li>The residual SD should be near the <code>error_sd</code> of 25.</li>
+</ul>
+<pre><code>##  Groups   Name        Std.Dev.
+##  sub_id   (Intercept) 95.8    
+##  stim_id  (Intercept) 55.4    
+##  Residual             25.1</code></pre>
+<p>Finally, look at the fixed effects (<code>mod.sum$coefficients</code>).</p>
+<ul>
+<li>The estimate for the Intercept should be near the <code>grand_i</code> of 400.</li>
+<li>The main effect of <code>sub_cond.e</code> should be near what we calculated for <code>sub_cond_eff</code> (0).</li>
+<li>The main effect of <code>stim_version.e</code> should be near what we calculated for <code>stim_version_eff</code> (75)</li>
+<li>The interaction between <code>sub_cond.e</code>:<code>stim_version.e</code> should be near what we calculated for <code>cond_version_ixn</code> (50).</li>
+</ul>
+<pre><code>##                           Estimate Std. Error      df  t value  Pr(&gt;|t|)
+## (Intercept)                 401.94    10.3598   131.4  38.7979 7.766e-74
+## sub_cond.e                   11.15    13.5547   198.0   0.8223 4.119e-01
+## stim_version.e               74.57     0.3546 19749.0 210.3088 0.000e+00
+## sub_cond.e:stim_version.e    51.05     0.7092 19749.0  71.9876 0.000e+00</code></pre>
+</div>
+<div id="rint-ranef" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> Random Effects</h3>
+<p>Plot the subject intercepts from our code above (<code>sub$sub_i</code>) against the subject intercepts calculcated by <code>lmer</code> (<code>ranef(mod)$sub_id</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ranef</span>(mod)<span class="op">$</span>sub_id <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">mod_sub_i =</span> <span class="st">`</span><span class="dt">(Intercept)</span><span class="st">`</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sub_id =</span> <span class="kw">as.integer</span>(sub_id)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(sub, <span class="dt">by =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(sub_i,mod_sub_i)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Simulated random intercepts (sub_i)&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Modeled random intercepts&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:plot-sub-ranef"></span>
+<img src="02_sim_lmer_files/figure-html/plot-sub-ranef-1.png" alt="Compare simulated subject random intercepts to those from the model" width="100%" />
+<p class="caption">
+Figure 2.5: Compare simulated subject random intercepts to those from the model
+</p>
+</div>
+<p>Plot the stimulus intercepts from our code above (<code>stim$stim_i</code>) against the stimulus intercepts calculcated by <code>lmer</code> (<code>ranef(mod)$stim_id</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ranef</span>(mod)<span class="op">$</span>stim_id <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&quot;stim_id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">mod_stim_i =</span> <span class="st">`</span><span class="dt">(Intercept)</span><span class="st">`</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stim_id =</span> <span class="kw">as.integer</span>(stim_id)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(stim, <span class="dt">by =</span> <span class="st">&quot;stim_id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(stim_i,mod_stim_i)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Simulated random intercepts (stim_i)&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Modeled random intercepts&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:plot-stim-ranef"></span>
+<img src="02_sim_lmer_files/figure-html/plot-stim-ranef-1.png" alt="Compare simulated stimulus random intercepts to those from the model" width="100%" />
+<p class="caption">
+Figure 2.6: Compare simulated stimulus random intercepts to those from the model
+</p>
+</div>
+</div>
+</div>
+<div id="rint-function" class="section level2">
+<h2><span class="header-section-number">2.5</span> Function</h2>
+<p>You can put the code above in a function so you can run it more easily and change the parameters. I removed the plot and set the argument defaults to the same as the example above, but you can set them to other patterns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_lmer &lt;-<span class="st"> </span><span class="cf">function</span>( <span class="dt">sub_n =</span> <span class="dv">200</span>,
+                      <span class="dt">sub_sd =</span> <span class="dv">100</span>,
+                      <span class="dt">stim_n =</span> <span class="dv">50</span>,
+                      <span class="dt">stim_sd =</span> <span class="dv">50</span>,
+                      <span class="dt">grand_i =</span> <span class="dv">400</span>,
+                      <span class="dt">hard_congr =</span> <span class="op">-</span><span class="dv">25</span>,
+                      <span class="dt">hard_incon =</span> <span class="op">+</span><span class="dv">25</span>,
+                      <span class="dt">easy_congr =</span> <span class="op">-</span><span class="dv">50</span>,
+                      <span class="dt">easy_incon =</span> <span class="op">+</span><span class="dv">50</span>,
+                      <span class="dt">error_sd =</span> <span class="dv">25</span>) {
+  sub &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+    <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,
+    <span class="dt">sub_i  =</span> <span class="kw">rnorm</span>(sub_n, <span class="dv">0</span>, sub_sd),
+    <span class="dt">sub_cond =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;hard&quot;</span>,<span class="st">&quot;easy&quot;</span>), <span class="dt">each =</span> sub_n<span class="op">/</span><span class="dv">2</span>)
+  )
+  
+  stim &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+    <span class="dt">stim_id =</span> <span class="dv">1</span><span class="op">:</span>stim_n,
+    <span class="dt">stim_i =</span> <span class="kw">rnorm</span>(stim_n, <span class="dv">0</span>, stim_sd)
+  )
+
+  <span class="co"># mean difference between easy and hard conditions</span>
+  sub_cond_eff     &lt;-<span class="st"> </span>(easy_congr <span class="op">+</span><span class="st"> </span>easy_incon)<span class="op">/</span><span class="dv">2</span> <span class="op">-</span>
+<span class="st">                      </span>(hard_congr <span class="op">+</span><span class="st"> </span>hard_incon)<span class="op">/</span><span class="dv">2</span>
+  <span class="co"># mean difference between incongruent and congruent versions</span>
+  stim_version_eff &lt;-<span class="st"> </span>(hard_incon <span class="op">+</span><span class="st"> </span>easy_incon)<span class="op">/</span><span class="dv">2</span> <span class="op">-</span><span class="st"> </span>
+<span class="st">                      </span>(hard_congr <span class="op">+</span><span class="st"> </span>easy_congr)<span class="op">/</span><span class="dv">2</span>  
+  <span class="co"># interaction between version and condition</span>
+  cond_version_ixn &lt;-<span class="st"> </span>(easy_incon <span class="op">-</span><span class="st"> </span>easy_congr) <span class="op">-</span>
+<span class="st">                      </span>(hard_incon <span class="op">-</span><span class="st"> </span>hard_congr) 
+  
+  dat &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(
+    <span class="dt">sub_id =</span> sub<span class="op">$</span>sub_id,
+    <span class="dt">stim_id =</span> stim<span class="op">$</span>stim_id,
+    <span class="dt">stim_version =</span> <span class="kw">c</span>(<span class="st">&quot;congruent&quot;</span>, <span class="st">&quot;incongruent&quot;</span>)
+  ) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">left_join</span>(sub, <span class="dt">by =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">left_join</span>(stim, <span class="dt">by =</span> <span class="st">&quot;stim_id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(
+      <span class="co"># effect-code subject condition and stimulus version</span>
+      <span class="dt">sub_cond.e =</span> <span class="kw">recode</span>(sub_cond, <span class="st">&quot;hard&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>, <span class="st">&quot;easy&quot;</span> =<span class="st"> </span><span class="op">+</span><span class="fl">0.5</span>),
+      <span class="dt">stim_version.e =</span> <span class="kw">recode</span>(stim_version, <span class="st">&quot;congruent&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>, <span class="st">&quot;incongruent&quot;</span> =<span class="st"> </span><span class="op">+</span><span class="fl">0.5</span>),
+      <span class="co"># calculate error term (normally distributed residual with SD set above)</span>
+      <span class="dt">err =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, error_sd),
+      <span class="co"># calculate DV from intercepts, effects, and error</span>
+      <span class="dt">dv =</span> grand_i <span class="op">+</span><span class="st"> </span>sub_i <span class="op">+</span><span class="st"> </span>stim_i <span class="op">+</span><span class="st"> </span>err <span class="op">+</span>
+<span class="st">           </span>(sub_cond.e <span class="op">*</span><span class="st"> </span>sub_cond_eff) <span class="op">+</span><span class="st"> </span>
+<span class="st">           </span>(stim_version.e <span class="op">*</span><span class="st"> </span>stim_version_eff) <span class="op">+</span><span class="st"> </span>
+<span class="st">           </span>(sub_cond.e <span class="op">*</span><span class="st"> </span>stim_version.e <span class="op">*</span><span class="st"> </span>cond_version_ixn)
+    )
+  
+  mod &lt;-<span class="st"> </span><span class="kw">lmer</span>(dv <span class="op">~</span><span class="st"> </span>sub_cond.e <span class="op">*</span><span class="st"> </span>stim_version.e <span class="op">+</span>
+<span class="st">                </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>sub_id) <span class="op">+</span><span class="st"> </span>
+<span class="st">                </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>stim_id),
+              <span class="dt">data =</span> dat)
+  
+  mod.sum &lt;-<span class="st"> </span><span class="kw">summary</span>(mod)
+  
+  <span class="kw">return</span>(mod.sum)
+}</code></pre></div>
+<p>Run the function with the default values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_lmer</span>()</code></pre></div>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
+## Formula: dv ~ sub_cond.e * stim_version.e + (1 | sub_id) + (1 | stim_id)
+##    Data: dat
+## 
+## REML criterion at convergence: 187457
+## 
+## Scaled residuals: 
+##    Min     1Q Median     3Q    Max 
+## -4.389 -0.676 -0.004  0.674  4.581 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  sub_id   (Intercept) 8855     94.1    
+##  stim_id  (Intercept) 2659     51.6    
+##  Residual              630     25.1    
+## Number of obs: 20000, groups:  sub_id, 200; stim_id, 50
+## 
+## Fixed effects:
+##                            Estimate Std. Error        df t value Pr(&gt;|t|)
+## (Intercept)                 390.831      9.873   140.402   39.58   &lt;2e-16
+## sub_cond.e                  -12.626     13.313   197.996   -0.95     0.34
+## stim_version.e               75.093      0.355 19749.001  211.61   &lt;2e-16
+## sub_cond.e:stim_version.e    50.586      0.710 19749.001   71.28   &lt;2e-16
+##                              
+## (Intercept)               ***
+## sub_cond.e                   
+## stim_version.e            ***
+## sub_cond.e:stim_version.e ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) sb_cn. stm_v.
+## sub_cond.e  0.000               
+## stim_versn. 0.000  0.000        
+## sb_cnd.:s_. 0.000  0.000  0.000</code></pre>
+<p>Try changing some variables to simulate null effects.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_lmer</span>(<span class="dt">hard_congr =</span> <span class="dv">0</span>,
+         <span class="dt">hard_incon =</span> <span class="dv">0</span>,
+         <span class="dt">easy_congr =</span> <span class="dv">0</span>,
+         <span class="dt">easy_incon =</span> <span class="dv">0</span>)</code></pre></div>
+<pre><code>## Warning in checkConv(attr(opt, &quot;derivs&quot;), opt$par, ctrl =
+## control$checkConv, : Model failed to converge with max|grad| = 0.00336514
+## (tol = 0.002, component 1)</code></pre>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
+## Formula: dv ~ sub_cond.e * stim_version.e + (1 | sub_id) + (1 | stim_id)
+##    Data: dat
+## 
+## REML criterion at convergence: 187296
+## 
+## Scaled residuals: 
+##    Min     1Q Median     3Q    Max 
+## -4.140 -0.662 -0.003  0.670  4.115 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  sub_id   (Intercept) 11700    108.2   
+##  stim_id  (Intercept)  2692     51.9   
+##  Residual               623     25.0   
+## Number of obs: 20000, groups:  sub_id, 200; stim_id, 50
+## 
+## Fixed effects:
+##                            Estimate Std. Error        df t value Pr(&gt;|t|)
+## (Intercept)                 407.692     10.601   165.095   38.46   &lt;2e-16
+## sub_cond.e                   -7.251     15.301   197.982   -0.47    0.636
+## stim_version.e               -0.888      0.353 19748.994   -2.52    0.012
+## sub_cond.e:stim_version.e    -0.849      0.706 19748.994   -1.20    0.229
+##                              
+## (Intercept)               ***
+## sub_cond.e                   
+## stim_version.e            *  
+## sub_cond.e:stim_version.e    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) sb_cn. stm_v.
+## sub_cond.e  0.000               
+## stim_versn. 0.000  0.000        
+## sb_cnd.:s_. 0.000  0.000  0.000 
+## convergence code: 0
+## Model failed to converge with max|grad| = 0.00336514 (tol = 0.002, component 1)</code></pre>
+</div>
+<div id="simulating-random-slopes" class="section level2">
+<h2><span class="header-section-number">2.6</span> Simulating Random Slopes</h2>
+<p>In the example so far we've ignored random variation among subjects or stimuli in the size of the fixed effects (i.e., <strong>random slopes</strong>).</p>
+<p>First, let's reset the parameters we set above.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_n            &lt;-<span class="st"> </span><span class="dv">200</span> <span class="co"># number of subjects in this simulation</span>
+sub_sd           &lt;-<span class="st"> </span><span class="dv">100</span> <span class="co"># SD for the subjects&#39; random intercept</span>
+stim_n           &lt;-<span class="st"> </span><span class="dv">50</span>  <span class="co"># number of stimuli in this simulation</span>
+stim_sd          &lt;-<span class="st"> </span><span class="dv">50</span>  <span class="co"># SD for the stimuli&#39;s random intercept</span>
+grand_i          &lt;-<span class="st"> </span><span class="dv">400</span> <span class="co"># overall mean DV</span>
+sub_cond_eff     &lt;-<span class="st"> </span><span class="dv">50</span>  <span class="co"># mean difference between conditions: hard - easy</span>
+stim_version_eff &lt;-<span class="st"> </span><span class="dv">50</span>  <span class="co"># mean difference between versions: incongruent - congruent</span>
+cond_version_ixn &lt;-<span class="st">  </span><span class="dv">0</span>  <span class="co"># interaction between version and condition</span>
+error_sd         &lt;-<span class="st"> </span><span class="dv">25</span>  <span class="co"># residual (error) SD</span></code></pre></div>
+<div id="rslope-subjects" class="section level3">
+<h3><span class="header-section-number">2.6.1</span> Subjects</h3>
+<p>In addition to generating a random intercept for each subject, now we will also generate a random slope for any within-subject factors. The only within-subject factor in this design is <code>stim_version</code>. The main effect of <code>stim_version</code> is set to 50 above, but different subjects will show variation in the size of this effect. That's what the random slope captures. We'll set <code>sub_version_sd</code> below to the SD of this variation and use this to calculate the random slope (<code>sub_version_slope</code>) for each subject.</p>
+<p>Also, it's likely that the variation between subjects in the size of the effect of version is related in some way to between-subject variation in the intercept. So we want the random intercept and slope to be correlated. Here, we'll simulate a case where subjects who have slower (larger) reaction times across the board show a smaller effect of condition, so we set <code>sub_i_version_cor</code> below to a negative number (-0.2).</p>
+<p>I'm writing a package that has functions to easily create correlated variables for simulations. The function <code>rnorm_multi</code> generates <code>n</code> observations of <code>vars</code> variables with <code>mu</code> means and <code>sd</code> standard deviations with <code>cors</code> specific correlations. You can learn more about this function at my <a href="rnorm_multi">Simulating Multiple Vectors</a> tutorial. You can use <code>devtools::install_github(&quot;debruine/faux&quot;)</code> to install the package.</p>
+<p>The code below creates two variables (<code>sub_i</code>, <code>sub_version_slope</code>) that are correlated with r = -0.2, means of 0, and SDs equal to what we set <code>sub_sd</code> above and <code>sub_version_sd</code> below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_version_sd &lt;-<span class="st"> </span><span class="dv">20</span>
+sub_i_version_cor &lt;-<span class="st"> </span><span class="op">-</span><span class="fl">0.2</span>
+
+sub &lt;-<span class="st"> </span><span class="kw">rnorm_multi</span>(
+  <span class="dt">n =</span> sub_n, 
+  <span class="dt">vars =</span> <span class="dv">2</span>, 
+  <span class="dt">cors =</span> sub_i_version_cor,
+  <span class="dt">mu =</span> <span class="dv">0</span>, <span class="co"># means of random intercepts and slopes are always 0</span>
+  <span class="dt">sd =</span> <span class="kw">c</span>(sub_sd, sub_version_sd),
+  <span class="dt">varnames =</span> <span class="kw">c</span>(<span class="st">&quot;sub_i&quot;</span>, <span class="st">&quot;sub_version_slope&quot;</span>)
+) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,
+    <span class="dt">sub_cond =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;easy&quot;</span>,<span class="st">&quot;hard&quot;</span>), <span class="dt">each =</span> sub_n<span class="op">/</span><span class="dv">2</span>) <span class="co"># between-subjects factor</span>
+  )</code></pre></div>
+<p>Plot to double-check it looks sensible.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(sub, <span class="kw">aes</span>(sub_i, sub_version_slope, <span class="dt">color =</span> sub_cond)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:plot-subject-slope-cor"></span>
+<img src="02_sim_lmer_files/figure-html/plot-subject-slope-cor-1.png" alt="Double-check slope-intercept correlations" width="100%" />
+<p class="caption">
+Figure 2.7: Double-check slope-intercept correlations
+</p>
+</div>
+</div>
+<div id="rslope-stimuli" class="section level3">
+<h3><span class="header-section-number">2.6.2</span> Stimuli</h3>
+<p>In addition to generating a random intercept for each stimulus, we will also generate a random slope for any within-stimulus factors. Both <code>stim_version</code> and <code>sub_condition</code> are within-stimulus factors (i.e., all stimuli are seen in both <code>congruent</code> and <code>incongruent</code> versions and both <code>easy</code> and <code>hard</code> conditions). So the main effects of version and condition (and their interaction) will vary depending on the stimulus.</p>
+<p>They will also be correlated, but in a more complex way than above. You need to set the correlations for all pairs of slopes and intercept. Let's set the correlation between the random intercept and each of the slopes to -0.4 and the slopes all correlate with each other +0.2 (You could set each of the six correlations separately if you want, though).</p>
+<div class="info">
+<p>
+See the <a href="https://debruine.github.io/posts/rnorm_multi">Simulating Multiple Vectors</a> tutorial for other ways to set the correlations.
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stim_version_sd &lt;-<span class="st"> </span><span class="dv">10</span> <span class="co"># SD for the stimuli&#39;s random slope for stim_version</span>
+stim_cond_sd &lt;-<span class="st"> </span><span class="dv">30</span> <span class="co"># SD for the stimuli&#39;s random slope for sub_cond</span>
+stim_cond_version_sd &lt;-<span class="st"> </span><span class="dv">15</span> <span class="co"># SD for the stimuli&#39;s random slope for sub_cond:stim_version</span>
+stim_i_cor &lt;-<span class="st"> </span><span class="op">-</span><span class="fl">0.4</span> <span class="co"># correlations between intercept and slopes</span>
+stim_s_cor &lt;-<span class="st"> </span><span class="op">+</span><span class="fl">0.2</span> <span class="co"># correlations among slopes</span>
+
+<span class="co"># specify correlations for rnorm_multi (one of several methods)</span>
+stim_cors &lt;-<span class="st"> </span><span class="kw">c</span>(stim_i_cor, stim_i_cor, stim_i_cor,
+                           stim_s_cor, stim_s_cor,
+                                       stim_s_cor)
+stim &lt;-<span class="st"> </span><span class="kw">rnorm_multi</span>(
+  <span class="dt">n =</span> stim_n, 
+  <span class="dt">vars =</span> <span class="dv">4</span>, 
+  <span class="dt">cors =</span> stim_cors, 
+  <span class="dt">mu =</span> <span class="dv">0</span>, <span class="co"># means of random intercepts and slopes are always 0</span>
+  <span class="dt">sd =</span> <span class="kw">c</span>(stim_sd, stim_version_sd, stim_cond_sd, stim_cond_version_sd),
+  <span class="dt">varnames =</span> <span class="kw">c</span>(<span class="st">&quot;stim_i&quot;</span>, <span class="st">&quot;stim_version_slope&quot;</span>, <span class="st">&quot;stim_cond_slope&quot;</span>, <span class="st">&quot;stim_cond_version_slope&quot;</span>)
+) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">stim_id =</span> <span class="dv">1</span><span class="op">:</span>stim_n
+  )</code></pre></div>
+<p>Here, we're simulating different SDs for different effects, so our plot should reflect this. The graph below uses the `<code>ggpairs</code> function fromt he <code>GGally</code> package to quickly visualise correlated variables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GGally<span class="op">::</span><span class="kw">ggpairs</span>(stim, <span class="dt">columns =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, 
+                <span class="dt">lower =</span> <span class="kw">list</span>(<span class="dt">continuous =</span> <span class="st">&quot;smooth&quot;</span>),
+                <span class="dt">progress =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:plot-stim-slope-cor"></span>
+<img src="02_sim_lmer_files/figure-html/plot-stim-slope-cor-1.png" alt="Double-check slope-intercept correlations" width="100%" />
+<p class="caption">
+Figure 2.8: Double-check slope-intercept correlations
+</p>
+</div>
+</div>
+<div id="rslope-trials" class="section level3">
+<h3><span class="header-section-number">2.6.3</span> Trials</h3>
+<p>Now we put the subjects and stimuli together in the same way as before.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trials &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(
+  <span class="dt">sub_id =</span> sub<span class="op">$</span>sub_id, <span class="co"># get subject IDs from the sub data table</span>
+  <span class="dt">stim_id =</span> stim<span class="op">$</span>stim_id, <span class="co"># get stimulus IDs from the stim data table</span>
+  <span class="dt">stim_version =</span> <span class="kw">c</span>(<span class="st">&quot;congruent&quot;</span>, <span class="st">&quot;incongruent&quot;</span>) <span class="co"># all subjects see both congruent and incongruent versions of all stimuli</span>
+) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(sub, <span class="dt">by =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># includes the intercept, slope, and conditin for each subject</span>
+<span class="st">  </span><span class="kw">left_join</span>(stim, <span class="dt">by =</span> <span class="st">&quot;stim_id&quot;</span>)   <span class="co"># includes the intercept and slopes for each stimulus</span></code></pre></div>
+<table>
+<caption><span id="tab:rslope-expand-grid">Table 2.4: </span>Subject- and stimulus-specific random intercepts and slopes for 2 subjects and 2 stimuli</caption>
+<thead>
+<tr class="header">
+<th align="right">sub_id</th>
+<th align="right">stim_id</th>
+<th align="left">stim_version</th>
+<th align="right">sub_i</th>
+<th align="right">sub_version_slope</th>
+<th align="left">sub_cond</th>
+<th align="right">stim_i</th>
+<th align="right">stim_version_slope</th>
+<th align="right">stim_cond_slope</th>
+<th align="right">stim_cond_version_slope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">congruent</td>
+<td align="right">-63.15</td>
+<td align="right">-23.61</td>
+<td align="left">easy</td>
+<td align="right">11.54</td>
+<td align="right">-0.0276</td>
+<td align="right">28.62</td>
+<td align="right">7.068</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">congruent</td>
+<td align="right">98.23</td>
+<td align="right">-2.32</td>
+<td align="left">easy</td>
+<td align="right">11.54</td>
+<td align="right">-0.0276</td>
+<td align="right">28.62</td>
+<td align="right">7.068</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="left">congruent</td>
+<td align="right">-63.15</td>
+<td align="right">-23.61</td>
+<td align="left">easy</td>
+<td align="right">-14.00</td>
+<td align="right">1.4777</td>
+<td align="right">-26.67</td>
+<td align="right">-1.602</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="left">congruent</td>
+<td align="right">98.23</td>
+<td align="right">-2.32</td>
+<td align="left">easy</td>
+<td align="right">-14.00</td>
+<td align="right">1.4777</td>
+<td align="right">-26.67</td>
+<td align="right">-1.602</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">incongruent</td>
+<td align="right">-63.15</td>
+<td align="right">-23.61</td>
+<td align="left">easy</td>
+<td align="right">11.54</td>
+<td align="right">-0.0276</td>
+<td align="right">28.62</td>
+<td align="right">7.068</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">incongruent</td>
+<td align="right">98.23</td>
+<td align="right">-2.32</td>
+<td align="left">easy</td>
+<td align="right">11.54</td>
+<td align="right">-0.0276</td>
+<td align="right">28.62</td>
+<td align="right">7.068</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="left">incongruent</td>
+<td align="right">-63.15</td>
+<td align="right">-23.61</td>
+<td align="left">easy</td>
+<td align="right">-14.00</td>
+<td align="right">1.4777</td>
+<td align="right">-26.67</td>
+<td align="right">-1.602</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="left">incongruent</td>
+<td align="right">98.23</td>
+<td align="right">-2.32</td>
+<td align="left">easy</td>
+<td align="right">-14.00</td>
+<td align="right">1.4777</td>
+<td align="right">-26.67</td>
+<td align="right">-1.602</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="rslope-dv" class="section level2">
+<h2><span class="header-section-number">2.7</span> Calculate DV</h2>
+<p>Now we can calculate the DV by adding together an overall intercept (mean RT for all trials), the subject-specific intercept, the stimulus-specific intercept, the effect of subject condition, the stimulus-specific slope for condition, the effect of stimulus version, the stimulus-specific slope for version, the subject-specific slope for condition, the interaction between condition and version (set to 0 for this example), the stimulus-specific slope for the interaction between condition and version, and an error term.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>trials <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="co"># effect-code subject condition and stimulus version</span>
+    <span class="dt">sub_cond.e =</span> <span class="kw">recode</span>(sub_cond, <span class="st">&quot;hard&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>, <span class="st">&quot;easy&quot;</span> =<span class="st"> </span><span class="op">+</span><span class="fl">0.5</span>),
+    <span class="dt">stim_version.e =</span> <span class="kw">recode</span>(stim_version, <span class="st">&quot;congruent&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>, <span class="st">&quot;incongruent&quot;</span> =<span class="st"> </span><span class="op">+</span><span class="fl">0.5</span>),
+    <span class="co"># calculate trial-specific effects by adding overall effects and slopes</span>
+    <span class="dt">cond_eff =</span> sub_cond_eff <span class="op">+</span><span class="st"> </span>stim_cond_slope,
+    <span class="dt">version_eff =</span> stim_version_eff <span class="op">+</span><span class="st"> </span>stim_version_slope <span class="op">+</span><span class="st"> </span>sub_version_slope,
+    <span class="dt">cond_version_eff =</span> cond_version_ixn <span class="op">+</span><span class="st"> </span>stim_cond_version_slope,
+    <span class="co"># calculate error term (normally distributed residual with SD set above)</span>
+    <span class="dt">err =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, error_sd),
+    <span class="co"># calculate DV from intercepts, effects, and error</span>
+    <span class="dt">dv =</span> grand_i <span class="op">+</span><span class="st"> </span>sub_i <span class="op">+</span><span class="st"> </span>stim_i <span class="op">+</span><span class="st"> </span>err <span class="op">+</span>
+<span class="st">         </span>(sub_cond.e <span class="op">*</span><span class="st"> </span>cond_eff) <span class="op">+</span><span class="st"> </span>
+<span class="st">         </span>(stim_version.e <span class="op">*</span><span class="st"> </span>version_eff) <span class="op">+</span><span class="st"> </span>
+<span class="st">         </span>(sub_cond.e <span class="op">*</span><span class="st"> </span>stim_version.e <span class="op">*</span><span class="st"> </span>cond_version_eff)
+  )</code></pre></div>
+<p>As always, graph to make sure you've simulated the general pattern you expected.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(sub_cond, dv, <span class="dt">color =</span> stim_version)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> grand_i) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_violin</span>(<span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.9</span>))</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:rslope-plot-dv"></span>
+<img src="02_sim_lmer_files/figure-html/rslope-plot-dv-1.png" alt="Double-check the simulated pattern" width="100%" />
+<p class="caption">
+Figure 2.9: Double-check the simulated pattern
+</p>
+</div>
+</div>
+<div id="rslope-analysis" class="section level2">
+<h2><span class="header-section-number">2.8</span> Analysis</h2>
+<p>New we'll run a linear mixed effects model with <code>lmer</code> and look at the summary. You specify random slopes by adding the within-level effects to the random intercept specifications. Since the only within-subject factor is version, the random effects specification for subjects is <code>(1 + stim_version.e | sub_id)</code>. Since both condition and version are within-stimuli factors, the random effects specification for stimuli is <code>(1 + stim_version.e*sub_cond.e | stim_id)</code>.</p>
+<div class="info">
+<p>
+<a href="http://talklab.psy.gla.ac.uk/KeepItMaximalR2.pdf">Keep It Maximal</a> is a great paper on how and why to set random slopes <em>maximally</em> like this.
+</p>
+</div>
+<p>This model will take a lot longer to run than one without random slopes specified.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod &lt;-<span class="st"> </span><span class="kw">lmer</span>(dv <span class="op">~</span><span class="st"> </span>sub_cond.e <span class="op">*</span><span class="st"> </span>stim_version.e <span class="op">+</span>
+<span class="st">              </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>stim_version.e <span class="op">|</span><span class="st"> </span>sub_id) <span class="op">+</span><span class="st"> </span>
+<span class="st">              </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>stim_version.e<span class="op">*</span>sub_cond.e <span class="op">|</span><span class="st"> </span>stim_id),
+            <span class="dt">data =</span> dat)</code></pre></div>
+<pre><code>## Warning in checkConv(attr(opt, &quot;derivs&quot;), opt$par, ctrl =
+## control$checkConv, : Model failed to converge with max|grad| = 0.0132569
+## (tol = 0.002, component 1)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod.sum &lt;-<span class="st"> </span><span class="kw">summary</span>(mod)
+
+mod.sum</code></pre></div>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
+## Formula: 
+## dv ~ sub_cond.e * stim_version.e + (1 + stim_version.e | sub_id) +  
+##     (1 + stim_version.e * sub_cond.e | stim_id)
+##    Data: dat
+## 
+## REML criterion at convergence: 188357
+## 
+## Scaled residuals: 
+##    Min     1Q Median     3Q    Max 
+## -4.799 -0.661 -0.007  0.657  3.788 
+## 
+## Random effects:
+##  Groups   Name                      Variance Std.Dev. Corr             
+##  sub_id   (Intercept)               9842.1   99.21                     
+##           stim_version.e             317.3   17.81    -0.07            
+##  stim_id  (Intercept)               2485.4   49.85                     
+##           stim_version.e              93.5    9.67    -0.56            
+##           sub_cond.e                 646.6   25.43    -0.25  0.08      
+##           stim_version.e:sub_cond.e  269.3   16.41    -0.39  0.32  0.58
+##  Residual                            627.3   25.05                     
+## Number of obs: 20000, groups:  sub_id, 200; stim_id, 50
+## 
+## Fixed effects:
+##                           Estimate Std. Error     df t value Pr(&gt;|t|)    
+## (Intercept)                 406.39       9.95 156.06   40.85  &lt; 2e-16 ***
+## sub_cond.e                   61.29      14.49 220.86    4.23 0.000034 ***
+## stim_version.e               49.29       1.89 133.47   26.04  &lt; 2e-16 ***
+## sub_cond.e:stim_version.e    -2.04       3.50 158.43   -0.58     0.56    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) sb_cn. stm_v.
+## sub_cond.e  -0.044              
+## stim_versn. -0.322  0.014       
+## sb_cnd.:s_. -0.181  0.045  0.155
+## convergence code: 0
+## Model failed to converge with max|grad| = 0.0132569 (tol = 0.002, component 1)</code></pre>
+<div id="rslope-sense-checks" class="section level3">
+<h3><span class="header-section-number">2.8.1</span> Sense Checks</h3>
+<p>First, check that your groups make sense (<code>mod.sum$ngrps</code>).</p>
+<ul>
+<li><code>sub_id</code> = <code>sub_n</code> (200)</li>
+<li><code>stim_id</code> = <code>stim_n</code> (50)</li>
+</ul>
+<pre><code>##  sub_id stim_id 
+##     200      50</code></pre>
+<p>Next, look at the SDs for the random effects (<code>mod.sum$varcor</code>).</p>
+<ul>
+<li>Group:<code>sub_id</code></li>
+<li><code>(Intercept)</code> ~= <code>sub_sd</code> (100)</li>
+<li><code>stim_version.e</code> ~= <code>sub_version_sd</code> (20)</li>
+<li>Group: <code>stim_id</code></li>
+<li><code>(Intercept)</code> ~= <code>stim_sd</code> (50)</li>
+<li><code>stim_version.e</code> ~= <code>stim_version_sd</code> (10)</li>
+<li><code>sub_cond.e</code> ~= <code>stim_cond_sd</code> (30)</li>
+<li><code>stim_version.e:sub_cond.e</code> ~= <code>stim_cond_version_sd</code> (15)</li>
+<li>Residual ~= <code>error_sd</code> (25)</li>
+</ul>
+<pre><code>##  Groups   Name                      Std.Dev. Corr             
+##  sub_id   (Intercept)               99.21                     
+##           stim_version.e            17.81    -0.07            
+##  stim_id  (Intercept)               49.85                     
+##           stim_version.e             9.67    -0.56            
+##           sub_cond.e                25.43    -0.25  0.08      
+##           stim_version.e:sub_cond.e 16.41    -0.39  0.32  0.58
+##  Residual                           25.05</code></pre>
+<p>The correlations are a bit more difficult to parse. The first column under <code>Corr</code> shows the correlation between the random slope for that row and the random intercept. So for <code>stim_version.e</code> under <code>sub_id</code>, the correlation should be close to <code>sub_i_version_cor</code> (-0.2). For all three random slopes under <code>stim_id</code>, the correlation with the random intercept should be near <code>stim_i_cor</code> (-0.4) and their correlations with each other should be near <code>stim_s_cor</code> (0.2).</p>
+<pre><code>##  Groups   Name                      Std.Dev. Corr             
+##  sub_id   (Intercept)               99.21                     
+##           stim_version.e            17.81    -0.07            
+##  stim_id  (Intercept)               49.85                     
+##           stim_version.e             9.67    -0.56            
+##           sub_cond.e                25.43    -0.25  0.08      
+##           stim_version.e:sub_cond.e 16.41    -0.39  0.32  0.58
+##  Residual                           25.05</code></pre>
+<p>Finally, look at the fixed effects (<code>mod.sum$coefficients</code>).</p>
+<ul>
+<li><code>(Intercept)</code> ~= <code>grand_i</code> (400)</li>
+<li><code>sub_cond.e</code> ~= <code>sub_cond_eff</code> (50)</li>
+<li><code>stim_version.e</code> ~= <code>stim_version_eff</code> (50)</li>
+<li><code>sub_cond.e</code>:<code>stim_version.e</code> ~= <code>cond_version_ixn</code> (0)</li>
+</ul>
+<pre><code>##                           Estimate Std. Error    df t value  Pr(&gt;|t|)
+## (Intercept)                406.393      9.947 156.1  40.854 3.083e-85
+## sub_cond.e                  61.291     14.488 220.9   4.231 3.417e-05
+## stim_version.e              49.289      1.893 133.5  26.039 3.660e-54
+## sub_cond.e:stim_version.e   -2.043      3.498 158.4  -0.584 5.600e-01</code></pre>
+</div>
+<div id="rslope-ranef" class="section level3">
+<h3><span class="header-section-number">2.8.2</span> Random effects</h3>
+<p>Plot the subject intercepts and slopes from our code above (<code>sub$sub_i</code>) against the subject intercepts and slopes calculcated by <code>lmer</code> (<code>ranef(mod)$sub_id</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ranef</span>(mod)<span class="op">$</span>sub_id <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">mod_i =</span> <span class="st">`</span><span class="dt">(Intercept)</span><span class="st">`</span>,
+         <span class="dt">mod_version_slope =</span> stim_version.e) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sub_id =</span> <span class="kw">as.integer</span>(sub_id)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(sub, <span class="dt">by =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(mod_i, sub_i, 
+         mod_version_slope,  sub_version_slope) <span class="op">%&gt;%</span>
+<span class="st">  </span>GGally<span class="op">::</span><span class="kw">ggpairs</span>(<span class="dt">lower =</span> <span class="kw">list</span>(<span class="dt">continuous =</span> <span class="st">&quot;smooth&quot;</span>),
+                <span class="dt">progress =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:rslope-plot-sub-ranef"></span>
+<img src="02_sim_lmer_files/figure-html/rslope-plot-sub-ranef-1.png" alt="Compare simulated subject random effects to those from the model" width="100%" />
+<p class="caption">
+Figure 2.10: Compare simulated subject random effects to those from the model
+</p>
+</div>
+<p>Plot the stimulus intercepts and slopes from our code above (<code>stim$stim_i</code>) against the stimulus intercepts and slopes calculcated by <code>lmer</code> (<code>ranef(mod)$stim_id</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ranef</span>(mod)<span class="op">$</span>stim_id <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&quot;stim_id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">mod_i =</span> <span class="st">`</span><span class="dt">(Intercept)</span><span class="st">`</span>,
+         <span class="dt">mod_version_slope =</span> stim_version.e,
+         <span class="dt">mod_cond_slope =</span> sub_cond.e,
+         <span class="dt">mod_cond_version_slope =</span> <span class="st">`</span><span class="dt">stim_version.e:sub_cond.e</span><span class="st">`</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stim_id =</span> <span class="kw">as.integer</span>(stim_id)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(stim, <span class="dt">by =</span> <span class="st">&quot;stim_id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(mod_i, stim_i, 
+         mod_version_slope, stim_version_slope, 
+         mod_cond_slope, stim_cond_slope, 
+         mod_cond_version_slope, stim_cond_version_slope) <span class="op">%&gt;%</span>
+<span class="st">  </span>GGally<span class="op">::</span><span class="kw">ggpairs</span>(<span class="dt">lower =</span> <span class="kw">list</span>(<span class="dt">continuous =</span> <span class="st">&quot;smooth&quot;</span>),
+                <span class="dt">progress =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:rslope-plot-stim-ranef"></span>
+<img src="02_sim_lmer_files/figure-html/rslope-plot-stim-ranef-1.png" alt="Compare simulated stimulus random effects to those from the model" width="100%" />
+<p class="caption">
+Figure 2.11: Compare simulated stimulus random effects to those from the model
+</p>
+</div>
+</div>
+</div>
+<div id="rslope-function" class="section level2">
+<h2><span class="header-section-number">2.9</span> Function</h2>
+<p>You can put the code above in a function so you can run it more easily and change the parameters. I removed the plot and set the argument defaults to the same as the example above, but you can set them to other patterns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_lmer &lt;-<span class="st"> </span><span class="cf">function</span>( <span class="dt">sub_n =</span> <span class="dv">200</span>,
+                      <span class="dt">sub_sd =</span> <span class="dv">100</span>,
+                      <span class="dt">sub_version_sd =</span> <span class="dv">20</span>, 
+                      <span class="dt">sub_i_version_cor =</span> <span class="op">-</span><span class="fl">0.2</span>,
+                      <span class="dt">stim_n =</span> <span class="dv">50</span>,
+                      <span class="dt">stim_sd =</span> <span class="dv">50</span>,
+                      <span class="dt">stim_version_sd =</span> <span class="dv">10</span>,
+                      <span class="dt">stim_cond_sd =</span> <span class="dv">30</span>,
+                      <span class="dt">stim_cond_version_sd =</span> <span class="dv">15</span>,
+                      <span class="dt">stim_i_cor =</span> <span class="op">-</span><span class="fl">0.4</span>,
+                      <span class="dt">stim_s_cor =</span> <span class="op">+</span><span class="fl">0.2</span>,
+                      <span class="dt">grand_i =</span> <span class="dv">400</span>,
+                      <span class="dt">hard_congr =</span> <span class="op">-</span><span class="dv">25</span>,
+                      <span class="dt">hard_incon =</span> <span class="op">+</span><span class="dv">25</span>,
+                      <span class="dt">easy_congr =</span> <span class="op">-</span><span class="dv">50</span>,
+                      <span class="dt">easy_incon =</span> <span class="op">+</span><span class="dv">50</span>,
+                      <span class="dt">error_sd =</span> <span class="dv">25</span>) {
+  sub &lt;-<span class="st"> </span><span class="kw">rnorm_multi</span>(
+    <span class="dt">n =</span> sub_n, 
+    <span class="dt">vars =</span> <span class="dv">2</span>, 
+    <span class="dt">cors =</span> sub_i_version_cor,
+    <span class="dt">mu =</span> <span class="dv">0</span>, <span class="co"># means of random intercepts and slopes are always 0</span>
+    <span class="dt">sd =</span> <span class="kw">c</span>(sub_sd, sub_version_sd),
+    <span class="dt">varnames =</span> <span class="kw">c</span>(<span class="st">&quot;sub_i&quot;</span>, <span class="st">&quot;sub_version_slope&quot;</span>)
+  ) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(
+      <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,
+      <span class="dt">sub_cond =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;easy&quot;</span>,<span class="st">&quot;hard&quot;</span>), <span class="dt">each =</span> sub_n<span class="op">/</span><span class="dv">2</span>) <span class="co"># between-subjects factor</span>
+    )
+  
+  stim_cors &lt;-<span class="st"> </span><span class="kw">c</span>(stim_i_cor, stim_i_cor, stim_i_cor,
+                             stim_s_cor, stim_s_cor,
+                                         stim_s_cor)
+  stim &lt;-<span class="st"> </span><span class="kw">rnorm_multi</span>(
+    <span class="dt">n =</span> stim_n, 
+    <span class="dt">vars =</span> <span class="dv">4</span>, 
+    <span class="dt">cors =</span> stim_cors, 
+    <span class="dt">mu =</span> <span class="dv">0</span>, <span class="co"># means of random intercepts and slopes are always 0</span>
+    <span class="dt">sd =</span> <span class="kw">c</span>(stim_sd, stim_version_sd, stim_cond_sd, stim_cond_version_sd),
+    <span class="dt">varnames =</span> <span class="kw">c</span>(<span class="st">&quot;stim_i&quot;</span>, <span class="st">&quot;stim_version_slope&quot;</span>, <span class="st">&quot;stim_cond_slope&quot;</span>, <span class="st">&quot;stim_cond_version_slope&quot;</span>)
+  ) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(
+      <span class="dt">stim_id =</span> <span class="dv">1</span><span class="op">:</span>stim_n
+    )
+  
+  <span class="co"># mean difference between easy and hard conditions</span>
+  sub_cond_eff     &lt;-<span class="st"> </span>(easy_congr <span class="op">+</span><span class="st"> </span>easy_incon)<span class="op">/</span><span class="dv">2</span> <span class="op">-</span>
+<span class="st">                      </span>(hard_congr <span class="op">+</span><span class="st"> </span>hard_incon)<span class="op">/</span><span class="dv">2</span>
+  <span class="co"># mean difference between incongruent and congruent versions</span>
+  stim_version_eff &lt;-<span class="st"> </span>(hard_incon <span class="op">+</span><span class="st"> </span>easy_incon)<span class="op">/</span><span class="dv">2</span> <span class="op">-</span><span class="st"> </span>
+<span class="st">                      </span>(hard_congr <span class="op">+</span><span class="st"> </span>easy_congr)<span class="op">/</span><span class="dv">2</span>  
+  <span class="co"># interaction between version and condition</span>
+  cond_version_ixn &lt;-<span class="st"> </span>(easy_incon <span class="op">-</span><span class="st"> </span>easy_congr) <span class="op">-</span>
+<span class="st">                      </span>(hard_incon <span class="op">-</span><span class="st"> </span>hard_congr) 
+  
+  trials &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(
+    <span class="dt">sub_id =</span> sub<span class="op">$</span>sub_id, <span class="co"># get subject IDs from the sub data table</span>
+    <span class="dt">stim_id =</span> stim<span class="op">$</span>stim_id, <span class="co"># get stimulus IDs from the stim data table</span>
+    <span class="dt">stim_version =</span> <span class="kw">c</span>(<span class="st">&quot;congruent&quot;</span>, <span class="st">&quot;incongruent&quot;</span>) <span class="co"># all subjects see both congruent and incongruent versions of all stimuli</span>
+  ) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">left_join</span>(sub, <span class="dt">by =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># includes the intercept, slope, and conditin for each subject</span>
+<span class="st">    </span><span class="kw">left_join</span>(stim, <span class="dt">by =</span> <span class="st">&quot;stim_id&quot;</span>)   <span class="co"># includes the intercept and slopes for each stimulus</span>
+  
+  dat &lt;-<span class="st"> </span>trials <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(
+      <span class="co"># effect-code subject condition and stimulus version</span>
+      <span class="dt">sub_cond.e =</span> <span class="kw">recode</span>(sub_cond, <span class="st">&quot;hard&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>, <span class="st">&quot;easy&quot;</span> =<span class="st"> </span><span class="op">+</span><span class="fl">0.5</span>),
+      <span class="dt">stim_version.e =</span> <span class="kw">recode</span>(stim_version, <span class="st">&quot;congruent&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>, <span class="st">&quot;incongruent&quot;</span> =<span class="st"> </span><span class="op">+</span><span class="fl">0.5</span>),
+      <span class="co"># calculate trial-specific effects by adding overall effects and slopes</span>
+      <span class="dt">cond_eff =</span> sub_cond_eff <span class="op">+</span><span class="st"> </span>stim_cond_slope,
+      <span class="dt">version_eff =</span> stim_version_eff <span class="op">+</span><span class="st"> </span>stim_version_slope <span class="op">+</span><span class="st"> </span>sub_version_slope,
+      <span class="dt">cond_version_eff =</span> cond_version_ixn <span class="op">+</span><span class="st"> </span>stim_cond_version_slope,
+      <span class="co"># calculate error term (normally distributed residual with SD set above)</span>
+      <span class="dt">err =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, error_sd),
+      <span class="co"># calculate DV from intercepts, effects, and error</span>
+      <span class="dt">dv =</span> grand_i <span class="op">+</span><span class="st"> </span>sub_i <span class="op">+</span><span class="st"> </span>stim_i <span class="op">+</span><span class="st"> </span>err <span class="op">+</span>
+<span class="st">           </span>(sub_cond.e <span class="op">*</span><span class="st"> </span>cond_eff) <span class="op">+</span><span class="st"> </span>
+<span class="st">           </span>(stim_version.e <span class="op">*</span><span class="st"> </span>version_eff) <span class="op">+</span><span class="st"> </span>
+<span class="st">           </span>(sub_cond.e <span class="op">*</span><span class="st"> </span>stim_version.e <span class="op">*</span><span class="st"> </span>cond_version_eff)
+    )
+  
+  mod &lt;-<span class="st"> </span><span class="kw">lmer</span>(dv <span class="op">~</span><span class="st"> </span>sub_cond.e <span class="op">*</span><span class="st"> </span>stim_version.e <span class="op">+</span>
+<span class="st">                </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>stim_version.e <span class="op">|</span><span class="st"> </span>sub_id) <span class="op">+</span><span class="st"> </span>
+<span class="st">                </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>stim_version.e<span class="op">*</span>sub_cond.e <span class="op">|</span><span class="st"> </span>stim_id),
+              <span class="dt">data =</span> dat)
+
+  mod.sum &lt;-<span class="st"> </span><span class="kw">summary</span>(mod)
+  
+  <span class="kw">return</span>(mod.sum)
+}</code></pre></div>
+<p>Run the function with the default values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_lmer</span>()</code></pre></div>
+<p>Try changing some variables to simulate null effects.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_lmer</span>(<span class="dt">hard_congr =</span> <span class="dv">0</span>,
+         <span class="dt">hard_incon =</span> <span class="dv">0</span>,
+         <span class="dt">easy_congr =</span> <span class="dv">0</span>,
+         <span class="dt">easy_incon =</span> <span class="dv">0</span>)</code></pre></div>
+
+</div>
+</div>
+
+
+
+</div>
+<div class="psyteachr_footer">
+  
+</div>
+<script>
+
+/* update total correct if #total_correct exists */
+update_total_correct = function() {
+  if (t = document.getElementById("total_correct")) {
+    t.innerHTML =
+      document.getElementsByClassName("correct").length + " of " +
+      document.getElementsByClassName("solveme").length + " correct";
+  }
+}
+
+/* solution button toggling function */
+b_func = function() {
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "");
+  }
+  
+  if (my_answer !== "" & real_answers.includes(my_answer)) {
+    cl.add("correct");
+  } else {
+    cl.remove("correct");
+  }
+  update_total_correct();
+}
+
+window.onload = function() {
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+  
+  /* set up solveme inputs */
+  var solveme = document.getElementsByClassName("solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off"); 
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+    
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+    
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+  
+  update_total_correct();
+}
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="packages.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="installing-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": {},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>
