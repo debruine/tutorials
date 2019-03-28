@@ -1,7 +1,7 @@
 
-# Your first R package with unit tests {#packages}
+# R package with unit tests {#packages}
 
-## Learning Objectives
+## Learning objectives
 
 * Create an R package
 * Create a function
@@ -11,7 +11,7 @@
 * Use your package in a script
 * Share your package through GitHub
 
-## Setting Up
+## Setting up
 
 You will need to install the following <a class='glossary' target='_blank' title='A group of R functions.' href='https://psyteachr.github.io/glossary/p#package'>packages</a>:
 

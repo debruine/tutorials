@@ -30,7 +30,7 @@ set.seed(8675309) # Jenny, I've got your number
 <p>If you are running repeated simulations (e.g., for a power calculation), make sure you never use <code>set.seed</code> inside of a function that creates random numbers, or the function will always give you the exact same numbers.</p>
 </div>
 
-## Simulate Random Intercepts
+## Random intercepts
 
 ### Subjects {#rint-subjects}
 
@@ -159,7 +159,7 @@ Table: (\#tab:expand-grid)Subject- and stimulus-specific random intercepts for 2
 
 Now we can calculate the DV by adding together an overall intercept (mean RT for all trials), the subject-specific intercept, the stimulus-specific intercept, the effect of subject condition, the interaction between condition and version (set to 0 for this first example), the effect of stimulus version, and an error term. 
 
-### Simulating Fixed Effects
+### Fixed effects
 
 We set these effects in raw units (ms) and [effect-code](https://debruine.github.io/posts/coding-schemes.html) the subject condition and stimulus version. It's usually easiest to interpret if you recode the level that you predict will be larger as +0.5 and the level you predict will be smaller as -0.5. So when we set the effect of subject condition (`sub_cond_eff`) to 50, that means the average difference between the easy and hard condition is 50ms. `Easy` is effect-coded as -0.5 and `hard` is effect-coded as +0.5, which means that trials in the easy condition have -0.5 \* 50ms (i.e., -25ms) added to their reaction time, while trials in the hard condition have +0.5 \* 50ms (i.e., +25ms) added to their reaction time.
 
@@ -243,7 +243,7 @@ The DV is equal to the grand intercept (400) plus the subject's intercept (-99.6
 
 In this simulated dataset, the grand intercept is 401.6, the mean difference between subject conditions is 60.2, and the mean difference between stimulus versions is -49.5.
 
-### Simulating Interactions
+### Interactions
 
 If you want to simulate an interaction, it can be tricky to figure out what to set the main effects and interaction effect to. It can be easier to think about the simple main effects for each cell. Create four new variables and set them to the deviations from the overall mean you'd expect for each condition (so they should add up to 0). Here, we're simulating a small effect of version in the hard condition (50ms difference) and double that effect of version in the easy condition (100ms difference).
 
@@ -397,7 +397,7 @@ mod.sum
 ## sb_cnd.:s_. 0.000  0.000  0.000
 ```
 
-### Sense Checks {#rint-sense-checks}
+### Sense checks {#rint-sense-checks}
 
 First, check that your groups make sense (`mod.sum$ngrps`). 
 
@@ -441,7 +441,7 @@ Finally, look at the fixed effects (`mod.sum$coefficients`).
 ## sub_cond.e:stim_version.e    51.05     0.7092 19749.0  71.9876 0.000e+00
 ```
 
-### Random Effects {#rint-ranef}
+### Random effects {#rint-ranef}
 
 Plot the subject intercepts from our code above (`sub$sub_i`) against the subject intercepts calculcated by `lmer` (`ranef(mod)$sub_id`).
 
@@ -659,7 +659,7 @@ sim_lmer(hard_congr = 0,
 ## Model failed to converge with max|grad| = 0.00336514 (tol = 0.002, component 1)
 ```
 
-## Simulating Random Slopes
+## Random slopes
 
 In the example so far we've ignored random variation among subjects or stimuli in the size of the fixed effects (i.e., **random slopes**). 
 
@@ -917,7 +917,7 @@ mod.sum
 ## Model failed to converge with max|grad| = 0.0132569 (tol = 0.002, component 1)
 ```
 
-### Sense Checks {#rslope-sense-checks}
+### Sense checks {#rslope-sense-checks}
 
 First, check that your groups make sense (`mod.sum$ngrps`). 
 

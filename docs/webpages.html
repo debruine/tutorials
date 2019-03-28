@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>C Pipes | Tutorials</title>
+  <title>Chapter 3 Webpages | Tutorials</title>
   <meta name="description" content="Tutorial materials">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="C Pipes | Tutorials" />
+  <meta property="og:title" content="Chapter 3 Webpages | Tutorials" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="C Pipes | Tutorials" />
+  <meta name="twitter:title" content="Chapter 3 Webpages | Tutorials" />
   
   <meta name="twitter:description" content="Tutorial materials" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="setup-git.html">
-<link rel="next" href="symbols.html">
+<link rel="prev" href="sim-lmer.html">
+<link rel="next" href="installing-r.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -243,162 +243,332 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pipes" class="section level1">
-<h1><span class="header-section-number">C</span> Pipes</h1>
-<p><img src="images/pipe_sticker.png" style="width: 200px; float: right;"></p>
-<p>Pipes are a way to order your code in a more readable format.</p>
-<p>Let's say you have a small data table with 10 participant IDs, two columns with variable type A, and 2 columns with variable type B. You want to calculate the mean of the A variables and the mean of the B variables and return a table with 10 rows (1 for each participant) and 3 columns (<code>id</code>, <code>A_mean</code> and <code>B_mean</code>).</p>
-<p>One way you could do this is by creating a new object at every step and using that object in the next step. This is pretty clear, but you've created 6 unnecessary data objects in your environment. This can get confusing in very long scripts.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-
-<span class="co"># make a data table with 10 subjects</span>
-data_original &lt;-<span class="st"> </span><span class="kw">tibble</span>(
-  <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,
-  <span class="dt">A1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">0</span>),
-  <span class="dt">A2 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">1</span>),
-  <span class="dt">B1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">2</span>),
-  <span class="dt">B2 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">3</span>)
-)
-
-<span class="co"># gather columns A1 to B2 into &quot;variable&quot; and &quot;value&quot; columns</span>
-data_gathered &lt;-<span class="st"> </span><span class="kw">gather</span>(data_original, variable, value, A1<span class="op">:</span>B2)
-
-<span class="co"># separate the variable column at the _ into &quot;var&quot; and &quot;var_n&quot; columns</span>
-data_separated &lt;-<span class="st"> </span><span class="kw">separate</span>(data_gathered, variable, <span class="kw">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;var_n&quot;</span>), <span class="dt">sep =</span> <span class="dv">1</span>)
-
-<span class="co"># group the data by id and var</span>
-data_grouped &lt;-<span class="st"> </span><span class="kw">group_by</span>(data_separated, id, var)
-
-<span class="co"># calculate the mean value for each id/var </span>
-data_summarised &lt;-<span class="st"> </span><span class="kw">summarise</span>(data_grouped, <span class="dt">mean =</span> <span class="kw">mean</span>(value))
-
-<span class="co"># spread the mean column into A and B columns</span>
-data_spread &lt;-<span class="st"> </span><span class="kw">spread</span>(data_summarised, var, mean)
-
-<span class="co"># rename A and B to A_mean and B_mean</span>
-data &lt;-<span class="st"> </span><span class="kw">rename</span>(data_spread, <span class="dt">A_mean =</span> A, <span class="dt">B_mean =</span> B)</code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="right">id</th>
-<th align="right">A_mean</th>
-<th align="right">B_mean</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">0.7834151</td>
-<td align="right">2.221239</td>
-</tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="right">0.0727862</td>
-<td align="right">2.052466</td>
-</tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">1.0975524</td>
-<td align="right">2.802452</td>
-</tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">1.6159707</td>
-<td align="right">1.459485</td>
-</tr>
-<tr class="odd">
-<td align="right">5</td>
-<td align="right">0.6841141</td>
-<td align="right">3.345551</td>
-</tr>
-<tr class="even">
-<td align="right">6</td>
-<td align="right">1.1469719</td>
-<td align="right">1.857865</td>
-</tr>
-<tr class="odd">
-<td align="right">7</td>
-<td align="right">-0.2070695</td>
-<td align="right">1.996193</td>
-</tr>
-<tr class="even">
-<td align="right">8</td>
-<td align="right">0.6342169</td>
-<td align="right">1.890787</td>
-</tr>
-<tr class="odd">
-<td align="right">9</td>
-<td align="right">-0.4276909</td>
-<td align="right">2.104264</td>
-</tr>
-<tr class="even">
-<td align="right">10</td>
-<td align="right">0.4651093</td>
-<td align="right">2.527036</td>
-</tr>
-</tbody>
-</table>
-<p class="warning">
-You <em>can</em> name each object <code>data</code> and keep replacing the old data object with the new one at each step. This will keep you environment clean, but I don't recommend it because it makes it too easy to accidentally run your code out of order when you are running line-by-line for development or debugging.
-</p>
-<p>One way to avoid extra objects is to nest your functions, literally replacing each data object with the code that generated it in the previous step. This can be fine for very short chains.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_petal_width &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">mean</span>(iris<span class="op">$</span>Petal.Width), <span class="dv">2</span>)</code></pre></div>
-<p>But it gets extremely confusing for long chains:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># do not ever do this!!</span>
-data &lt;-<span class="st"> </span><span class="kw">rename</span>(
-  <span class="kw">spread</span>(
-    <span class="kw">summarise</span>(
-      <span class="kw">group_by</span>(
-        <span class="kw">separate</span>(
-          <span class="kw">gather</span>(
-            <span class="kw">tibble</span>(
-              <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,
-              <span class="dt">A1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">0</span>),
-              <span class="dt">A2 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">1</span>),
-              <span class="dt">B1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">2</span>),
-              <span class="dt">B2 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">3</span>)), 
-            variable, value, A1<span class="op">:</span>B2), 
-          variable, <span class="kw">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;var_n&quot;</span>), <span class="dt">sep =</span> <span class="dv">1</span>), 
-        id, var), 
-      <span class="dt">mean =</span> <span class="kw">mean</span>(value)), 
-    var, mean), 
-  <span class="dt">A_mean =</span> A, <span class="dt">B_mean =</span> B)</code></pre></div>
-<p>The pipe lets you &quot;pipe&quot; the result of each function into the next function, allowing you to put your code in a logical order without creating too many extra objects.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate mean of A and B variables for each participant</span>
-data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
-  <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,
-  <span class="dt">A1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">0</span>),
-  <span class="dt">A2 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">1</span>),
-  <span class="dt">B1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">2</span>),
-  <span class="dt">B2 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">3</span>)
-) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(variable, value, A1<span class="op">:</span>B2) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">separate</span>(variable, <span class="kw">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;var_n&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(id, var) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(value)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread</span>(var, mean) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">rename</span>(<span class="dt">A_mean =</span> A, <span class="dt">B_mean =</span> B)</code></pre></div>
-<p>You can read this code from top to bottom as follows:</p>
-<ol style="list-style-type: decimal">
-<li>Make a tibble called <code>data</code> with
+<div id="webpages" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Webpages</h1>
+<div id="learning-objectives-1" class="section level2">
+<h2><span class="header-section-number">3.1</span> Learning objectives</h2>
 <ul>
-<li><code>id</code> of 1 to 10,</li>
-<li><code>A1</code> of 10 random numbers from a normal distribution with a mean of 0,</li>
-<li><code>A2</code> of 10 random numbers from a normal distribution with a mean of 1,</li>
-<li><code>B1</code> of 10 random numbers from a normal distribution with a mean of 2,</li>
-<li><code>B2</code> of 10 random numbers from a normal distribution with a mean of 3; and then</li>
-</ul></li>
-<li>Gather to create <code>variable</code> and <code>value</code> column from columns <code>A_1</code> to <code>B_2</code>; and then</li>
-<li>Separate the column <code>variable</code> into 2 new columns called <code>var</code>and <code>var_n</code>, separate at character 1; and then</li>
-<li>Group by columns <code>id</code> and <code>var</code>; and then</li>
-<li>Summarise and new column called <code>mean</code> as the mean of the <code>value</code> column for each group; and then</li>
-<li>Spread to make new columns with the key names in <code>var</code> and values in <code>mean</code>; and then</li>
-<li>Rename to make columns called <code>A_mean</code> (old <code>A</code>) and <code>B_mean</code> (old <code>B</code>)</li>
+<li><a href="webpages.html#webpage-create">Create a simple webpage using R Markdown</a></li>
+<li><a href="setup-git.html#setup-git">Use version control with your files</a></li>
+<li><a href="webpages.html#webpage-content">Create content in R Markdown</a></li>
+<li><a href="webpages.html#webpage-pages">Link multiple pages</a></li>
+<li><a href="webpages.html#webpage-styles">Style your content using <code>css</code></a></li>
+<li><a href="webpages.html#webpage-online">Host your website on GitHub or GitLab</a></li>
+</ul>
+</div>
+<div id="webpage-create" class="section level2">
+<h2><span class="header-section-number">3.2</span> Create a webpage</h2>
+<div id="create-a-project" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Create a project</h3>
+<ol style="list-style-type: decimal">
+<li>Choose <code>New Project...</code> from the <code>File</code> menu (don't save any workspaces)</li>
+<li>Choose the <code>Version Control</code> option If you don't have this option, <a href="setup-git.html#setup-git">set up git</a> using the instructions in Appendix @ref(#setup-git).</li>
+<li>Choose the <code>Git</code> option to clone a project from a git repository</li>
+<li><p>Set the <code>Repository URL</code> This will look something like <code>ssh://git@github.com/USERNAME/mywebpage.git</code> or <code>git@gitlab.com:USERNAME/mywebpage.git</code>. Make sure to replace <code>USERNAME</code> with your GitHub or GitLab username and <code>mywebpage</code> with the name of your project if you didn't use that name.</p>
+<img src="images/clone_git.png" /></li>
+<li><p>Type in your SSH passphrase</p></li>
 </ol>
-<p>You can make intermediate objects whenever you need to break up your code because it's getting too complicated or you need to debug something.</p>
-<p class="info">
-You can debug a pipe by running just the first few functions by highlighting from the beginning to just before the pipe you want to stop at. Try this by highlighting from <code>data &lt;-</code> to the end of the <code>separate</code> function and typing cmd-return. What does <code>data</code> look like now?
+</div>
+<div id="site-header" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Site header</h3>
+<p>This is where you can set options like whether to show a table of contents and what the navigation bar will look like. We'll edit this later to add a section menu.</p>
+<ol style="list-style-type: decimal">
+<li>Make a new file Choose <code>New File &gt; Text File</code> from the <code>File</code> menu</li>
+<li><p>Put the following text in the file:</p>
+<pre><code>name: &quot;mywebpage&quot;  
+author: &quot;YOUR NAME&quot;  
+output_dir: &quot;docs&quot;  
+output:  
+  html_document:  
+    self_contained: no  
+    theme: flatly  
+navbar:  
+  title: &quot;My First Webpage&quot;  </code></pre></li>
+<li><p>Save the file as <code>_site.yml</code> (do not change the name)</p></li>
+</ol>
+</div>
+<div id="site-script-only-for-gitlab" class="section level3">
+<h3><span class="header-section-number">3.2.3</span> Site script (only for GitLab)</h3>
+<p>This file contains instructions for copying files from your private GitLab repository to the public web resources. You don't need it for a GitHub website because all the files are public.</p>
+<ol style="list-style-type: decimal">
+<li>Make a new file Choose <code>New File &gt; Text File</code> from the <code>File</code> menu</li>
+<li><p>Put the following text in the file:</p>
+<pre><code>pages:
+  stage: deploy
+  script:
+  - mkdir .public
+  - cp -r docs/* .public
+  - mv .public public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master</code></pre></li>
+<li><p>Save the file as <code>.gitlab-ci.yml</code> (do not change the name)</p></li>
+</ol>
+</div>
+<div id="main-page" class="section level3">
+<h3><span class="header-section-number">3.2.4</span> Main page</h3>
+<ol style="list-style-type: decimal">
+<li>Make a new file Choose <code>New File &gt; R Markdown...</code> from the <code>File</code> menu <img src="images/new_rmarkdown.png" /></li>
+<li><p>Replace all of the default text with the following text:</p>
+<pre><code>---
+title: &quot;My Website Name&quot;
+---
+
+I am a postgraduate student in the University of Glasgow&#39;s
+[Institute of Neuroscience and Psychology](http://www.gla.ac.uk/researchinstitutes/neurosciencepsychology/).
+I work with [Supervisor&#39;s Name](http://supervisor/website)</code></pre></li>
+<li>Personalise the website name, supervisor name, and supervisor website link.</li>
+<li><p>Save the file as <code>index.Rmd</code> (do not change the name)</p></li>
+</ol>
+</div>
+<div id="render-the-site" class="section level3">
+<h3><span class="header-section-number">3.2.5</span> Render the site</h3>
+<ol style="list-style-type: decimal">
+<li>Type <code>rmarkdown::render_site()</code> into the lower left Console pane. You might get some error messages about the graphics engine. You can ignore those for now.</li>
+<li>Click on the <code>docs</code> directory in the <code>Files</code> tab of the lower right pane</li>
+<li>Click on <code>index.html</code> and choose <code>View in Web Browser</code></li>
+<li>Check if your links work, edit and repeat if they don't</li>
+</ol>
+</div>
+</div>
+<div id="webpage-content" class="section level2">
+<h2><span class="header-section-number">3.3</span> Add content</h2>
+<p>If you are comfortable with HTML, you can write most of your page in HTML. If not, I'd suggest using rmarkdown, whcih is a simple way to indicate headings, paragraphs, links, lists and images.</p>
+<div id="headings-and-paragraphs" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Headings and paragraphs</h3>
+<p>Headings are prefaces with hashes <code>#</code>. The largest, title heading gets one hash and each subheading level adds another hash.</p>
+<p>Paragraphs don't require any special marks, they are just automatically created when you skip a line between blocks of text.</p>
+<pre><code>### Headings and paragraphs
+
+Headings are prefaces with hashes `#`. The largest, title heading gets one hash and each subheading level adds another hash. 
+
+Paragraphs don&#39;t require any special marks, they are just automatically created when you skip a line between blocks of text.</code></pre>
+</div>
+<div id="links" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> Links</h3>
+<p>Links are just text surrounded by square brackets, followed by the URL surrounded by parentheses. Start the URL with <code>http://</code> if it's an external website. If you want to link to one of your own pages, you can just put the name of the page.</p>
+<p>I can link to <a href="http://google.com">Google</a> or to <a href="index.html">my own main page</a>.</p>
+<pre><code>I can link to [Google](http://google.com) or to [my own main page](index.html).</code></pre>
+</div>
+<div id="lists" class="section level3">
+<h3><span class="header-section-number">3.3.3</span> Lists</h3>
+<p>You can make bullet point lists by prefacing items with <code>*</code> or numeric lists by prefacing them with numbers. Make nested lists by indenting 4 spaces.</p>
+<p>Face Research Lab:</p>
+<ul>
+<li>Permanent Staff
+<ul>
+<li>Lisa</li>
+<li>Ben</li>
+</ul></li>
+<li>Postdocs
+<ul>
+<li>Iris</li>
+<li>Ant</li>
+<li>Kieran</li>
+</ul></li>
+<li>PhD Students
+<ul>
+<li>Danielle</li>
+<li>Chengyang</li>
+<li>Vanessa</li>
+<li>Jaimie</li>
+</ul></li>
+</ul>
+<p>Things I need to do:</p>
+<ol style="list-style-type: decimal">
+<li>Finish this lesson</li>
+<li>Write new R script for hormones project</li>
+<li>Write reference letter</li>
+<li>Check Moodle</li>
+</ol>
+<pre><code>Face Research Lab:
+
+* Permanent Staff
+    * Lisa
+    * Ben
+* Postdocs
+    * Iris
+    * Ant
+    * Kieran
+* PhD Students
+    * Danielle
+    * Chengyang 
+    * Vanessa
+    * Jaimie
+
+Things I need to do:
+
+1. Finish this lesson
+1. Write new R script for hormones project
+1. Write reference letter
+1. Check Moodle</code></pre>
+<div class="info">
+<p>
+Notice how the numeric list uses all number <code>1</code>. You can use incrementing numbers if you want, but using all <code>1</code>s makes it easier to change the order of your items with out having the renumber.
 </p>
+</div>
+</div>
+<div id="images" class="section level3">
+<h3><span class="header-section-number">3.3.4</span> Images</h3>
+<p>Images are created much like links. Just put an exclamation mark (<code>!</code>) before the first brasket and put some explanatory text (title and image credit) in the squre brackets, and the image location in the parentheses.</p>
+<div class="figure">
+<img src="images/pangolin.jpg" alt="A pangolin, by Bart Wursten" />
+<p class="caption">A pangolin, by Bart Wursten</p>
+</div>
+<pre><code>![A pangolin, by Bart Wursten](images/pangolin.jpg)</code></pre>
+</div>
+</div>
+<div id="webpage-pages" class="section level2">
+<h2><span class="header-section-number">3.4</span> Add pages</h2>
+<ol style="list-style-type: decimal">
+<li>Create a new .Rmd file for each webpage</li>
+<li>Add content to the webpages (more on this below)</li>
+<li>Type <code>rmarkdown::render_site()</code> in the Console window</li>
+</ol>
+</div>
+<div id="webpage-styles" class="section level2">
+<h2><span class="header-section-number">3.5</span> Styles</h2>
+<div id="change-the-theme" class="section level3">
+<h3><span class="header-section-number">3.5.1</span> Change the theme</h3>
+<p>The <code>_site.yml</code> file <code>theme</code> option specifies the <a href="https://bootswatch.com/4-alpha/">Bootstrap theme</a> to use for the page. You can use <code>default</code>, <code>cerulean</code>, <code>journal</code>, <code>flatly</code>, <code>readable</code>, <code>spacelab</code>, <code>united</code>, <code>cosmo</code>, <code>lumen</code>, <code>paper</code>, <code>sandstone</code>, <code>simplex</code>, and <code>yeti</code>. Annoyingly, there are no dark themes available by default.</p>
+<pre><code>name: &quot;mywebpage&quot;  
+author: &quot;YOUR NAME&quot;  
+output_dir: &quot;docs&quot;  
+output:  
+  html_document:  
+    self_contained: no  
+    theme: flatly  
+    css: style.css
+navbar:  
+  title: &quot;My First Webpage&quot;  </code></pre>
+</div>
+<div id="add-custom-styles" class="section level3">
+<h3><span class="header-section-number">3.5.2</span> Add custom styles</h3>
+<p>You can also add a custom style sheet (a document that determines how each element of your website should look) by adding the line <code>css: style.css</code> under <code>html_document:</code> in the <code>_site.yml</code> file (as above).</p>
+<p>Then you need to create a file named <code>style.css</code> and add your custom styles there. The web has thousands of guides to CSS, but <a href="https://www.codecademy.com/en/tracks/htmlcss">codeacademy</a> has great interactive tutorials for learning html, css, and even more advanced web coding like javascript.</p>
+<p>However, the basics of css are easy to learn and it's best to just start playing around with it. Add the following text to your <code>style.css</code> file and re-render the website using <code>rmarkdown::render_site()</code>.</p>
+</div>
+<div id="change-global-fonts-and-colours" class="section level3">
+<h3><span class="header-section-number">3.5.3</span> Change global fonts and colours</h3>
+<pre><code>html {
+  font-size: 2em;
+  font-family: &quot;Times New Roman&quot;;
+  color: white;
+  background-color: hsl(360, 100%, 20%);
+}</code></pre>
+<style>
+  #html-example * {
+    font-size: 2em;
+    font-family: "Times New Roman";
+    color: white;
+    background-color: hsl(300, 100%, 20%);
+  }
+</style>
+<div id="html-example">
+<p>This will make all the text on your website twice as large, a different font, and change the text and background colours.</p>
+</div>
+</div>
+<div id="change-certain-elements" class="section level3">
+<h3><span class="header-section-number">3.5.4</span> Change certain elements</h3>
+<p>Maybe you only want to change the font colour for your headings, not the rest of the text. You can apply a style to a specific <em>element</em> type by specifying the element name before the curly brackets.</p>
+<pre><code>h1, h2, h3 {
+  text-align: center;
+  color: hsl(0, 100%, 20%);
+}
+
+h3 {
+  font-style: italic;
+}
+
+p {
+  border: 1px solid green;
+  padding: 10px;
+  line-height: 2;
+}
+
+ul {
+  border: 3px dotted red;
+  border-radius: 10px;
+  padding: 10px 30px;
+}</code></pre>
+<style>
+  #h-example h2, 
+  #h-example h3, 
+  #h-example h4 {
+    text-align: center;
+    color: hsl(0, 100%, 20%);
+  }
+  
+  #h-example h4 {
+    font-style: italic;
+  }
+  
+  #h-example p {
+    border: 1px solid green;
+    padding: 10px;
+    line-height: 2;
+  }
+  
+  #h-example ul {
+    border: 3px dotted red;
+    border-radius: 10px;
+    padding: 10px 30px;
+  }
+</style>
+<div id="h-example">
+<h2 id="example-using-the-styles-above"><span class="header-section-number">3.5.4</span> Example using the styles above</h2>
+<p>The CSS above changes the styles for three levels of headers (<code>h2</code>, <code>h3</code>, <code>h4</code>) and sets the third level to italics.</p>
+<h3 id="level-3-header"><span class="header-section-number">3.5.4</span> Level 3 header</h3>
+<p>It also gives paragraphs (<code>p</code>) a green border and double-spacing.</p>
+<h4 id="level-4-header"><span class="header-section-number">3.5.4</span> Level 4 header</h4>
+<p>Unordered Lists (<code>ul</code>) get:</p>
+<ul>
+<li>dotted red border</li>
+<li>round corners</li>
+<li>increased padding on top (<code>10px</code>) and sides (<code>30px</code>)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="webpage-online" class="section level2">
+<h2><span class="header-section-number">3.6</span> Put your webpage online</h2>
+<div id="save-this-version-with-git" class="section level3">
+<h3><span class="header-section-number">3.6.1</span> Save this version with git</h3>
+<ol style="list-style-type: decimal">
+<li>Click on the <code>git</code> tab in the upper right pane <img src="images/git_tab.png" /></li>
+<li>Stage your files Select all (cmd-A) and click on a checkbox in the <code>Staged</code> column to select all files <img src="images/git_stage_all.png" /></li>
+<li>Commit your changes Click <code>Commit</code>. A new window will open. Type <code>Added site and index pages</code> in the <code>Commit message</code> box and click <a class="btn btn-default btn-xs">Commit</a> <img src="images/initial_commit.png" /></li>
+<li>Close the progress window and the commit window</li>
+<li>Upload your changes
+<ul>
+<li>Click <code>Push</code> (the green up arrow)</li>
+<li>Enter your SSH passphrase</li>
+<li>Close the window when it's done</li>
+</ul></li>
+<li>Go to your GitHub or GitLab page; the new files should be in your repository <img src="images/first_commit.png" /></li>
+</ol>
+</div>
+<div id="github" class="section level3">
+<h3><span class="header-section-number">3.6.2</span> GitHub</h3>
+<p>To use a GitHub repository as a website, you need to set the source directory the first time you add files to the <code>docs</code> directory.</p>
+<ol style="list-style-type: decimal">
+<li>Go to the website for your GitHub repository (e.g., <code>https://github.com/username/mywebpage</code>)</li>
+<li>Click on the <code>Settings</code> tab and scroll down to <code>GitHub Pages</code></li>
+<li>Under <strong><code>Source</code></strong>, choose <code>master branch /docs folder</code> and click <strong><code>Save</code></strong> <img src="images/github_docs.png" /></li>
+<li>Click on the link that appears above (e.g., <code>https://debruine.github.io/mywebpage/</code>)</li>
+</ol>
+</div>
+<div id="gitlab" class="section level3">
+<h3><span class="header-section-number">3.6.3</span> GitLab</h3>
+<p>If you are working in GitLab, your webpage should be created in a minute or two. Just go to the URL like <code>https://myusername.gitlab.io/mywebpage/</code>.</p>
+
+</div>
+</div>
+</div>
+
+
 
 </div>
 <div class="psyteachr_footer">
@@ -491,8 +661,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="setup-git.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="symbols.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="sim-lmer.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="installing-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
