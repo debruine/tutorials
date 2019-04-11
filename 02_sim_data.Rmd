@@ -16,7 +16,7 @@ Let's start with a simple independent-samples design where the variables are fro
 * What are the score means?
 * What are the score variances?
 
-I start simulation scripts by setting variables for these values.
+I start simulation scripts by setting parameters for these values.
 
 ```{r ind-vars}
 
@@ -115,7 +115,9 @@ t.test(dat$A, dat$B, paired = TRUE)
 
 Now I'm going to show you a different way to simulate the same design. This might seem excessively complicated, but you will need this pattern when you start simulating data for [mixed effects models](#sim_lmer).
 
-Remember, we used the following variables to set up our simulation above:
+### Parameters
+
+Remember, we used the following parameters to set up our simulation above:
 
 ```{r paired-vars2}
 sub_n <- 100
@@ -133,10 +135,19 @@ grand_i <- (A_mean + B_mean)/2
 AB_effect <- B_mean - A_mean
 ```
 
-We also need to think about variance a little differently. First, calculate the pooled variance as the mean of the variances for A and B (remember, variance is SD squared). The variance of the subject intercepts is `r` times this pooled variance and the error variance is what is left over. We take the square root (`sqrt()`) to set the subject intercept and error SDs for simulation later.
+We also need to think about variance a little differently. First, calculate the pooled variance as the mean of the variances for A and B (remember, variance is SD squared).
 
 ```{r}
 pooled_var <- (A_sd^2 + B_sd^2)/2
+```
+
+```{block, type="warning"}
+If the SDs for A and B are very different, this suggests a more complicated data generation model. For this tutorial we'll assume the score variance is similar for conditions A and B.
+```
+
+The variance of the subject intercepts is `r` times this pooled variance and the error variance is what is left over. We take the square root (`sqrt()`) to set the subject intercept and error SDs for simulation later.
+
+```{r}
 sub_sd <- sqrt(pooled_var * AB_r)
 error_sd <- sqrt(pooled_var * (1-AB_r))
 ```
@@ -144,6 +155,8 @@ error_sd <- sqrt(pooled_var * (1-AB_r))
 ```{block type="info"}
 You can think about the subject intercept variance as how much subjects vary in the score in general, regardless of condition. If they vary a lot, in comparison to the random "error" variation, then scores in the two conditions will be highly correlated. If they don't vary much (or random variation from trial to trial is quite large), then scores won't be well correlated.
 ```
+
+### Subject intercepts
 
 Now we use these variables to create a data table for our subjects. Each subject gets an ID and a **random intercept** (`sub_i`). The intercept is simulated from a random normal distribution with a mean of 0 and an SD of `sub_sd`. This represents how much higher or lower than the average score each subject tends to be (regardless of condition).
 
@@ -154,6 +167,8 @@ sub <- tibble(
 )
 ```
 
+### Observations
+
 Next, set up a table where each row represents one observation. We'll use one of my favourite functions for simulation: `expand.grid()`. This creates every possible combination of the listed factors. Here, we're using it to create a row for each subject in each condition, since this is a fully within-subjects design.
 
 ```{r}
@@ -162,6 +177,8 @@ obs <- expand.grid(
   condition = c("A", "B")
 )
 ```
+
+### Calculate the score
 
 Next, we join the subject table so each row has the information about the subject's random intercept and then calculate the score. I've done it in a few steps below for clarity. The score is just the sum of:
 
@@ -182,7 +199,7 @@ dat <- obs %>%
 ```
 
 ```{block, type="info"}
-The code above "effect codes" condition, which we will use later in a mixed effect model. You can learn more about [coding schemes](https://debruine.github.io/posts/coding-schemes/) here.
+The variable `condition.e` "effect codes" condition, which we will use later in a mixed effect model. You can learn more about [coding schemes](https://debruine.github.io/posts/coding-schemes/) here.
 ```
 
 You can use the following code to put the data table into a more familiar "wide" format.
@@ -202,7 +219,9 @@ dat_wide %>%
   faux::check_sim_stats(usekable = TRUE)
 ```
 
-You can analyse the data from the wide format:
+### Analyses
+
+You can analyse the data with a paired-samples t-test from the wide format:
 
 ```{r}
 t.test(dat_wide$A, dat_wide$B, paired = TRUE)
@@ -213,6 +232,13 @@ Or in the long format:
 ```{r}
 t.test(score ~ condition, dat, paired = TRUE)
 ```
+
+You can analyse the data with ANOVA.
+
+```{r}
+afex::aov_4(score ~ (condition.e | sub_id), data = dat)
+```
+
 
 You can even analyse the data with a mixed effects model. 
 
@@ -226,8 +252,9 @@ summary(lmem)$coefficients %>%
   knitr::kable(digits = 3)
 ```
 
+## Functions
 
-We can put everything together into a function where you specify the subject number, means, SDs and correlation and it returns a data table.
+We can put everything together into a function where you specify the subject number, means, SDs and correlation, it translates this into the intercept specification, and returns a data table.
 
 ```{r sim-paired-dat-func}
 
@@ -280,5 +307,136 @@ sim_paired_data(10000, c(0, 0.5), c(1, 1), .25) %>%
   faux::check_sim_stats(usekable = TRUE)
 ```
 
+It might be more suerful to create functions to translate back and forth from the distribution specification to the intercept specification.
 
+### Distribution to intercept specification
+
+```{r dist2int-func}
+dist2int <- function(mu = 0, sd = 1, r = 0) {
+  A_mean <- mu[1]
+  B_mean <- ifelse(is.na(mu[2]), mu[1], mu[2])
+  A_sd <- sd[1]
+  B_sd <- ifelse(is.na(sd[2]), sd[1], sd[2])
+  AB_r <- r
+  pooled_var <- (A_sd^2 + B_sd^2)/2
+  
+  list(
+    grand_i = (A_mean + B_mean)/2,
+    AB_effect = B_mean - A_mean,
+    sub_sd = sqrt(pooled_var * AB_r),
+    error_sd = sqrt(pooled_var * (1-AB_r))
+  )
+}
+```
+
+```{r, eval = FALSE}
+dist2int()
+```
+
+
+```{r, echo = FALSE}
+dist2int() %>%
+  as_tibble() %>%
+  t() %>%
+  knitr::kable(col.names = "")
+```
+
+```{r, eval = FALSE}
+dist2int(mu = c(100, 105), sd = c(10.5, 9.5), r = 0.5)
+```
+
+
+```{r, echo = FALSE}
+dist2int(mu = c(100, 105), sd = c(10.5, 9.5), r = 0.5) %>%
+  as_tibble() %>%
+  t() %>%
+  knitr::kable(col.names = "", digits = 3)
+```
+
+### Intercept to distribution specification
+
+```{r int2dist-func}
+int2dist <- function(grand_i = 0, 
+                     AB_effect = 0, 
+                     sub_sd = 0, 
+                     error_sd = 1) {
+  pooled_var <- sub_sd^2 + error_sd^2
+   
+  list(
+    A_mean = grand_i - 0.5 * AB_effect,
+    B_mean = grand_i + 0.5 * AB_effect,
+    A_sd = sqrt(pooled_var),
+    B_sd = sqrt(pooled_var),
+    AB_r = sub_sd^2 / pooled_var
+  )
+}
+```
+
+```{r, eval = FALSE}
+int2dist()
+```
+
+
+```{r, echo = FALSE}
+int2dist() %>%
+  as_tibble() %>%
+  t() %>%
+  knitr::kable(col.names = "")
+```
+
+```{r, eval = FALSE}
+int2dist(102.5, 5, 0.708, 0.708)
+```
+
+
+```{r, echo = FALSE}
+int2dist(102.5, 5, 0.708, 0.708) %>%
+  as_tibble() %>%
+  t() %>%
+  knitr::kable(col.names = "", digits = 3)
+```
+
+We can then use either sepcification to generate data with either technique.
+
+
+
+
+
+
+
+```{r func-check, eval = FALSE, echo = FALSE}
+
+library(purrr)
+
+sim <- expand.grid(
+  A = 0:5,
+  B = 0:5,
+  SD = 1:5,
+  cor = seq(0,0.8, .1)
+) %>%
+  mutate(
+    int = pmap(
+      list(A, B, SD, cor),
+      function(A, B, SD, cor) { dist2int(c(A, B), c(SD, SD), cor) }
+    ),
+    int = purrr::map(int, as_tibble)
+  ) %>%
+  unnest() %>%
+  mutate(
+    dist = pmap(
+      list(grand_i, AB_effect, sub_sd, error_sd),
+      int2dist
+    ),
+    dist = map(dist, as_tibble)
+  ) %>%
+  unnest()
+
+plot(sim$A,sim$A_mean)
+plot(sim$B, sim$B_mean)
+plot(sim$SD, sim$A_sd)
+plot(sim$SD, sim$B_sd)
+plot(sim$cor, sim$AB_r)
+
+
+```
 
