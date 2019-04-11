@@ -12,11 +12,13 @@ set.seed(8675309) # this makes sure your script uses the same set of random numb
 
 ## Independent samples
 
-Let's start with a simple independent-samples design where the variables are from a normal distribution. Each subject produces one score (in conditions A or B). What we need to know about these scores is:
+Let's start with a simple independent-samples design where the variables are from a normal distribution. Each subject produces one score (in condition A or B). What we need to know about these scores is:
 
 * How many subjects are in each condition?
 * What are the score means?
 * What are the score variances?
+
+### Parameters {#ind-params}
 
 I start simulation scripts by setting parameters for these values.
 
@@ -25,10 +27,12 @@ I start simulation scripts by setting parameters for these values.
 A_sub_n <- 50
 B_sub_n <- 50
 A_mean <- 10
-B_mean <- 12
+B_mean <- 11
 A_sd <- 2.5
 B_sd <- 2.5
 ```
+
+### Scores
 
 We can the generate the scores using the `rnorm()` <a class='glossary' target='_blank' title='A named section of code that can be reused.' href='https://psyteachr.github.io/glossary/f#function'>function</a>.
 
@@ -38,7 +42,9 @@ A_scores <- rnorm(A_sub_n, A_mean, A_sd)
 B_scores <- rnorm(B_sub_n, B_mean, B_sd)
 ```
 
-I always use the `tidyverse` for <a class='glossary' target='_blank' title='The process of preparing data for visualisation and statistical analysis.' href='https://psyteachr.github.io/glossary/d#data-wrangling'>data wrangling</a>", so I'll create a data table using the `tibble()` function. We need to know what condition each subject is in, so set the first `A_sub_n` values to "A" and the next `B_sub_n` values to "B". Then set the score to the `A_scores` <a class='glossary' target='_blank' title='To combine strings or vectors.' href='https://psyteachr.github.io/glossary/c#concatenate'>concatenated</a> to the `B_scores`.
+You can stop here and just analyse your simulated data with `t.test(A_scores, B_scores)`, but usualy you want to get your simulated data into a data table that looks like what you might eventually import from a CSV file with your actual experimental data.
+
+I always use the `tidyverse` for <a class='glossary' target='_blank' title='The process of preparing data for visualisation and statistical analysis.' href='https://psyteachr.github.io/glossary/d#data-wrangling'>data wrangling</a>, so I'll create a data table using the `tibble()` function (but you can use `data.frame()` if you must). We need to know what condition each subject is in, so set the first `A_sub_n` values to "A" and the next `B_sub_n` values to "B". Then set the score to the `A_scores` <a class='glossary' target='_blank' title='To combine strings or vectors.' href='https://psyteachr.github.io/glossary/c#concatenate'>concatenated</a> to the `B_scores`.
 
 
 ```r
@@ -48,24 +54,31 @@ dat <- tibble(
 )
 ```
 
+### Check your data
+
 Always examine your simulated data after you generate it to make sure it looks like you want.
 
 
 ```r
-dat %>%
+summary_dat <- dat %>%
   group_by(sub_condition) %>%
   summarise(n = n() ,
             mean = mean(score),
-            sd = sd(score)) %>%
-  knitr::kable()
+            sd = sd(score))
 ```
 
 
 
-sub_condition     n       mean         sd
---------------  ---  ---------  ---------
-A                50   10.25673   2.149247
-B                50   12.00478   2.499963
+sub_condition     n     mean      sd
+--------------  ---  -------  ------
+A                50   10.257   2.149
+B                50   11.005   2.500
+
+<div class="info">
+<p>Your means and SDs won't be <strong>exactly</strong> what you specified because those parameters are for population and you are taking a sample. The larger your <code>sub_n</code>, the closer these values will usually be to the parameters you specify.</p>
+</div>
+
+### Analysis
 
 Now you can analyse your simulated data.
 
@@ -79,15 +92,78 @@ t.test(score~sub_condition, dat)
 ## 	Welch Two Sample t-test
 ## 
 ## data:  score by sub_condition
-## t = -3.7492, df = 95.843, p-value = 0.0003034
+## t = -1.6044, df = 95.843, p-value = 0.1119
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -2.6735571 -0.8225523
+##  -1.6735571  0.1774477
 ## sample estimates:
 ## mean in group A mean in group B 
-##        10.25673        12.00478
+##        10.25673        11.00478
 ```
 
+### Function
+
+You can wrap all this in a function so you can run it many times to do a power calculation. Put all your parameters as <a class='glossary' target='_blank' title='A variable that provides input to a function.' href='https://psyteachr.github.io/glossary/a#argument'>arguments</a> to the function.
+
+
+```r
+ind_sim <- function(A_sub_n, B_sub_n, A_mean, B_mean, A_sd, B_sd) {
+  A_scores <- rnorm(A_sub_n, A_mean, A_sd)
+  B_scores <- rnorm(B_sub_n, B_mean, B_sd)
+  
+  dat <- tibble(
+    sub_condition = rep( c("A", "B"), c(A_sub_n, B_sub_n) ),
+    score = c(A_scores, B_scores)
+  )
+  t <- t.test(score~sub_condition, dat)
+  
+  # return just the values you care about
+  list(
+    t = t$statistic,
+    ci_lower = t$conf.int[1],
+    ci_upper = t$conf.int[2],
+    p = t$p.value,
+    estimate = t$estimate[1] - t$estimate[2]
+  )
+}
+```
+
+<div class="try">
+<p>Run the function with the parameters from the example above. Run it a few times and see how the results compare. What happens if you change a parameter? Edit the list at the end of the function to return more values of interest, like the means for A and B.</p>
+</div>
+
+Now you can use this function to run many simulations. There are a lot of ways to do this. The pattern below uses the `map_df` function from the `purrr` package.
+
+
+```r
+simulation <- purrr::map_df(1:1000, ~ind_sim(50, 50, 10, 11, 2.5, 2.5))
+```
+
+Now you can graph the data from your simulations.
+
+
+```r
+simulation %>%
+  gather(stat, value, t:estimate) %>%
+  ggplot() + 
+  geom_density(aes(value, color = stat), show.legend = FALSE) +
+  facet_wrap(~stat, scales = "free")
+```
+
+<div class="figure" style="text-align: center">
+<img src="02_sim_data_files/figure-html/paired-sim-fig-1.png" alt="Distribution of results from simulated independent samples data" width="100%" />
+<p class="caption">(\#fig:paired-sim-fig)Distribution of results from simulated independent samples data</p>
+</div>
+
+You can calculate power as the proportion of simulations on which the p-value was less than your alpha.
+
+
+```r
+alpha <- 0.05
+power <- mean(simulation$p < alpha)
+```
+
+Your power for the parameters above is 0.496.
 
 
 ## Paired samples
@@ -99,16 +175,19 @@ Now let's try a paired-samples design where the variables are from a normal dist
 * What are the score variances?
 * What is the correlation between the scores?
 
+### Parameters {#paired-params}
 
 
 ```r
 sub_n <- 100
 A_mean <- 10
-B_mean <- 12
+B_mean <- 11
 A_sd <- 2.5
 B_sd <- 2.5
 AB_r <- 0.5
 ```
+
+### Correlated Scores
 
 You can then use `rnorm_multi()` to generate a data table with simulated values for correlated scores:
 
@@ -124,13 +203,17 @@ dat <- faux::rnorm_multi(
 )
 ```
 
+### Check your data
+
 Now check your data; `faux` has a function `check_sim_stats()` that gives you the correlation table, means, and SDs for each numeric column in a data table.
 
 
 var       A      B    mean     sd
 ----  -----  -----  ------  -----
-A      1.00   0.48    9.90   2.46
-B      0.48   1.00   11.88   2.53
+A      1.00   0.57   10.00   2.68
+B      0.57   1.00   10.78   2.58
+
+### Analysis
 
 Finally, you can analyse your simulated data.
 
@@ -144,14 +227,72 @@ t.test(dat$A, dat$B, paired = TRUE)
 ## 	Paired t-test
 ## 
 ## data:  dat$A and dat$B
-## t = -7.7821, df = 99, p-value = 7.01e-12
+## t = -3.2027, df = 99, p-value = 0.001832
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -2.494424 -1.480841
+##  -1.2617664 -0.2964011
 ## sample estimates:
 ## mean of the differences 
-##               -1.987633
+##              -0.7790837
 ```
+
+### Function
+
+The function is set up the same way as before. Set the arguments to the relevant parameters, construct the data table, run the t-test, and return the values you care about.
+
+
+```r
+paired_sim <- function(sub_n, A_mean, B_mean, A_sd, B_sd, AB_r) {
+
+  dat <- faux::rnorm_multi(
+    n = sub_n, 
+    vars = 2, 
+    cors = AB_r, 
+    mu = c(A_mean, B_mean), 
+    sd = c(A_sd, B_sd), 
+    varnames = c("A", "B")
+  )
+  t <- t.test(dat$A, dat$B, paired = TRUE)
+  
+  # return just the values you care about
+  list(
+    t = t$statistic,
+    ci_lower = t$conf.int[1],
+    ci_upper = t$conf.int[2],
+    p = t$p.value,
+    estimate = t$estimate
+  )
+}
+```
+
+Run 1000 simulations and graph the results.
+
+
+```r
+simulation <- purrr::map_df(1:1000, ~paired_sim(100, 10, 11, 2.5, 2.5, .5))
+```
+
+
+```r
+simulation %>%
+  gather(stat, value, t:estimate) %>%
+  ggplot() + 
+  geom_density(aes(value, color = stat), show.legend = FALSE) +
+  facet_wrap(~stat, scales = "free")
+```
+
+<div class="figure" style="text-align: center">
+<img src="02_sim_data_files/figure-html/ind-sim-fig-1.png" alt="Distribution of results from simulated paired samples data" width="100%" />
+<p class="caption">(\#fig:ind-sim-fig)Distribution of results from simulated paired samples data</p>
+</div>
+
+
+```r
+alpha <- 0.05
+power <- mean(simulation$p < alpha)
+```
+
+Your power for the parameters above is 0.982.
 
 ## Intercept model
 
@@ -165,7 +306,7 @@ Remember, we used the following parameters to set up our simulation above:
 ```r
 sub_n <- 100
 A_mean <- 10
-B_mean <- 12
+B_mean <- 11
 A_sd <- 2.5
 B_sd <- 2.5
 AB_r <- 0.5
@@ -266,8 +407,8 @@ Then you can use the `check_sim_stats` function to check this looks correct (rem
 
 var       A      B    mean     sd
 ----  -----  -----  ------  -----
-A      1.00   0.54    9.61   2.72
-B      0.54   1.00   11.83   2.72
+A      1.00   0.42    9.93   2.26
+B      0.42   1.00   10.59   2.48
 
 ### Analyses
 
@@ -283,13 +424,13 @@ t.test(dat_wide$A, dat_wide$B, paired = TRUE)
 ## 	Paired t-test
 ## 
 ## data:  dat_wide$A and dat_wide$B
-## t = -8.4641, df = 99, p-value = 2.408e-13
+## t = -2.5832, df = 99, p-value = 0.01125
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -2.738493 -1.698367
+##  -1.1660212 -0.1529139
 ## sample estimates:
 ## mean of the differences 
-##                -2.21843
+##              -0.6594675
 ```
 
 Or in the long format:
@@ -304,13 +445,13 @@ t.test(score ~ condition, dat, paired = TRUE)
 ## 	Paired t-test
 ## 
 ## data:  score by condition
-## t = -8.4641, df = 99, p-value = 2.408e-13
+## t = -2.5832, df = 99, p-value = 0.01125
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -2.738493 -1.698367
+##  -1.1660212 -0.1529139
 ## sample estimates:
 ## mean of the differences 
-##                -2.21843
+##              -0.6594675
 ```
 
 You can analyse the data with ANOVA.
@@ -324,8 +465,8 @@ afex::aov_4(score ~ (condition.e | sub_id), data = dat)
 ## Anova Table (Type 3 tests)
 ## 
 ## Response: score
-##        Effect    df  MSE         F ges p.value
-## 1 condition.e 1, 99 3.43 71.64 *** .14  <.0001
+##        Effect    df  MSE      F ges p.value
+## 1 condition.e 1, 99 3.26 6.67 * .02     .01
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 ```
@@ -346,10 +487,10 @@ summary(lmem)$coefficients %>%
 
 
 
-Factor         Estimate   Std. Error   df   t value  Pr(>|t|) 
+Factor         Estimate   Std. Error   df   t value   Pr(>|t|)
 ------------  ---------  -----------  ---  --------  ---------
-(Intercept)      10.716        0.238   99    44.985  1.04e-67 
-condition.e       2.218        0.262   99     8.464  2.41e-13 
+(Intercept)      10.258        0.200   99    51.247      0.000
+condition.e       0.659        0.255   99     2.583      0.011
 
 ## Functions
 
@@ -357,13 +498,9 @@ We can put everything together into a function where you specify the subject num
 
 
 ```r
-sim_paired_data <- function(n = 100, mu = c(0,0), sd = c(1,1), r = 0) {
-  sub_n <- n
-  A_mean <- mu[1]
-  B_mean <- mu[2]
-  A_sd <- sd[1]
-  B_sd <- sd[2]
-  AB_r <- r
+sim_paired_data <- function(sub_n = 100, 
+                            A_mean, B_mean, 
+                            A_sd, B_sd, AB_r) {
   
   grand_i <- (A_mean + B_mean)/2
   AB_effect <- B_mean - A_mean
@@ -396,7 +533,7 @@ sim_paired_data <- function(n = 100, mu = c(0,0), sd = c(1,1), r = 0) {
 
 
 ```r
-sim_paired_data(100, c(10, 12), c(2.5, 2.5), .5) %>%
+sim_paired_data(100, 10, 12, 2.5, 2.5, .5) %>%
   select(-sub_id) %>%
   faux::check_sim_stats(usekable = TRUE)
 ```
@@ -405,22 +542,24 @@ sim_paired_data(100, c(10, 12), c(2.5, 2.5), .5) %>%
 
 var       A      B    mean     sd
 ----  -----  -----  ------  -----
-A      1.00   0.48    9.98   2.32
-B      0.48   1.00   11.97   2.62
+A      1.00   0.31   10.01   2.65
+B      0.31   1.00   12.24   2.37
+
+Set the `sub_n` to a very high number to see that the means, SDs and correlations are what you specified.
 
 
 ```r
-sim_paired_data(10000, c(0, 0.5), c(1, 1), .25) %>%
+sim_paired_data(10000, 0, 0.5, 1, 1, .25) %>%
   select(-sub_id) %>%
   faux::check_sim_stats(usekable = TRUE)
 ```
 
 
 
-var       A      B    mean     sd
-----  -----  -----  ------  -----
-A      1.00   0.26   -0.02   1.00
-B      0.26   1.00    0.51   0.99
+var       A      B   mean     sd
+----  -----  -----  -----  -----
+A      1.00   0.25    0.0   0.99
+B      0.25   1.00    0.5   1.01
 
 It might be more suerful to create functions to translate back and forth from the distribution specification to the intercept specification.
 
@@ -430,8 +569,10 @@ It might be more suerful to create functions to translate back and forth from th
 ```r
 dist2int <- function(mu = 0, sd = 1, r = 0) {
   A_mean <- mu[1]
+  # set B_mean to A_mean if mu has length 1
   B_mean <- ifelse(is.na(mu[2]), mu[1], mu[2])
   A_sd <- sd[1]
+  # set B_sd to A_sd if sd has length 1
   B_sd <- ifelse(is.na(sd[2]), sd[1], sd[2])
   AB_r <- r
   pooled_var <- (A_sd^2 + B_sd^2)/2
@@ -444,6 +585,7 @@ dist2int <- function(mu = 0, sd = 1, r = 0) {
   )
 }
 ```
+
 
 
 ```r
@@ -527,12 +669,7 @@ B_sd        1.001
 AB_r        0.500
 -------  --------
 
-We can then use either sepcification to generate data with either technique.
-
-
-
-
-
+We can then use either specification to generate data with either technique.
 
 
 

@@ -146,8 +146,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.10" data-path="packages.html"><a href="packages.html#glossary"><i class="fa fa-check"></i><b>1.10</b> Glossary</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="sim-data.html"><a href="sim-data.html"><i class="fa fa-check"></i><b>2</b> Simulating Data</a><ul>
-<li class="chapter" data-level="2.1" data-path="sim-data.html"><a href="sim-data.html#independent-samples"><i class="fa fa-check"></i><b>2.1</b> Independent samples</a></li>
-<li class="chapter" data-level="2.2" data-path="sim-data.html"><a href="sim-data.html#paired-samples"><i class="fa fa-check"></i><b>2.2</b> Paired samples</a></li>
+<li class="chapter" data-level="2.1" data-path="sim-data.html"><a href="sim-data.html#independent-samples"><i class="fa fa-check"></i><b>2.1</b> Independent samples</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="sim-data.html"><a href="sim-data.html#ind-params"><i class="fa fa-check"></i><b>2.1.1</b> Parameters</a></li>
+<li class="chapter" data-level="2.1.2" data-path="sim-data.html"><a href="sim-data.html#scores"><i class="fa fa-check"></i><b>2.1.2</b> Scores</a></li>
+<li class="chapter" data-level="2.1.3" data-path="sim-data.html"><a href="sim-data.html#check-your-data"><i class="fa fa-check"></i><b>2.1.3</b> Check your data</a></li>
+<li class="chapter" data-level="2.1.4" data-path="sim-data.html"><a href="sim-data.html#analysis"><i class="fa fa-check"></i><b>2.1.4</b> Analysis</a></li>
+<li class="chapter" data-level="2.1.5" data-path="sim-data.html"><a href="sim-data.html#function"><i class="fa fa-check"></i><b>2.1.5</b> Function</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="sim-data.html"><a href="sim-data.html#paired-samples"><i class="fa fa-check"></i><b>2.2</b> Paired samples</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="sim-data.html"><a href="sim-data.html#paired-params"><i class="fa fa-check"></i><b>2.2.1</b> Parameters</a></li>
+<li class="chapter" data-level="2.2.2" data-path="sim-data.html"><a href="sim-data.html#correlated-scores"><i class="fa fa-check"></i><b>2.2.2</b> Correlated Scores</a></li>
+<li class="chapter" data-level="2.2.3" data-path="sim-data.html"><a href="sim-data.html#check-your-data-1"><i class="fa fa-check"></i><b>2.2.3</b> Check your data</a></li>
+<li class="chapter" data-level="2.2.4" data-path="sim-data.html"><a href="sim-data.html#analysis-1"><i class="fa fa-check"></i><b>2.2.4</b> Analysis</a></li>
+<li class="chapter" data-level="2.2.5" data-path="sim-data.html"><a href="sim-data.html#function-1"><i class="fa fa-check"></i><b>2.2.5</b> Function</a></li>
+</ul></li>
 <li class="chapter" data-level="2.3" data-path="sim-data.html"><a href="sim-data.html#intercept-model"><i class="fa fa-check"></i><b>2.3</b> Intercept model</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="sim-data.html"><a href="sim-data.html#parameters"><i class="fa fa-check"></i><b>2.3.1</b> Parameters</a></li>
 <li class="chapter" data-level="2.3.2" data-path="sim-data.html"><a href="sim-data.html#subject-intercepts"><i class="fa fa-check"></i><b>2.3.2</b> Subject intercepts</a></li>
@@ -269,34 +281,42 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">set.seed</span>(<span class="dv">8675309</span>) <span class="co"># this makes sure your script uses the same set of random numbers each time you run the full script (never set this inside a function or loop)</span></code></pre></div>
 <div id="independent-samples" class="section level2">
 <h2><span class="header-section-number">2.1</span> Independent samples</h2>
-<p>Let's start with a simple independent-samples design where the variables are from a normal distribution. Each subject produces one score (in conditions A or B). What we need to know about these scores is:</p>
+<p>Let's start with a simple independent-samples design where the variables are from a normal distribution. Each subject produces one score (in condition A or B). What we need to know about these scores is:</p>
 <ul>
 <li>How many subjects are in each condition?</li>
 <li>What are the score means?</li>
 <li>What are the score variances?</li>
 </ul>
+<div id="ind-params" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Parameters</h3>
 <p>I start simulation scripts by setting parameters for these values.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">A_sub_n &lt;-<span class="st"> </span><span class="dv">50</span>
 B_sub_n &lt;-<span class="st"> </span><span class="dv">50</span>
 A_mean &lt;-<span class="st"> </span><span class="dv">10</span>
-B_mean &lt;-<span class="st"> </span><span class="dv">12</span>
+B_mean &lt;-<span class="st"> </span><span class="dv">11</span>
 A_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
 B_sd &lt;-<span class="st"> </span><span class="fl">2.5</span></code></pre></div>
+</div>
+<div id="scores" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Scores</h3>
 <p>We can the generate the scores using the <code>rnorm()</code> <a class='glossary' target='_blank' title='A named section of code that can be reused.' href='https://psyteachr.github.io/glossary/f#function'>function</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">A_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(A_sub_n, A_mean, A_sd)
 B_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(B_sub_n, B_mean, B_sd)</code></pre></div>
-<p>I always use the <code>tidyverse</code> for <a class='glossary' target='_blank' title='The process of preparing data for visualisation and statistical analysis.' href='https://psyteachr.github.io/glossary/d#data-wrangling'>data wrangling</a>&quot;, so I'll create a data table using the <code>tibble()</code> function. We need to know what condition each subject is in, so set the first <code>A_sub_n</code> values to &quot;A&quot; and the next <code>B_sub_n</code> values to &quot;B&quot;. Then set the score to the <code>A_scores</code> <a class='glossary' target='_blank' title='To combine strings or vectors.' href='https://psyteachr.github.io/glossary/c#concatenate'>concatenated</a> to the <code>B_scores</code>.</p>
+<p>You can stop here and just analyse your simulated data with <code>t.test(A_scores, B_scores)</code>, but usualy you want to get your simulated data into a data table that looks like what you might eventually import from a CSV file with your actual experimental data.</p>
+<p>I always use the <code>tidyverse</code> for <a class='glossary' target='_blank' title='The process of preparing data for visualisation and statistical analysis.' href='https://psyteachr.github.io/glossary/d#data-wrangling'>data wrangling</a>, so I'll create a data table using the <code>tibble()</code> function (but you can use <code>data.frame()</code> if you must). We need to know what condition each subject is in, so set the first <code>A_sub_n</code> values to &quot;A&quot; and the next <code>B_sub_n</code> values to &quot;B&quot;. Then set the score to the <code>A_scores</code> <a class='glossary' target='_blank' title='To combine strings or vectors.' href='https://psyteachr.github.io/glossary/c#concatenate'>concatenated</a> to the <code>B_scores</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">sub_condition =</span> <span class="kw">rep</span>( <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="kw">c</span>(A_sub_n, B_sub_n) ),
   <span class="dt">score =</span> <span class="kw">c</span>(A_scores, B_scores)
 )</code></pre></div>
+</div>
+<div id="check-your-data" class="section level3">
+<h3><span class="header-section-number">2.1.3</span> Check your data</h3>
 <p>Always examine your simulated data after you generate it to make sure it looks like you want.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat <span class="op">%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">summary_dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(sub_condition) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>() ,
             <span class="dt">mean =</span> <span class="kw">mean</span>(score),
-            <span class="dt">sd =</span> <span class="kw">sd</span>(score)) <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+            <span class="dt">sd =</span> <span class="kw">sd</span>(score))</code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -310,30 +330,85 @@ B_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(B_sub_n, B_
 <tr class="odd">
 <td align="left">A</td>
 <td align="right">50</td>
-<td align="right">10.25673</td>
-<td align="right">2.149247</td>
+<td align="right">10.257</td>
+<td align="right">2.149</td>
 </tr>
 <tr class="even">
 <td align="left">B</td>
 <td align="right">50</td>
-<td align="right">12.00478</td>
-<td align="right">2.499963</td>
+<td align="right">11.005</td>
+<td align="right">2.500</td>
 </tr>
 </tbody>
 </table>
+<div class="info">
+<p>
+Your means and SDs won't be <strong>exactly</strong> what you specified because those parameters are for population and you are taking a sample. The larger your <code>sub_n</code>, the closer these values will usually be to the parameters you specify.
+</p>
+</div>
+</div>
+<div id="analysis" class="section level3">
+<h3><span class="header-section-number">2.1.4</span> Analysis</h3>
 <p>Now you can analyse your simulated data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(score<span class="op">~</span>sub_condition, dat)</code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
 ## data:  score by sub_condition
-## t = -3.7492, df = 95.843, p-value = 0.0003034
+## t = -1.6044, df = 95.843, p-value = 0.1119
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -2.6735571 -0.8225523
+##  -1.6735571  0.1774477
 ## sample estimates:
 ## mean in group A mean in group B 
-##        10.25673        12.00478</code></pre>
+##        10.25673        11.00478</code></pre>
+</div>
+<div id="function" class="section level3">
+<h3><span class="header-section-number">2.1.5</span> Function</h3>
+<p>You can wrap all this in a function so you can run it many times to do a power calculation. Put all your parameters as <a class='glossary' target='_blank' title='A variable that provides input to a function.' href='https://psyteachr.github.io/glossary/a#argument'>arguments</a> to the function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ind_sim &lt;-<span class="st"> </span><span class="cf">function</span>(A_sub_n, B_sub_n, A_mean, B_mean, A_sd, B_sd) {
+  A_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(A_sub_n, A_mean, A_sd)
+  B_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(B_sub_n, B_mean, B_sd)
+  
+  dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+    <span class="dt">sub_condition =</span> <span class="kw">rep</span>( <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="kw">c</span>(A_sub_n, B_sub_n) ),
+    <span class="dt">score =</span> <span class="kw">c</span>(A_scores, B_scores)
+  )
+  t &lt;-<span class="st"> </span><span class="kw">t.test</span>(score<span class="op">~</span>sub_condition, dat)
+  
+  <span class="co"># return just the values you care about</span>
+  <span class="kw">list</span>(
+    <span class="dt">t =</span> t<span class="op">$</span>statistic,
+    <span class="dt">ci_lower =</span> t<span class="op">$</span>conf.int[<span class="dv">1</span>],
+    <span class="dt">ci_upper =</span> t<span class="op">$</span>conf.int[<span class="dv">2</span>],
+    <span class="dt">p =</span> t<span class="op">$</span>p.value,
+    <span class="dt">estimate =</span> t<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>t<span class="op">$</span>estimate[<span class="dv">2</span>]
+  )
+}</code></pre></div>
+<div class="try">
+<p>
+Run the function with the parameters from the example above. Run it a few times and see how the results compare. What happens if you change a parameter? Edit the list at the end of the function to return more values of interest, like the means for A and B.
+</p>
+</div>
+<p>Now you can use this function to run many simulations. There are a lot of ways to do this. The pattern below uses the <code>map_df</code> function from the <code>purrr</code> package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulation &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="op">~</span><span class="kw">ind_sim</span>(<span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>))</code></pre></div>
+<p>Now you can graph the data from your simulations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulation <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(stat, value, t<span class="op">:</span>estimate) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(value, <span class="dt">color =</span> stat), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>stat, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:paired-sim-fig"></span>
+<img src="02_sim_data_files/figure-html/paired-sim-fig-1.png" alt="Distribution of results from simulated independent samples data" width="100%" />
+<p class="caption">
+Figure 2.1: Distribution of results from simulated independent samples data
+</p>
+</div>
+<p>You can calculate power as the proportion of simulations on which the p-value was less than your alpha.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
+power &lt;-<span class="st"> </span><span class="kw">mean</span>(simulation<span class="op">$</span>p <span class="op">&lt;</span><span class="st"> </span>alpha)</code></pre></div>
+<p>Your power for the parameters above is 0.496.</p>
+</div>
 </div>
 <div id="paired-samples" class="section level2">
 <h2><span class="header-section-number">2.2</span> Paired samples</h2>
@@ -344,12 +419,17 @@ B_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(B_sub_n, B_
 <li>What are the score variances?</li>
 <li>What is the correlation between the scores?</li>
 </ul>
+<div id="paired-params" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Parameters</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_n &lt;-<span class="st"> </span><span class="dv">100</span>
 A_mean &lt;-<span class="st"> </span><span class="dv">10</span>
-B_mean &lt;-<span class="st"> </span><span class="dv">12</span>
+B_mean &lt;-<span class="st"> </span><span class="dv">11</span>
 A_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
 B_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
 AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div>
+</div>
+<div id="correlated-scores" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Correlated Scores</h3>
 <p>You can then use <code>rnorm_multi()</code> to generate a data table with simulated values for correlated scores:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>faux<span class="op">::</span><span class="kw">rnorm_multi</span>(
   <span class="dt">n =</span> sub_n, 
@@ -359,6 +439,9 @@ AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div
   <span class="dt">sd =</span> <span class="kw">c</span>(A_sd, B_sd), 
   <span class="dt">varnames =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)
 )</code></pre></div>
+</div>
+<div id="check-your-data-1" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Check your data</h3>
 <p>Now check your data; <code>faux</code> has a function <code>check_sim_stats()</code> that gives you the correlation table, means, and SDs for each numeric column in a data table.</p>
 <table>
 <thead>
@@ -374,32 +457,77 @@ AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div
 <tr class="odd">
 <td align="left">A</td>
 <td align="right">1.00</td>
-<td align="right">0.48</td>
-<td align="right">9.90</td>
-<td align="right">2.46</td>
+<td align="right">0.57</td>
+<td align="right">10.00</td>
+<td align="right">2.68</td>
 </tr>
 <tr class="even">
 <td align="left">B</td>
-<td align="right">0.48</td>
+<td align="right">0.57</td>
 <td align="right">1.00</td>
-<td align="right">11.88</td>
-<td align="right">2.53</td>
+<td align="right">10.78</td>
+<td align="right">2.58</td>
 </tr>
 </tbody>
 </table>
+</div>
+<div id="analysis-1" class="section level3">
+<h3><span class="header-section-number">2.2.4</span> Analysis</h3>
 <p>Finally, you can analyse your simulated data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(dat<span class="op">$</span>A, dat<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
 ## data:  dat$A and dat$B
-## t = -7.7821, df = 99, p-value = 7.01e-12
+## t = -3.2027, df = 99, p-value = 0.001832
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -2.494424 -1.480841
+##  -1.2617664 -0.2964011
 ## sample estimates:
 ## mean of the differences 
-##               -1.987633</code></pre>
+##              -0.7790837</code></pre>
+</div>
+<div id="function-1" class="section level3">
+<h3><span class="header-section-number">2.2.5</span> Function</h3>
+<p>The function is set up the same way as before. Set the arguments to the relevant parameters, construct the data table, run the t-test, and return the values you care about.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">paired_sim &lt;-<span class="st"> </span><span class="cf">function</span>(sub_n, A_mean, B_mean, A_sd, B_sd, AB_r) {
+
+  dat &lt;-<span class="st"> </span>faux<span class="op">::</span><span class="kw">rnorm_multi</span>(
+    <span class="dt">n =</span> sub_n, 
+    <span class="dt">vars =</span> <span class="dv">2</span>, 
+    <span class="dt">cors =</span> AB_r, 
+    <span class="dt">mu =</span> <span class="kw">c</span>(A_mean, B_mean), 
+    <span class="dt">sd =</span> <span class="kw">c</span>(A_sd, B_sd), 
+    <span class="dt">varnames =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)
+  )
+  t &lt;-<span class="st"> </span><span class="kw">t.test</span>(dat<span class="op">$</span>A, dat<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)
+  
+  <span class="co"># return just the values you care about</span>
+  <span class="kw">list</span>(
+    <span class="dt">t =</span> t<span class="op">$</span>statistic,
+    <span class="dt">ci_lower =</span> t<span class="op">$</span>conf.int[<span class="dv">1</span>],
+    <span class="dt">ci_upper =</span> t<span class="op">$</span>conf.int[<span class="dv">2</span>],
+    <span class="dt">p =</span> t<span class="op">$</span>p.value,
+    <span class="dt">estimate =</span> t<span class="op">$</span>estimate
+  )
+}</code></pre></div>
+<p>Run 1000 simulations and graph the results.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulation &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="op">~</span><span class="kw">paired_sim</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, .<span class="dv">5</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulation <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(stat, value, t<span class="op">:</span>estimate) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(value, <span class="dt">color =</span> stat), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>stat, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:ind-sim-fig"></span>
+<img src="02_sim_data_files/figure-html/ind-sim-fig-1.png" alt="Distribution of results from simulated paired samples data" width="100%" />
+<p class="caption">
+Figure 2.2: Distribution of results from simulated paired samples data
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
+power &lt;-<span class="st"> </span><span class="kw">mean</span>(simulation<span class="op">$</span>p <span class="op">&lt;</span><span class="st"> </span>alpha)</code></pre></div>
+<p>Your power for the parameters above is 0.982.</p>
+</div>
 </div>
 <div id="intercept-model" class="section level2">
 <h2><span class="header-section-number">2.3</span> Intercept model</h2>
@@ -409,7 +537,7 @@ AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div
 <p>Remember, we used the following parameters to set up our simulation above:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_n &lt;-<span class="st"> </span><span class="dv">100</span>
 A_mean &lt;-<span class="st"> </span><span class="dv">10</span>
-B_mean &lt;-<span class="st"> </span><span class="dv">12</span>
+B_mean &lt;-<span class="st"> </span><span class="dv">11</span>
 A_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
 B_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
 AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div>
@@ -489,16 +617,16 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <tr class="odd">
 <td align="left">A</td>
 <td align="right">1.00</td>
-<td align="right">0.54</td>
-<td align="right">9.61</td>
-<td align="right">2.72</td>
+<td align="right">0.42</td>
+<td align="right">9.93</td>
+<td align="right">2.26</td>
 </tr>
 <tr class="even">
 <td align="left">B</td>
-<td align="right">0.54</td>
+<td align="right">0.42</td>
 <td align="right">1.00</td>
-<td align="right">11.83</td>
-<td align="right">2.72</td>
+<td align="right">10.59</td>
+<td align="right">2.48</td>
 </tr>
 </tbody>
 </table>
@@ -511,33 +639,33 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 ##  Paired t-test
 ## 
 ## data:  dat_wide$A and dat_wide$B
-## t = -8.4641, df = 99, p-value = 2.408e-13
+## t = -2.5832, df = 99, p-value = 0.01125
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -2.738493 -1.698367
+##  -1.1660212 -0.1529139
 ## sample estimates:
 ## mean of the differences 
-##                -2.21843</code></pre>
+##              -0.6594675</code></pre>
 <p>Or in the long format:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(score <span class="op">~</span><span class="st"> </span>condition, dat, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
 ## data:  score by condition
-## t = -8.4641, df = 99, p-value = 2.408e-13
+## t = -2.5832, df = 99, p-value = 0.01125
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -2.738493 -1.698367
+##  -1.1660212 -0.1529139
 ## sample estimates:
 ## mean of the differences 
-##                -2.21843</code></pre>
+##              -0.6594675</code></pre>
 <p>You can analyse the data with ANOVA.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">afex<span class="op">::</span><span class="kw">aov_4</span>(score <span class="op">~</span><span class="st"> </span>(condition.e <span class="op">|</span><span class="st"> </span>sub_id), <span class="dt">data =</span> dat)</code></pre></div>
 <pre><code>## Anova Table (Type 3 tests)
 ## 
 ## Response: score
-##        Effect    df  MSE         F ges p.value
-## 1 condition.e 1, 99 3.43 71.64 *** .14  &lt;.0001
+##        Effect    df  MSE      F ges p.value
+## 1 condition.e 1, 99 3.26 6.67 * .02     .01
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;+&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>You can even analyse the data with a mixed effects model.</p>
@@ -556,25 +684,25 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <th align="right">Std. Error</th>
 <th align="right">df</th>
 <th align="right">t value</th>
-<th align="left">Pr(&gt;|t|)</th>
+<th align="right">Pr(&gt;|t|)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">10.716</td>
-<td align="right">0.238</td>
+<td align="right">10.258</td>
+<td align="right">0.200</td>
 <td align="right">99</td>
-<td align="right">44.985</td>
-<td align="left">1.04e-67</td>
+<td align="right">51.247</td>
+<td align="right">0.000</td>
 </tr>
 <tr class="even">
 <td align="left">condition.e</td>
-<td align="right">2.218</td>
-<td align="right">0.262</td>
+<td align="right">0.659</td>
+<td align="right">0.255</td>
 <td align="right">99</td>
-<td align="right">8.464</td>
-<td align="left">2.41e-13</td>
+<td align="right">2.583</td>
+<td align="right">0.011</td>
 </tr>
 </tbody>
 </table>
@@ -583,13 +711,9 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <div id="functions" class="section level2">
 <h2><span class="header-section-number">2.4</span> Functions</h2>
 <p>We can put everything together into a function where you specify the subject number, means, SDs and correlation, it translates this into the intercept specification, and returns a data table.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_paired_data &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">n =</span> <span class="dv">100</span>, <span class="dt">mu =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="dt">sd =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">r =</span> <span class="dv">0</span>) {
-  sub_n &lt;-<span class="st"> </span>n
-  A_mean &lt;-<span class="st"> </span>mu[<span class="dv">1</span>]
-  B_mean &lt;-<span class="st"> </span>mu[<span class="dv">2</span>]
-  A_sd &lt;-<span class="st"> </span>sd[<span class="dv">1</span>]
-  B_sd &lt;-<span class="st"> </span>sd[<span class="dv">2</span>]
-  AB_r &lt;-<span class="st"> </span>r
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_paired_data &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">sub_n =</span> <span class="dv">100</span>, 
+                            A_mean, B_mean, 
+                            A_sd, B_sd, AB_r) {
   
   grand_i &lt;-<span class="st"> </span>(A_mean <span class="op">+</span><span class="st"> </span>B_mean)<span class="op">/</span><span class="dv">2</span>
   AB_effect &lt;-<span class="st"> </span>B_mean <span class="op">-</span><span class="st"> </span>A_mean
@@ -618,7 +742,7 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <span class="st">  </span><span class="kw">select</span>(sub_id, condition, score) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">spread</span>(condition, score)
 }</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_paired_data</span>(<span class="dv">100</span>, <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">12</span>), <span class="kw">c</span>(<span class="fl">2.5</span>, <span class="fl">2.5</span>), .<span class="dv">5</span>) <span class="op">%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_paired_data</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, .<span class="dv">5</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>sub_id) <span class="op">%&gt;%</span>
 <span class="st">  </span>faux<span class="op">::</span><span class="kw">check_sim_stats</span>(<span class="dt">usekable =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <table>
@@ -635,20 +759,21 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <tr class="odd">
 <td align="left">A</td>
 <td align="right">1.00</td>
-<td align="right">0.48</td>
-<td align="right">9.98</td>
-<td align="right">2.32</td>
+<td align="right">0.31</td>
+<td align="right">10.01</td>
+<td align="right">2.65</td>
 </tr>
 <tr class="even">
 <td align="left">B</td>
-<td align="right">0.48</td>
+<td align="right">0.31</td>
 <td align="right">1.00</td>
-<td align="right">11.97</td>
-<td align="right">2.62</td>
+<td align="right">12.24</td>
+<td align="right">2.37</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_paired_data</span>(<span class="dv">10000</span>, <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), .<span class="dv">25</span>) <span class="op">%&gt;%</span>
+<p>Set the <code>sub_n</code> to a very high number to see that the means, SDs and correlations are what you specified.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_paired_data</span>(<span class="dv">10000</span>, <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">25</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>sub_id) <span class="op">%&gt;%</span>
 <span class="st">  </span>faux<span class="op">::</span><span class="kw">check_sim_stats</span>(<span class="dt">usekable =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <table>
@@ -665,16 +790,16 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <tr class="odd">
 <td align="left">A</td>
 <td align="right">1.00</td>
-<td align="right">0.26</td>
-<td align="right">-0.02</td>
-<td align="right">1.00</td>
+<td align="right">0.25</td>
+<td align="right">0.0</td>
+<td align="right">0.99</td>
 </tr>
 <tr class="even">
 <td align="left">B</td>
-<td align="right">0.26</td>
+<td align="right">0.25</td>
 <td align="right">1.00</td>
-<td align="right">0.51</td>
-<td align="right">0.99</td>
+<td align="right">0.5</td>
+<td align="right">1.01</td>
 </tr>
 </tbody>
 </table>
@@ -683,8 +808,10 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <h3><span class="header-section-number">2.4.1</span> Distribution to intercept specification</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dist2int &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>, <span class="dt">r =</span> <span class="dv">0</span>) {
   A_mean &lt;-<span class="st"> </span>mu[<span class="dv">1</span>]
+  <span class="co"># set B_mean to A_mean if mu has length 1</span>
   B_mean &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(mu[<span class="dv">2</span>]), mu[<span class="dv">1</span>], mu[<span class="dv">2</span>])
   A_sd &lt;-<span class="st"> </span>sd[<span class="dv">1</span>]
+  <span class="co"># set B_sd to A_sd if sd has length 1</span>
   B_sd &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(sd[<span class="dv">2</span>]), sd[<span class="dv">1</span>], sd[<span class="dv">2</span>])
   AB_r &lt;-<span class="st"> </span>r
   pooled_var &lt;-<span class="st"> </span>(A_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>B_sd<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span>
@@ -805,7 +932,7 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 </tr>
 </tbody>
 </table>
-<p>We can then use either sepcification to generate data with either technique.</p>
+<p>We can then use either specification to generate data with either technique.</p>
 
 </div>
 </div>
