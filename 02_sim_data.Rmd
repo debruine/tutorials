@@ -108,6 +108,13 @@ ind_sim <- function(A_sub_n, B_sub_n, A_mean, B_mean, A_sd, B_sd) {
 
 ```
 
+Now run your new function with the values you used above.
+
+```{r}
+ind_sim(50, 50, 10, 11, 2.5, 2.5)
+```
+
+
 ```{block, type = "try"}
 Run the function with the parameters from the example above. Run it a few times and see how the results compare. What happens if you change a parameter? Edit the list at the end of the function to return more values of interest, like the means for A and B.
 ```
@@ -116,6 +123,12 @@ Now you can use this function to run many simulations. There are a lot of ways t
 
 ```{r}
 simulation <- purrr::map_df(1:1000, ~ind_sim(50, 50, 10, 11, 2.5, 2.5))
+```
+
+```{block, type="info"}
+The function `map_df` takes two arguments, a vector and a function, and returns a dataframe. It runs the function once for each item in the vector, so the vector `1:1000` above runs the `ind_sim()` function 1000 times. 
+
+The `purrr::map()` functions can also set arguments in the function from the items in the vector. We aren't doing that here, but will use that pattern later.
 ```
 
 Now you can graph the data from your simulations.
@@ -437,7 +450,7 @@ sim_paired_data(10000, 0, 0.5, 1, 1, .25) %>%
   faux::check_sim_stats(usekable = TRUE)
 ```
 
-It might be more suerful to create functions to translate back and forth from the distribution specification to the intercept specification.
+It might be more useful to create functions to translate back and forth from the distribution specification to the intercept specification.
 
 ### Distribution to intercept specification
 

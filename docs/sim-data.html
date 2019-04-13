@@ -385,6 +385,24 @@ Your means and SDs won't be <strong>exactly</strong> what you specified because 
     <span class="dt">estimate =</span> t<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>t<span class="op">$</span>estimate[<span class="dv">2</span>]
   )
 }</code></pre></div>
+<p>Now run your new function with the values you used above.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ind_sim</span>(<span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>)</code></pre></div>
+<pre><code>## $t
+##        t 
+## -1.16975 
+## 
+## $ci_lower
+## [1] -1.56612
+## 
+## $ci_upper
+## [1] 0.4052779
+## 
+## $p
+## [1] 0.245173
+## 
+## $estimate
+## mean in group A 
+##      -0.5804213</code></pre>
 <div class="try">
 <p>
 Run the function with the parameters from the example above. Run it a few times and see how the results compare. What happens if you change a parameter? Edit the list at the end of the function to return more values of interest, like the means for A and B.
@@ -392,6 +410,14 @@ Run the function with the parameters from the example above. Run it a few times 
 </div>
 <p>Now you can use this function to run many simulations. There are a lot of ways to do this. The pattern below uses the <code>map_df</code> function from the <code>purrr</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulation &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="op">~</span><span class="kw">ind_sim</span>(<span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>))</code></pre></div>
+<div class="info">
+<p>
+The function <code>map_df</code> takes two arguments, a vector and a function, and returns a dataframe. It runs the function once for each item in the vector, so the vector <code>1:1000</code> above runs the <code>ind_sim()</code> function 1000 times.
+</p>
+<p>
+The <code>purrr::map()</code> functions can also set arguments in the function from the items in the vector. We aren't doing that here, but will use that pattern later.
+</p>
+</div>
 <p>Now you can graph the data from your simulations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulation <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">gather</span>(stat, value, t<span class="op">:</span>estimate) <span class="op">%&gt;%</span>
@@ -457,16 +483,16 @@ AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div
 <tr class="odd">
 <td align="left">A</td>
 <td align="right">1.00</td>
-<td align="right">0.57</td>
-<td align="right">10.00</td>
-<td align="right">2.68</td>
+<td align="right">0.51</td>
+<td align="right">9.81</td>
+<td align="right">2.29</td>
 </tr>
 <tr class="even">
 <td align="left">B</td>
-<td align="right">0.57</td>
+<td align="right">0.51</td>
 <td align="right">1.00</td>
-<td align="right">10.78</td>
-<td align="right">2.58</td>
+<td align="right">10.81</td>
+<td align="right">2.57</td>
 </tr>
 </tbody>
 </table>
@@ -479,13 +505,13 @@ AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div
 ##  Paired t-test
 ## 
 ## data:  dat$A and dat$B
-## t = -3.2027, df = 99, p-value = 0.001832
+## t = -4.1238, df = 99, p-value = 7.761e-05
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.2617664 -0.2964011
+##  -1.479129 -0.518129
 ## sample estimates:
 ## mean of the differences 
-##              -0.7790837</code></pre>
+##              -0.9986288</code></pre>
 </div>
 <div id="function-1" class="section level3">
 <h3><span class="header-section-number">2.2.5</span> Function</h3>
@@ -526,7 +552,7 @@ Figure 2.2: Distribution of results from simulated paired samples data
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
 power &lt;-<span class="st"> </span><span class="kw">mean</span>(simulation<span class="op">$</span>p <span class="op">&lt;</span><span class="st"> </span>alpha)</code></pre></div>
-<p>Your power for the parameters above is 0.982.</p>
+<p>Your power for the parameters above is 0.984.</p>
 </div>
 </div>
 <div id="intercept-model" class="section level2">
@@ -617,16 +643,16 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <tr class="odd">
 <td align="left">A</td>
 <td align="right">1.00</td>
-<td align="right">0.42</td>
+<td align="right">0.41</td>
 <td align="right">9.93</td>
-<td align="right">2.26</td>
+<td align="right">2.04</td>
 </tr>
 <tr class="even">
 <td align="left">B</td>
-<td align="right">0.42</td>
+<td align="right">0.41</td>
 <td align="right">1.00</td>
-<td align="right">10.59</td>
-<td align="right">2.48</td>
+<td align="right">11.33</td>
+<td align="right">2.03</td>
 </tr>
 </tbody>
 </table>
@@ -639,33 +665,33 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 ##  Paired t-test
 ## 
 ## data:  dat_wide$A and dat_wide$B
-## t = -2.5832, df = 99, p-value = 0.01125
+## t = -6.303, df = 99, p-value = 8.154e-09
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.1660212 -0.1529139
+##  -1.8365839 -0.9571096
 ## sample estimates:
 ## mean of the differences 
-##              -0.6594675</code></pre>
+##               -1.396847</code></pre>
 <p>Or in the long format:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(score <span class="op">~</span><span class="st"> </span>condition, dat, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
 ## data:  score by condition
-## t = -2.5832, df = 99, p-value = 0.01125
+## t = -6.303, df = 99, p-value = 8.154e-09
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.1660212 -0.1529139
+##  -1.8365839 -0.9571096
 ## sample estimates:
 ## mean of the differences 
-##              -0.6594675</code></pre>
+##               -1.396847</code></pre>
 <p>You can analyse the data with ANOVA.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">afex<span class="op">::</span><span class="kw">aov_4</span>(score <span class="op">~</span><span class="st"> </span>(condition.e <span class="op">|</span><span class="st"> </span>sub_id), <span class="dt">data =</span> dat)</code></pre></div>
 <pre><code>## Anova Table (Type 3 tests)
 ## 
 ## Response: score
-##        Effect    df  MSE      F ges p.value
-## 1 condition.e 1, 99 3.26 6.67 * .02     .01
+##        Effect    df  MSE         F ges p.value
+## 1 condition.e 1, 99 2.46 39.73 *** .11  &lt;.0001
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;+&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>You can even analyse the data with a mixed effects model.</p>
@@ -684,25 +710,25 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <th align="right">Std. Error</th>
 <th align="right">df</th>
 <th align="right">t value</th>
-<th align="right">Pr(&gt;|t|)</th>
+<th align="left">Pr(&gt;|t|)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">10.258</td>
-<td align="right">0.200</td>
+<td align="right">10.631</td>
+<td align="right">0.170</td>
 <td align="right">99</td>
-<td align="right">51.247</td>
-<td align="right">0.000</td>
+<td align="right">62.381</td>
+<td align="left">2.77e-81</td>
 </tr>
 <tr class="even">
 <td align="left">condition.e</td>
-<td align="right">0.659</td>
-<td align="right">0.255</td>
+<td align="right">1.397</td>
+<td align="right">0.222</td>
 <td align="right">99</td>
-<td align="right">2.583</td>
-<td align="right">0.011</td>
+<td align="right">6.303</td>
+<td align="left">8.15e-09</td>
 </tr>
 </tbody>
 </table>
@@ -759,16 +785,16 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <tr class="odd">
 <td align="left">A</td>
 <td align="right">1.00</td>
-<td align="right">0.31</td>
-<td align="right">10.01</td>
-<td align="right">2.65</td>
+<td align="right">0.48</td>
+<td align="right">9.86</td>
+<td align="right">2.41</td>
 </tr>
 <tr class="even">
 <td align="left">B</td>
-<td align="right">0.31</td>
+<td align="right">0.48</td>
 <td align="right">1.00</td>
-<td align="right">12.24</td>
-<td align="right">2.37</td>
+<td align="right">11.84</td>
+<td align="right">2.29</td>
 </tr>
 </tbody>
 </table>
@@ -792,7 +818,7 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <td align="right">1.00</td>
 <td align="right">0.25</td>
 <td align="right">0.0</td>
-<td align="right">0.99</td>
+<td align="right">1.00</td>
 </tr>
 <tr class="even">
 <td align="left">B</td>
@@ -803,7 +829,7 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 </tr>
 </tbody>
 </table>
-<p>It might be more suerful to create functions to translate back and forth from the distribution specification to the intercept specification.</p>
+<p>It might be more useful to create functions to translate back and forth from the distribution specification to the intercept specification.</p>
 <div id="distribution-to-intercept-specification" class="section level3">
 <h3><span class="header-section-number">2.4.1</span> Distribution to intercept specification</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dist2int &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>, <span class="dt">r =</span> <span class="dv">0</span>) {

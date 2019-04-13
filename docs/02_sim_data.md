@@ -128,6 +128,33 @@ ind_sim <- function(A_sub_n, B_sub_n, A_mean, B_mean, A_sd, B_sd) {
 }
 ```
 
+Now run your new function with the values you used above.
+
+
+```r
+ind_sim(50, 50, 10, 11, 2.5, 2.5)
+```
+
+```
+## $t
+##        t 
+## -1.16975 
+## 
+## $ci_lower
+## [1] -1.56612
+## 
+## $ci_upper
+## [1] 0.4052779
+## 
+## $p
+## [1] 0.245173
+## 
+## $estimate
+## mean in group A 
+##      -0.5804213
+```
+
+
 <div class="try">
 <p>Run the function with the parameters from the example above. Run it a few times and see how the results compare. What happens if you change a parameter? Edit the list at the end of the function to return more values of interest, like the means for A and B.</p>
 </div>
@@ -138,6 +165,11 @@ Now you can use this function to run many simulations. There are a lot of ways t
 ```r
 simulation <- purrr::map_df(1:1000, ~ind_sim(50, 50, 10, 11, 2.5, 2.5))
 ```
+
+<div class="info">
+<p>The function <code>map_df</code> takes two arguments, a vector and a function, and returns a dataframe. It runs the function once for each item in the vector, so the vector <code>1:1000</code> above runs the <code>ind_sim()</code> function 1000 times.</p>
+<p>The <code>purrr::map()</code> functions can also set arguments in the function from the items in the vector. We aren't doing that here, but will use that pattern later.</p>
+</div>
 
 Now you can graph the data from your simulations.
 
@@ -210,8 +242,8 @@ Now check your data; `faux` has a function `check_sim_stats()` that gives you th
 
 var       A      B    mean     sd
 ----  -----  -----  ------  -----
-A      1.00   0.57   10.00   2.68
-B      0.57   1.00   10.78   2.58
+A      1.00   0.51    9.81   2.29
+B      0.51   1.00   10.81   2.57
 
 ### Analysis
 
@@ -227,13 +259,13 @@ t.test(dat$A, dat$B, paired = TRUE)
 ## 	Paired t-test
 ## 
 ## data:  dat$A and dat$B
-## t = -3.2027, df = 99, p-value = 0.001832
+## t = -4.1238, df = 99, p-value = 7.761e-05
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.2617664 -0.2964011
+##  -1.479129 -0.518129
 ## sample estimates:
 ## mean of the differences 
-##              -0.7790837
+##              -0.9986288
 ```
 
 ### Function
@@ -292,7 +324,7 @@ alpha <- 0.05
 power <- mean(simulation$p < alpha)
 ```
 
-Your power for the parameters above is 0.982.
+Your power for the parameters above is 0.984.
 
 ## Intercept model
 
@@ -407,8 +439,8 @@ Then you can use the `check_sim_stats` function to check this looks correct (rem
 
 var       A      B    mean     sd
 ----  -----  -----  ------  -----
-A      1.00   0.42    9.93   2.26
-B      0.42   1.00   10.59   2.48
+A      1.00   0.41    9.93   2.04
+B      0.41   1.00   11.33   2.03
 
 ### Analyses
 
@@ -424,13 +456,13 @@ t.test(dat_wide$A, dat_wide$B, paired = TRUE)
 ## 	Paired t-test
 ## 
 ## data:  dat_wide$A and dat_wide$B
-## t = -2.5832, df = 99, p-value = 0.01125
+## t = -6.303, df = 99, p-value = 8.154e-09
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.1660212 -0.1529139
+##  -1.8365839 -0.9571096
 ## sample estimates:
 ## mean of the differences 
-##              -0.6594675
+##               -1.396847
 ```
 
 Or in the long format:
@@ -445,13 +477,13 @@ t.test(score ~ condition, dat, paired = TRUE)
 ## 	Paired t-test
 ## 
 ## data:  score by condition
-## t = -2.5832, df = 99, p-value = 0.01125
+## t = -6.303, df = 99, p-value = 8.154e-09
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.1660212 -0.1529139
+##  -1.8365839 -0.9571096
 ## sample estimates:
 ## mean of the differences 
-##              -0.6594675
+##               -1.396847
 ```
 
 You can analyse the data with ANOVA.
@@ -465,8 +497,8 @@ afex::aov_4(score ~ (condition.e | sub_id), data = dat)
 ## Anova Table (Type 3 tests)
 ## 
 ## Response: score
-##        Effect    df  MSE      F ges p.value
-## 1 condition.e 1, 99 3.26 6.67 * .02     .01
+##        Effect    df  MSE         F ges p.value
+## 1 condition.e 1, 99 2.46 39.73 *** .11  <.0001
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 ```
@@ -487,10 +519,10 @@ summary(lmem)$coefficients %>%
 
 
 
-Factor         Estimate   Std. Error   df   t value   Pr(>|t|)
+Factor         Estimate   Std. Error   df   t value  Pr(>|t|) 
 ------------  ---------  -----------  ---  --------  ---------
-(Intercept)      10.258        0.200   99    51.247      0.000
-condition.e       0.659        0.255   99     2.583      0.011
+(Intercept)      10.631        0.170   99    62.381  2.77e-81 
+condition.e       1.397        0.222   99     6.303  8.15e-09 
 
 ## Functions
 
@@ -542,8 +574,8 @@ sim_paired_data(100, 10, 12, 2.5, 2.5, .5) %>%
 
 var       A      B    mean     sd
 ----  -----  -----  ------  -----
-A      1.00   0.31   10.01   2.65
-B      0.31   1.00   12.24   2.37
+A      1.00   0.48    9.86   2.41
+B      0.48   1.00   11.84   2.29
 
 Set the `sub_n` to a very high number to see that the means, SDs and correlations are what you specified.
 
@@ -558,10 +590,10 @@ sim_paired_data(10000, 0, 0.5, 1, 1, .25) %>%
 
 var       A      B   mean     sd
 ----  -----  -----  -----  -----
-A      1.00   0.25    0.0   0.99
+A      1.00   0.25    0.0   1.00
 B      0.25   1.00    0.5   1.01
 
-It might be more suerful to create functions to translate back and forth from the distribution specification to the intercept specification.
+It might be more useful to create functions to translate back and forth from the distribution specification to the intercept specification.
 
 ### Distribution to intercept specification
 
