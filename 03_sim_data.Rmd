@@ -190,11 +190,10 @@ dat <- faux::rnorm_multi(
 
 ### Check your data
 
-Now check your data; `faux` has a function `check_sim_stats()` that gives you the correlation table, means, and SDs for each numeric column in a data table.
+Now check your data; `faux` has a function `get_params()` that gives you the correlation table, means, and SDs for each numeric column in a data table.
 
 ```{r paired-check, echo = FALSE, results='asis'}
-# set usekable=TRUE to output a table in kable format
-faux::check_sim_stats(dat, usekable = TRUE)
+faux::get_params(dat) %>% knitr::kable()
 ```
 
 ### Analysis
@@ -356,12 +355,13 @@ dat_wide <- dat %>%
 ```
 
 
-Then you can use the `check_sim_stats` function to check this looks correct (remove the subject ID to leave it out of the table, since it's numeric).
+Then you can use the `get_params` function to check this looks correct (remove the subject ID to leave it out of the table, since it's numeric).
 
 ```{r, echo = FALSE, results='asis'}
 dat_wide %>%
   select(-sub_id) %>%
-  faux::check_sim_stats(usekable = TRUE)
+  faux::get_params() %>%
+  knitr::kable()
 ```
 
 ### Analyses
@@ -439,7 +439,8 @@ sim_paired_data <- function(sub_n = 100,
 ```{r, results = 'asis'}
 sim_paired_data(100, 10, 12, 2.5, 2.5, .5) %>%
   select(-sub_id) %>%
-  faux::check_sim_stats(usekable = TRUE)
+  faux::get_params() %>% 
+  knitr::kable()
 ```
 
 Set the `sub_n` to a very high number to see that the means, SDs and correlations are what you specified.
@@ -447,7 +448,8 @@ Set the `sub_n` to a very high number to see that the means, SDs and correlation
 ```{r, results = 'asis'}
 sim_paired_data(10000, 0, 0.5, 1, 1, .25) %>%
   select(-sub_id) %>%
-  faux::check_sim_stats(usekable = TRUE)
+  faux::get_params() %>% 
+  knitr::kable()
 ```
 
 It might be more useful to create functions to translate back and forth from the distribution specification to the intercept specification.

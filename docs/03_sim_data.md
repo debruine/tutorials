@@ -1,366 +1,95 @@
-<!DOCTYPE html>
-<html >
 
-<head>
+# Simulating Data {#sim_data}
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 3 Simulating Data | Tutorials</title>
-  <meta name="description" content="Tutorial materials">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
-
-  <meta property="og:title" content="Chapter 3 Simulating Data | Tutorials" />
-  <meta property="og:type" content="book" />
-  
-  
-  <meta property="og:description" content="Tutorial materials" />
-  
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Simulating Data | Tutorials" />
-  
-  <meta name="twitter:description" content="Tutorial materials" />
-  
-
-<meta name="author" content="Lisa DeBruine">
+This tutorial details a few ways I simulate data. I'll be using some functions from my [`faux` package](https://github.com/debruine/faux) to make it easier to generate sets of variables with specific correlations.
 
 
-<meta name="date" content="2019-05-21">
+```r
+library(tidyverse)
+library(faux) # devtools::install_github("debruine/faux")
+set.seed(8675309) # this makes sure your script uses the same set of random numbers each time you run the full script (never set this inside a function or loop)
+```
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  
-  
-<link rel="prev" href="aggregate.html">
-<link rel="next" href="sim-lmer.html">
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+## Independent samples
 
+Let's start with a simple independent-samples design where the variables are from a normal distribution. Each subject produces one score (in condition A or B). What we need to know about these scores is:
 
+* How many subjects are in each condition?
+* What are the score means?
+* What are the score variances?
 
+### Parameters {#ind-params}
+
+I start simulation scripts by setting parameters for these values.
 
 
+```r
+A_sub_n <- 50
+B_sub_n <- 50
+A_mean <- 10
+B_mean <- 11
+A_sd <- 2.5
+B_sd <- 2.5
+```
+
+### Scores
+
+We can the generate the scores using the `rnorm()` <a class='glossary' target='_blank' title='A named section of code that can be reused.' href='https://psyteachr.github.io/glossary/f#function'>function</a>.
 
 
+```r
+A_scores <- rnorm(A_sub_n, A_mean, A_sd)
+B_scores <- rnorm(B_sub_n, B_mean, B_sd)
+```
+
+You can stop here and just analyse your simulated data with `t.test(A_scores, B_scores)`, but usualy you want to get your simulated data into a data table that looks like what you might eventually import from a CSV file with your actual experimental data.
+
+I always use the `tidyverse` for <a class='glossary' target='_blank' title='The process of preparing data for visualisation and statistical analysis.' href='https://psyteachr.github.io/glossary/d#data-wrangling'>data wrangling</a>, so I'll create a data table using the `tibble()` function (but you can use `data.frame()` if you must). We need to know what condition each subject is in, so set the first `A_sub_n` values to "A" and the next `B_sub_n` values to "B". Then set the score to the `A_scores` <a class='glossary' target='_blank' title='To combine strings or vectors.' href='https://psyteachr.github.io/glossary/c#concatenate'>concatenated</a> to the `B_scores`.
 
 
-<style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-</style>
+```r
+dat <- tibble(
+  sub_condition = rep( c("A", "B"), c(A_sub_n, B_sub_n) ),
+  score = c(A_scores, B_scores)
+)
+```
 
-<link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
-<link rel="stylesheet" href="include/style.css" type="text/css" />
-</head>
+### Check your data
 
-<body>
+Always examine your simulated data after you generate it to make sure it looks like you want.
+
+
+```r
+summary_dat <- dat %>%
+  group_by(sub_condition) %>%
+  summarise(n = n() ,
+            mean = mean(score),
+            sd = sd(score))
+```
 
 
 
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+sub_condition     n     mean      sd
+--------------  ---  -------  ------
+A                50   10.257   2.149
+B                50   11.005   2.500
 
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><a href="./">Tutorials</a></li>
-
-<li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a></li>
-<li class="chapter" data-level="1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1</b> R package with unit tests</a><ul>
-<li class="chapter" data-level="1.1" data-path="packages.html"><a href="packages.html#learning-objectives"><i class="fa fa-check"></i><b>1.1</b> Learning objectives</a></li>
-<li class="chapter" data-level="1.2" data-path="packages.html"><a href="packages.html#setting-up"><i class="fa fa-check"></i><b>1.2</b> Setting up</a></li>
-<li class="chapter" data-level="1.3" data-path="packages.html"><a href="packages.html#create-your-r-package"><i class="fa fa-check"></i><b>1.3</b> Create your R package</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="packages.html"><a href="packages.html#edit-the-description-file"><i class="fa fa-check"></i><b>1.3.1</b> Edit the DESCRIPTION file</a></li>
-<li class="chapter" data-level="1.3.2" data-path="packages.html"><a href="packages.html#create-a-license"><i class="fa fa-check"></i><b>1.3.2</b> Create a LICENSE</a></li>
-<li class="chapter" data-level="1.3.3" data-path="packages.html"><a href="packages.html#create-a-readme"><i class="fa fa-check"></i><b>1.3.3</b> Create a README</a></li>
-</ul></li>
-<li class="chapter" data-level="1.4" data-path="packages.html"><a href="packages.html#creating-a-function"><i class="fa fa-check"></i><b>1.4</b> Creating a function</a><ul>
-<li class="chapter" data-level="1.4.1" data-path="packages.html"><a href="packages.html#template-function"><i class="fa fa-check"></i><b>1.4.1</b> Template function</a></li>
-<li class="chapter" data-level="1.4.2" data-path="packages.html"><a href="packages.html#edit-the-function"><i class="fa fa-check"></i><b>1.4.2</b> Edit the function</a></li>
-<li class="chapter" data-level="1.4.3" data-path="packages.html"><a href="packages.html#documentation"><i class="fa fa-check"></i><b>1.4.3</b> Documentation</a></li>
-<li class="chapter" data-level="1.4.4" data-path="packages.html"><a href="packages.html#imports"><i class="fa fa-check"></i><b>1.4.4</b> Imports</a></li>
-</ul></li>
-<li class="chapter" data-level="1.5" data-path="packages.html"><a href="packages.html#build-your-package"><i class="fa fa-check"></i><b>1.5</b> Build your package</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="packages.html"><a href="packages.html#check"><i class="fa fa-check"></i><b>1.5.1</b> Check</a></li>
-<li class="chapter" data-level="1.5.2" data-path="packages.html"><a href="packages.html#build"><i class="fa fa-check"></i><b>1.5.2</b> Build</a></li>
-<li class="chapter" data-level="1.5.3" data-path="packages.html"><a href="packages.html#install"><i class="fa fa-check"></i><b>1.5.3</b> Install</a></li>
-<li class="chapter" data-level="1.5.4" data-path="packages.html"><a href="packages.html#test"><i class="fa fa-check"></i><b>1.5.4</b> Test</a></li>
-</ul></li>
-<li class="chapter" data-level="1.6" data-path="packages.html"><a href="packages.html#error-checking"><i class="fa fa-check"></i><b>1.6</b> Error checking</a></li>
-<li class="chapter" data-level="1.7" data-path="packages.html"><a href="packages.html#unit-tests"><i class="fa fa-check"></i><b>1.7</b> Unit tests</a><ul>
-<li class="chapter" data-level="1.7.1" data-path="packages.html"><a href="packages.html#setup"><i class="fa fa-check"></i><b>1.7.1</b> Setup</a></li>
-<li class="chapter" data-level="1.7.2" data-path="packages.html"><a href="packages.html#new-unit-tests"><i class="fa fa-check"></i><b>1.7.2</b> New unit tests</a></li>
-<li class="chapter" data-level="1.7.3" data-path="packages.html"><a href="packages.html#run-all-tests"><i class="fa fa-check"></i><b>1.7.3</b> Run all tests</a></li>
-</ul></li>
-<li class="chapter" data-level="1.8" data-path="packages.html"><a href="packages.html#documentation-1"><i class="fa fa-check"></i><b>1.8</b> Documentation</a><ul>
-<li class="chapter" data-level="1.8.1" data-path="packages.html"><a href="packages.html#vignettes"><i class="fa fa-check"></i><b>1.8.1</b> Vignettes</a></li>
-<li class="chapter" data-level="1.8.2" data-path="packages.html"><a href="packages.html#pkgdown"><i class="fa fa-check"></i><b>1.8.2</b> pkgdown</a></li>
-</ul></li>
-<li class="chapter" data-level="1.9" data-path="packages.html"><a href="packages.html#share-your-package"><i class="fa fa-check"></i><b>1.9</b> Share your package</a><ul>
-<li class="chapter" data-level="1.9.1" data-path="packages.html"><a href="packages.html#git-on-rstudio"><i class="fa fa-check"></i><b>1.9.1</b> Git on RStudio</a></li>
-<li class="chapter" data-level="1.9.2" data-path="packages.html"><a href="packages.html#set-up-git-for-this-project"><i class="fa fa-check"></i><b>1.9.2</b> Set up git for this project</a></li>
-<li class="chapter" data-level="1.9.3" data-path="packages.html"><a href="packages.html#github-access-token"><i class="fa fa-check"></i><b>1.9.3</b> GitHub access token</a></li>
-<li class="chapter" data-level="1.9.4" data-path="packages.html"><a href="packages.html#make-a-new-github-repository"><i class="fa fa-check"></i><b>1.9.4</b> Make a new GitHub repository</a></li>
-<li class="chapter" data-level="1.9.5" data-path="packages.html"><a href="packages.html#set-up-website"><i class="fa fa-check"></i><b>1.9.5</b> Set up website</a></li>
-<li class="chapter" data-level="1.9.6" data-path="packages.html"><a href="packages.html#install-your-package-from-github"><i class="fa fa-check"></i><b>1.9.6</b> Install your package from GitHub</a></li>
-</ul></li>
-<li class="chapter" data-level="1.10" data-path="packages.html"><a href="packages.html#further-resources"><i class="fa fa-check"></i><b>1.10</b> Further resources</a><ul>
-<li class="chapter" data-level="1.10.1" data-path="packages.html"><a href="packages.html#workflow"><i class="fa fa-check"></i><b>1.10.1</b> Workflow</a></li>
-<li class="chapter" data-level="1.10.2" data-path="packages.html"><a href="packages.html#the-full-report_p-function"><i class="fa fa-check"></i><b>1.10.2</b> The full <code>report_p</code> function</a></li>
-</ul></li>
-<li class="chapter" data-level="1.11" data-path="packages.html"><a href="packages.html#glossary"><i class="fa fa-check"></i><b>1.11</b> Glossary</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="aggregate.html"><a href="aggregate.html"><i class="fa fa-check"></i><b>2</b> What's wrong with aggregating data?</a><ul>
-<li class="chapter" data-level="2.0.1" data-path="aggregate.html"><a href="aggregate.html#measurement-with-error"><i class="fa fa-check"></i><b>2.0.1</b> Measurement with Error</a></li>
-<li class="chapter" data-level="2.0.2" data-path="aggregate.html"><a href="aggregate.html#aggregating-by-stimuli"><i class="fa fa-check"></i><b>2.0.2</b> Aggregating by stimuli</a></li>
-<li class="chapter" data-level="2.0.3" data-path="aggregate.html"><a href="aggregate.html#aggregating-by-raters"><i class="fa fa-check"></i><b>2.0.3</b> Aggregating by raters</a></li>
-<li class="chapter" data-level="2.0.4" data-path="aggregate.html"><a href="aggregate.html#mixed-effect-model"><i class="fa fa-check"></i><b>2.0.4</b> Mixed Effect Model</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="sim-data.html"><a href="sim-data.html"><i class="fa fa-check"></i><b>3</b> Simulating Data</a><ul>
-<li class="chapter" data-level="3.1" data-path="sim-data.html"><a href="sim-data.html#independent-samples"><i class="fa fa-check"></i><b>3.1</b> Independent samples</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="sim-data.html"><a href="sim-data.html#ind-params"><i class="fa fa-check"></i><b>3.1.1</b> Parameters</a></li>
-<li class="chapter" data-level="3.1.2" data-path="sim-data.html"><a href="sim-data.html#scores"><i class="fa fa-check"></i><b>3.1.2</b> Scores</a></li>
-<li class="chapter" data-level="3.1.3" data-path="sim-data.html"><a href="sim-data.html#check-your-data"><i class="fa fa-check"></i><b>3.1.3</b> Check your data</a></li>
-<li class="chapter" data-level="3.1.4" data-path="sim-data.html"><a href="sim-data.html#analysis"><i class="fa fa-check"></i><b>3.1.4</b> Analysis</a></li>
-<li class="chapter" data-level="3.1.5" data-path="sim-data.html"><a href="sim-data.html#function"><i class="fa fa-check"></i><b>3.1.5</b> Function</a></li>
-</ul></li>
-<li class="chapter" data-level="3.2" data-path="sim-data.html"><a href="sim-data.html#paired-samples"><i class="fa fa-check"></i><b>3.2</b> Paired samples</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="sim-data.html"><a href="sim-data.html#paired-params"><i class="fa fa-check"></i><b>3.2.1</b> Parameters</a></li>
-<li class="chapter" data-level="3.2.2" data-path="sim-data.html"><a href="sim-data.html#correlated-scores"><i class="fa fa-check"></i><b>3.2.2</b> Correlated Scores</a></li>
-<li class="chapter" data-level="3.2.3" data-path="sim-data.html"><a href="sim-data.html#check-your-data-1"><i class="fa fa-check"></i><b>3.2.3</b> Check your data</a></li>
-<li class="chapter" data-level="3.2.4" data-path="sim-data.html"><a href="sim-data.html#analysis-1"><i class="fa fa-check"></i><b>3.2.4</b> Analysis</a></li>
-<li class="chapter" data-level="3.2.5" data-path="sim-data.html"><a href="sim-data.html#function-1"><i class="fa fa-check"></i><b>3.2.5</b> Function</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="sim-data.html"><a href="sim-data.html#intercept-model"><i class="fa fa-check"></i><b>3.3</b> Intercept model</a><ul>
-<li class="chapter" data-level="3.3.1" data-path="sim-data.html"><a href="sim-data.html#parameters"><i class="fa fa-check"></i><b>3.3.1</b> Parameters</a></li>
-<li class="chapter" data-level="3.3.2" data-path="sim-data.html"><a href="sim-data.html#subject-intercepts"><i class="fa fa-check"></i><b>3.3.2</b> Subject intercepts</a></li>
-<li class="chapter" data-level="3.3.3" data-path="sim-data.html"><a href="sim-data.html#observations"><i class="fa fa-check"></i><b>3.3.3</b> Observations</a></li>
-<li class="chapter" data-level="3.3.4" data-path="sim-data.html"><a href="sim-data.html#calculate-the-score"><i class="fa fa-check"></i><b>3.3.4</b> Calculate the score</a></li>
-<li class="chapter" data-level="3.3.5" data-path="sim-data.html"><a href="sim-data.html#analyses"><i class="fa fa-check"></i><b>3.3.5</b> Analyses</a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="sim-data.html"><a href="sim-data.html#functions"><i class="fa fa-check"></i><b>3.4</b> Functions</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="sim-data.html"><a href="sim-data.html#distribution-to-intercept-specification"><i class="fa fa-check"></i><b>3.4.1</b> Distribution to intercept specification</a></li>
-<li class="chapter" data-level="3.4.2" data-path="sim-data.html"><a href="sim-data.html#intercept-to-distribution-specification"><i class="fa fa-check"></i><b>3.4.2</b> Intercept to distribution specification</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="sim-lmer.html"><a href="sim-lmer.html"><i class="fa fa-check"></i><b>4</b> Simulating Mixed Effects</a><ul>
-<li class="chapter" data-level="4.1" data-path="sim-lmer.html"><a href="sim-lmer.html#setup-1"><i class="fa fa-check"></i><b>4.1</b> Setup</a></li>
-<li class="chapter" data-level="4.2" data-path="sim-lmer.html"><a href="sim-lmer.html#random-intercepts"><i class="fa fa-check"></i><b>4.2</b> Random intercepts</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-subjects"><i class="fa fa-check"></i><b>4.2.1</b> Subjects</a></li>
-<li class="chapter" data-level="4.2.2" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-stimuli"><i class="fa fa-check"></i><b>4.2.2</b> Stimuli</a></li>
-<li class="chapter" data-level="4.2.3" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-trials"><i class="fa fa-check"></i><b>4.2.3</b> Trials</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-dv"><i class="fa fa-check"></i><b>4.3</b> Calculate DV</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="sim-lmer.html"><a href="sim-lmer.html#fixed-effects"><i class="fa fa-check"></i><b>4.3.1</b> Fixed effects</a></li>
-<li class="chapter" data-level="4.3.2" data-path="sim-lmer.html"><a href="sim-lmer.html#interactions"><i class="fa fa-check"></i><b>4.3.2</b> Interactions</a></li>
-</ul></li>
-<li class="chapter" data-level="4.4" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-analysis"><i class="fa fa-check"></i><b>4.4</b> Analysis</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-sense-checks"><i class="fa fa-check"></i><b>4.4.1</b> Sense checks</a></li>
-<li class="chapter" data-level="4.4.2" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-ranef"><i class="fa fa-check"></i><b>4.4.2</b> Random effects</a></li>
-</ul></li>
-<li class="chapter" data-level="4.5" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-function"><i class="fa fa-check"></i><b>4.5</b> Function</a></li>
-<li class="chapter" data-level="4.6" data-path="sim-lmer.html"><a href="sim-lmer.html#random-slopes"><i class="fa fa-check"></i><b>4.6</b> Random slopes</a><ul>
-<li class="chapter" data-level="4.6.1" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-subjects"><i class="fa fa-check"></i><b>4.6.1</b> Subjects</a></li>
-<li class="chapter" data-level="4.6.2" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-stimuli"><i class="fa fa-check"></i><b>4.6.2</b> Stimuli</a></li>
-<li class="chapter" data-level="4.6.3" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-trials"><i class="fa fa-check"></i><b>4.6.3</b> Trials</a></li>
-</ul></li>
-<li class="chapter" data-level="4.7" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-dv"><i class="fa fa-check"></i><b>4.7</b> Calculate DV</a></li>
-<li class="chapter" data-level="4.8" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-analysis"><i class="fa fa-check"></i><b>4.8</b> Analysis</a><ul>
-<li class="chapter" data-level="4.8.1" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-sense-checks"><i class="fa fa-check"></i><b>4.8.1</b> Sense checks</a></li>
-<li class="chapter" data-level="4.8.2" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-ranef"><i class="fa fa-check"></i><b>4.8.2</b> Random effects</a></li>
-</ul></li>
-<li class="chapter" data-level="4.9" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-function"><i class="fa fa-check"></i><b>4.9</b> Function</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="webpages.html"><a href="webpages.html"><i class="fa fa-check"></i><b>5</b> Webpages</a><ul>
-<li class="chapter" data-level="5.1" data-path="webpages.html"><a href="webpages.html#learning-objectives-1"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
-<li class="chapter" data-level="5.2" data-path="webpages.html"><a href="webpages.html#webpage-create"><i class="fa fa-check"></i><b>5.2</b> Create a webpage</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="webpages.html"><a href="webpages.html#create-a-project"><i class="fa fa-check"></i><b>5.2.1</b> Create a project</a></li>
-<li class="chapter" data-level="5.2.2" data-path="webpages.html"><a href="webpages.html#site-header"><i class="fa fa-check"></i><b>5.2.2</b> Site header</a></li>
-<li class="chapter" data-level="5.2.3" data-path="webpages.html"><a href="webpages.html#site-script-only-for-gitlab"><i class="fa fa-check"></i><b>5.2.3</b> Site script (only for GitLab)</a></li>
-<li class="chapter" data-level="5.2.4" data-path="webpages.html"><a href="webpages.html#main-page"><i class="fa fa-check"></i><b>5.2.4</b> Main page</a></li>
-<li class="chapter" data-level="5.2.5" data-path="webpages.html"><a href="webpages.html#render-the-site"><i class="fa fa-check"></i><b>5.2.5</b> Render the site</a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="webpages.html"><a href="webpages.html#webpage-content"><i class="fa fa-check"></i><b>5.3</b> Add content</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="webpages.html"><a href="webpages.html#headings-and-paragraphs"><i class="fa fa-check"></i><b>5.3.1</b> Headings and paragraphs</a></li>
-<li class="chapter" data-level="5.3.2" data-path="webpages.html"><a href="webpages.html#links"><i class="fa fa-check"></i><b>5.3.2</b> Links</a></li>
-<li class="chapter" data-level="5.3.3" data-path="webpages.html"><a href="webpages.html#lists"><i class="fa fa-check"></i><b>5.3.3</b> Lists</a></li>
-<li class="chapter" data-level="5.3.4" data-path="webpages.html"><a href="webpages.html#images"><i class="fa fa-check"></i><b>5.3.4</b> Images</a></li>
-</ul></li>
-<li class="chapter" data-level="5.4" data-path="webpages.html"><a href="webpages.html#webpage-pages"><i class="fa fa-check"></i><b>5.4</b> Add pages</a></li>
-<li class="chapter" data-level="5.5" data-path="webpages.html"><a href="webpages.html#webpage-styles"><i class="fa fa-check"></i><b>5.5</b> Styles</a><ul>
-<li class="chapter" data-level="5.5.1" data-path="webpages.html"><a href="webpages.html#change-the-theme"><i class="fa fa-check"></i><b>5.5.1</b> Change the theme</a></li>
-<li class="chapter" data-level="5.5.2" data-path="webpages.html"><a href="webpages.html#add-custom-styles"><i class="fa fa-check"></i><b>5.5.2</b> Add custom styles</a></li>
-<li class="chapter" data-level="5.5.3" data-path="webpages.html"><a href="webpages.html#change-global-fonts-and-colours"><i class="fa fa-check"></i><b>5.5.3</b> Change global fonts and colours</a></li>
-<li class="chapter" data-level="5.5.4" data-path="webpages.html"><a href="webpages.html#change-certain-elements"><i class="fa fa-check"></i><b>5.5.4</b> Change certain elements</a></li>
-</ul></li>
-<li class="chapter" data-level="5.6" data-path="webpages.html"><a href="webpages.html#webpage-online"><i class="fa fa-check"></i><b>5.6</b> Put your webpage online</a><ul>
-<li class="chapter" data-level="5.6.1" data-path="webpages.html"><a href="webpages.html#save-this-version-with-git"><i class="fa fa-check"></i><b>5.6.1</b> Save this version with git</a></li>
-<li class="chapter" data-level="5.6.2" data-path="webpages.html"><a href="webpages.html#github"><i class="fa fa-check"></i><b>5.6.2</b> GitHub</a></li>
-<li class="chapter" data-level="5.6.3" data-path="webpages.html"><a href="webpages.html#gitlab"><i class="fa fa-check"></i><b>5.6.3</b> GitLab</a></li>
-</ul></li>
-</ul></li>
-<li class="appendix"><span><b>Appendices</b></span></li>
-<li class="chapter" data-level="A" data-path="installing-r.html"><a href="installing-r.html"><i class="fa fa-check"></i><b>A</b> Installing <code>R</code></a><ul>
-<li class="chapter" data-level="A.1" data-path="installing-r.html"><a href="installing-r.html#installing-base-r"><i class="fa fa-check"></i><b>A.1</b> Installing Base R</a></li>
-<li class="chapter" data-level="A.2" data-path="installing-r.html"><a href="installing-r.html#installing-rstudio"><i class="fa fa-check"></i><b>A.2</b> Installing RStudio</a></li>
-<li class="chapter" data-level="A.3" data-path="installing-r.html"><a href="installing-r.html#installing-latex"><i class="fa fa-check"></i><b>A.3</b> Installing LaTeX</a></li>
-</ul></li>
-<li class="chapter" data-level="B" data-path="setup-git.html"><a href="setup-git.html"><i class="fa fa-check"></i><b>B</b> Git and GitHub</a><ul>
-<li class="chapter" data-level="B.1" data-path="setup-git.html"><a href="setup-git.html#get-a-github-account"><i class="fa fa-check"></i><b>B.1</b> Get a GitHub account</a></li>
-<li class="chapter" data-level="B.2" data-path="setup-git.html"><a href="setup-git.html#set-up-rstudio"><i class="fa fa-check"></i><b>B.2</b> Set up RStudio</a><ul>
-<li class="chapter" data-level="B.2.1" data-path="setup-git.html"><a href="setup-git.html#install-git"><i class="fa fa-check"></i><b>B.2.1</b> Install git</a></li>
-<li class="chapter" data-level="B.2.2" data-path="setup-git.html"><a href="setup-git.html#enable-version-control-in-rstudio"><i class="fa fa-check"></i><b>B.2.2</b> Enable version control in RStudio</a></li>
-</ul></li>
-<li class="chapter" data-level="B.3" data-path="setup-git.html"><a href="setup-git.html#github-info"><i class="fa fa-check"></i><b>B.3</b> Set your GitHub info</a></li>
-<li class="chapter" data-level="B.4" data-path="setup-git.html"><a href="setup-git.html#create-an-ssh-key-on-rstudio"><i class="fa fa-check"></i><b>B.4</b> Create an SSH Key on RStudio</a></li>
-<li class="chapter" data-level="B.5" data-path="setup-git.html"><a href="setup-git.html#create-an-ssh-key-on-github"><i class="fa fa-check"></i><b>B.5</b> Create an SSH Key on GitHub</a></li>
-</ul></li>
-<li class="chapter" data-level="C" data-path="pipes.html"><a href="pipes.html"><i class="fa fa-check"></i><b>C</b> Pipes</a></li>
-<li class="chapter" data-level="D" data-path="symbols.html"><a href="symbols.html"><i class="fa fa-check"></i><b>D</b> Symbols</a></li>
-<li class="divider"></li>
-<li><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" 
-    target="blank"><img alt="Creative Commons License" 
-    style="border-width:0" 
-    src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><li>
-<li><a href="https://psyteachr.github.io/" target="blank">PsyTeachR</a></li>
-
-</ul>
-
-      </nav>
-    </div>
-
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Tutorials</a>
-          </h1>
-        </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="sim_data" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Simulating Data</h1>
-<p>This tutorial details a few ways I simulate data. I'll be using some functions from my <a href="https://github.com/debruine/faux"><code>faux</code> package</a> to make it easier to generate sets of variables with specific correlations.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-<span class="kw">library</span>(faux) <span class="co"># devtools::install_github(&quot;debruine/faux&quot;)</span>
-<span class="kw">set.seed</span>(<span class="dv">8675309</span>) <span class="co"># this makes sure your script uses the same set of random numbers each time you run the full script (never set this inside a function or loop)</span></code></pre></div>
-<div id="independent-samples" class="section level2">
-<h2><span class="header-section-number">3.1</span> Independent samples</h2>
-<p>Let's start with a simple independent-samples design where the variables are from a normal distribution. Each subject produces one score (in condition A or B). What we need to know about these scores is:</p>
-<ul>
-<li>How many subjects are in each condition?</li>
-<li>What are the score means?</li>
-<li>What are the score variances?</li>
-</ul>
-<div id="ind-params" class="section level3">
-<h3><span class="header-section-number">3.1.1</span> Parameters</h3>
-<p>I start simulation scripts by setting parameters for these values.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">A_sub_n &lt;-<span class="st"> </span><span class="dv">50</span>
-B_sub_n &lt;-<span class="st"> </span><span class="dv">50</span>
-A_mean &lt;-<span class="st"> </span><span class="dv">10</span>
-B_mean &lt;-<span class="st"> </span><span class="dv">11</span>
-A_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
-B_sd &lt;-<span class="st"> </span><span class="fl">2.5</span></code></pre></div>
-</div>
-<div id="scores" class="section level3">
-<h3><span class="header-section-number">3.1.2</span> Scores</h3>
-<p>We can the generate the scores using the <code>rnorm()</code> <a class='glossary' target='_blank' title='A named section of code that can be reused.' href='https://psyteachr.github.io/glossary/f#function'>function</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">A_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(A_sub_n, A_mean, A_sd)
-B_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(B_sub_n, B_mean, B_sd)</code></pre></div>
-<p>You can stop here and just analyse your simulated data with <code>t.test(A_scores, B_scores)</code>, but usualy you want to get your simulated data into a data table that looks like what you might eventually import from a CSV file with your actual experimental data.</p>
-<p>I always use the <code>tidyverse</code> for <a class='glossary' target='_blank' title='The process of preparing data for visualisation and statistical analysis.' href='https://psyteachr.github.io/glossary/d#data-wrangling'>data wrangling</a>, so I'll create a data table using the <code>tibble()</code> function (but you can use <code>data.frame()</code> if you must). We need to know what condition each subject is in, so set the first <code>A_sub_n</code> values to &quot;A&quot; and the next <code>B_sub_n</code> values to &quot;B&quot;. Then set the score to the <code>A_scores</code> <a class='glossary' target='_blank' title='To combine strings or vectors.' href='https://psyteachr.github.io/glossary/c#concatenate'>concatenated</a> to the <code>B_scores</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(
-  <span class="dt">sub_condition =</span> <span class="kw">rep</span>( <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="kw">c</span>(A_sub_n, B_sub_n) ),
-  <span class="dt">score =</span> <span class="kw">c</span>(A_scores, B_scores)
-)</code></pre></div>
-</div>
-<div id="check-your-data" class="section level3">
-<h3><span class="header-section-number">3.1.3</span> Check your data</h3>
-<p>Always examine your simulated data after you generate it to make sure it looks like you want.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">summary_dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(sub_condition) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>() ,
-            <span class="dt">mean =</span> <span class="kw">mean</span>(score),
-            <span class="dt">sd =</span> <span class="kw">sd</span>(score))</code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="left">sub_condition</th>
-<th align="right">n</th>
-<th align="right">mean</th>
-<th align="right">sd</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">A</td>
-<td align="right">50</td>
-<td align="right">10.257</td>
-<td align="right">2.149</td>
-</tr>
-<tr class="even">
-<td align="left">B</td>
-<td align="right">50</td>
-<td align="right">11.005</td>
-<td align="right">2.500</td>
-</tr>
-</tbody>
-</table>
 <div class="info">
-<p>
-Your means and SDs won't be <strong>exactly</strong> what you specified because those parameters are for population and you are taking a sample. The larger your <code>sub_n</code>, the closer these values will usually be to the parameters you specify.
-</p>
+<p>Your means and SDs won't be <strong>exactly</strong> what you specified because those parameters are for population and you are taking a sample. The larger your <code>sub_n</code>, the closer these values will usually be to the parameters you specify.</p>
 </div>
-</div>
-<div id="analysis" class="section level3">
-<h3><span class="header-section-number">3.1.4</span> Analysis</h3>
-<p>Now you can analyse your simulated data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(score<span class="op">~</span>sub_condition, dat)</code></pre></div>
-<pre><code>## 
-##  Welch Two Sample t-test
+
+### Analysis
+
+Now you can analyse your simulated data.
+
+
+```r
+t.test(score~sub_condition, dat)
+```
+
+```
+## 
+## 	Welch Two Sample t-test
 ## 
 ## data:  score by sub_condition
 ## t = -1.6044, df = 95.843, p-value = 0.1119
@@ -369,33 +98,45 @@ Your means and SDs won't be <strong>exactly</strong> what you specified because 
 ##  -1.6735571  0.1774477
 ## sample estimates:
 ## mean in group A mean in group B 
-##        10.25673        11.00478</code></pre>
-</div>
-<div id="function" class="section level3">
-<h3><span class="header-section-number">3.1.5</span> Function</h3>
-<p>You can wrap all this in a function so you can run it many times to do a power calculation. Put all your parameters as <a class='glossary' target='_blank' title='A variable that provides input to a function.' href='https://psyteachr.github.io/glossary/a#argument'>arguments</a> to the function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ind_sim &lt;-<span class="st"> </span><span class="cf">function</span>(A_sub_n, B_sub_n, A_mean, B_mean, A_sd, B_sd) {
-  A_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(A_sub_n, A_mean, A_sd)
-  B_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(B_sub_n, B_mean, B_sd)
+##        10.25673        11.00478
+```
+
+### Function
+
+You can wrap all this in a function so you can run it many times to do a power calculation. Put all your parameters as <a class='glossary' target='_blank' title='A variable that provides input to a function.' href='https://psyteachr.github.io/glossary/a#argument'>arguments</a> to the function.
+
+
+```r
+ind_sim <- function(A_sub_n, B_sub_n, A_mean, B_mean, A_sd, B_sd) {
+  A_scores <- rnorm(A_sub_n, A_mean, A_sd)
+  B_scores <- rnorm(B_sub_n, B_mean, B_sd)
   
-  dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(
-    <span class="dt">sub_condition =</span> <span class="kw">rep</span>( <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="kw">c</span>(A_sub_n, B_sub_n) ),
-    <span class="dt">score =</span> <span class="kw">c</span>(A_scores, B_scores)
+  dat <- tibble(
+    sub_condition = rep( c("A", "B"), c(A_sub_n, B_sub_n) ),
+    score = c(A_scores, B_scores)
   )
-  t &lt;-<span class="st"> </span><span class="kw">t.test</span>(score<span class="op">~</span>sub_condition, dat)
+  t <- t.test(score~sub_condition, dat)
   
-  <span class="co"># return just the values you care about</span>
-  <span class="kw">list</span>(
-    <span class="dt">t =</span> t<span class="op">$</span>statistic,
-    <span class="dt">ci_lower =</span> t<span class="op">$</span>conf.int[<span class="dv">1</span>],
-    <span class="dt">ci_upper =</span> t<span class="op">$</span>conf.int[<span class="dv">2</span>],
-    <span class="dt">p =</span> t<span class="op">$</span>p.value,
-    <span class="dt">estimate =</span> t<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>t<span class="op">$</span>estimate[<span class="dv">2</span>]
+  # return just the values you care about
+  list(
+    t = t$statistic,
+    ci_lower = t$conf.int[1],
+    ci_upper = t$conf.int[2],
+    p = t$p.value,
+    estimate = t$estimate[1] - t$estimate[2]
   )
-}</code></pre></div>
-<p>Now run your new function with the values you used above.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ind_sim</span>(<span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>)</code></pre></div>
-<pre><code>## $t
+}
+```
+
+Now run your new function with the values you used above.
+
+
+```r
+ind_sim(50, 50, 10, 11, 2.5, 2.5)
+```
+
+```
+## $t
 ##        t 
 ## -1.16975 
 ## 
@@ -410,112 +151,117 @@ Your means and SDs won't be <strong>exactly</strong> what you specified because 
 ## 
 ## $estimate
 ## mean in group A 
-##      -0.5804213</code></pre>
+##      -0.5804213
+```
+
+
 <div class="try">
-<p>
-Run the function with the parameters from the example above. Run it a few times and see how the results compare. What happens if you change a parameter? Edit the list at the end of the function to return more values of interest, like the means for A and B.
-</p>
+<p>Run the function with the parameters from the example above. Run it a few times and see how the results compare. What happens if you change a parameter? Edit the list at the end of the function to return more values of interest, like the means for A and B.</p>
 </div>
-<p>Now you can use this function to run many simulations. There are a lot of ways to do this. The pattern below uses the <code>map_df</code> function from the <code>purrr</code> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulation &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="op">~</span><span class="kw">ind_sim</span>(<span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>))</code></pre></div>
+
+Now you can use this function to run many simulations. There are a lot of ways to do this. The pattern below uses the `map_df` function from the `purrr` package.
+
+
+```r
+simulation <- purrr::map_df(1:1000, ~ind_sim(50, 50, 10, 11, 2.5, 2.5))
+```
+
 <div class="info">
-<p>
-The function <code>map_df</code> takes two arguments, a vector and a function, and returns a dataframe. It runs the function once for each item in the vector, so the vector <code>1:1000</code> above runs the <code>ind_sim()</code> function 1000 times.
-</p>
-<p>
-The <code>purrr::map()</code> functions can also set arguments in the function from the items in the vector. We aren't doing that here, but will use that pattern later.
-</p>
+<p>The function <code>map_df</code> takes two arguments, a vector and a function, and returns a dataframe. It runs the function once for each item in the vector, so the vector <code>1:1000</code> above runs the <code>ind_sim()</code> function 1000 times.</p>
+<p>The <code>purrr::map()</code> functions can also set arguments in the function from the items in the vector. We aren't doing that here, but will use that pattern later.</p>
 </div>
-<p>Now you can graph the data from your simulations.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulation <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(stat, value, t<span class="op">:</span>estimate) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(value, <span class="dt">color =</span> stat), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>stat, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:paired-sim-fig"></span>
+
+Now you can graph the data from your simulations.
+
+
+```r
+simulation %>%
+  gather(stat, value, t:estimate) %>%
+  ggplot() + 
+  geom_density(aes(value, color = stat), show.legend = FALSE) +
+  facet_wrap(~stat, scales = "free")
+```
+
+<div class="figure" style="text-align: center">
 <img src="03_sim_data_files/figure-html/paired-sim-fig-1.png" alt="Distribution of results from simulated independent samples data" width="100%" />
-<p class="caption">
-Figure 3.1: Distribution of results from simulated independent samples data
-</p>
+<p class="caption">(\#fig:paired-sim-fig)Distribution of results from simulated independent samples data</p>
 </div>
-<p>You can calculate power as the proportion of simulations on which the p-value was less than your alpha.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
-power &lt;-<span class="st"> </span><span class="kw">mean</span>(simulation<span class="op">$</span>p <span class="op">&lt;</span><span class="st"> </span>alpha)</code></pre></div>
-<p>Your power for the parameters above is 0.496.</p>
-</div>
-</div>
-<div id="paired-samples" class="section level2">
-<h2><span class="header-section-number">3.2</span> Paired samples</h2>
-<p>Now let's try a paired-samples design where the variables are from a normal distribution. Each subject produces two scores (in conditions A and B). What we need to know about these two scores is:</p>
-<ul>
-<li>How many subjects?</li>
-<li>What are the score means?</li>
-<li>What are the score variances?</li>
-<li>What is the correlation between the scores?</li>
-</ul>
-<div id="paired-params" class="section level3">
-<h3><span class="header-section-number">3.2.1</span> Parameters</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_n &lt;-<span class="st"> </span><span class="dv">100</span>
-A_mean &lt;-<span class="st"> </span><span class="dv">10</span>
-B_mean &lt;-<span class="st"> </span><span class="dv">11</span>
-A_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
-B_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
-AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div>
-</div>
-<div id="correlated-scores" class="section level3">
-<h3><span class="header-section-number">3.2.2</span> Correlated Scores</h3>
-<p>You can then use <code>rnorm_multi()</code> to generate a data table with simulated values for correlated scores:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>faux<span class="op">::</span><span class="kw">rnorm_multi</span>(
-  <span class="dt">n =</span> sub_n, 
-  <span class="dt">vars =</span> <span class="dv">2</span>, 
-  <span class="dt">cors =</span> AB_r, 
-  <span class="dt">mu =</span> <span class="kw">c</span>(A_mean, B_mean), 
-  <span class="dt">sd =</span> <span class="kw">c</span>(A_sd, B_sd), 
-  <span class="dt">varnames =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)
-)</code></pre></div>
-<pre><code>## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r</code></pre>
-</div>
-<div id="check-your-data-1" class="section level3">
-<h3><span class="header-section-number">3.2.3</span> Check your data</h3>
-<p>Now check your data; <code>faux</code> has a function <code>get_params()</code> that gives you the correlation table, means, and SDs for each numeric column in a data table.</p>
-<table>
-<thead>
-<tr class="header">
-<th align="right">n</th>
-<th align="left">var</th>
-<th align="right">A</th>
-<th align="right">B</th>
-<th align="right">mean</th>
-<th align="right">sd</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">100</td>
-<td align="left">A</td>
-<td align="right">1.00</td>
-<td align="right">0.51</td>
-<td align="right">9.81</td>
-<td align="right">2.29</td>
-</tr>
-<tr class="even">
-<td align="right">100</td>
-<td align="left">B</td>
-<td align="right">0.51</td>
-<td align="right">1.00</td>
-<td align="right">10.81</td>
-<td align="right">2.57</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="analysis-1" class="section level3">
-<h3><span class="header-section-number">3.2.4</span> Analysis</h3>
-<p>Finally, you can analyse your simulated data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(dat<span class="op">$</span>A, dat<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## 
-##  Paired t-test
+
+You can calculate power as the proportion of simulations on which the p-value was less than your alpha.
+
+
+```r
+alpha <- 0.05
+power <- mean(simulation$p < alpha)
+```
+
+Your power for the parameters above is 0.496.
+
+
+## Paired samples
+
+Now let's try a paired-samples design where the variables are from a normal distribution. Each subject produces two scores (in conditions A and B). What we need to know about these two scores is:
+
+* How many subjects?
+* What are the score means?
+* What are the score variances?
+* What is the correlation between the scores?
+
+### Parameters {#paired-params}
+
+
+```r
+sub_n <- 100
+A_mean <- 10
+B_mean <- 11
+A_sd <- 2.5
+B_sd <- 2.5
+AB_r <- 0.5
+```
+
+### Correlated Scores
+
+You can then use `rnorm_multi()` to generate a data table with simulated values for correlated scores:
+
+
+```r
+dat <- faux::rnorm_multi(
+  n = sub_n, 
+  vars = 2, 
+  cors = AB_r, 
+  mu = c(A_mean, B_mean), 
+  sd = c(A_sd, B_sd), 
+  varnames = c("A", "B")
+)
+```
+
+```
+## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
+## c(A_mean, : cors is deprecated, please use r
+```
+
+### Check your data
+
+Now check your data; `faux` has a function `get_params()` that gives you the correlation table, means, and SDs for each numeric column in a data table.
+
+
+   n  var       A      B    mean     sd
+----  ----  -----  -----  ------  -----
+ 100  A      1.00   0.51    9.81   2.29
+ 100  B      0.51   1.00   10.81   2.57
+
+### Analysis
+
+Finally, you can analyse your simulated data.
+
+
+```r
+t.test(dat$A, dat$B, paired = TRUE)
+```
+
+```
+## 
+## 	Paired t-test
 ## 
 ## data:  dat$A and dat$B
 ## t = -4.1238, df = 99, p-value = 7.761e-05
@@ -524,35 +270,47 @@ AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div
 ##  -1.479129 -0.518129
 ## sample estimates:
 ## mean of the differences 
-##              -0.9986288</code></pre>
-</div>
-<div id="function-1" class="section level3">
-<h3><span class="header-section-number">3.2.5</span> Function</h3>
-<p>The function is set up the same way as before. Set the arguments to the relevant parameters, construct the data table, run the t-test, and return the values you care about.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">paired_sim &lt;-<span class="st"> </span><span class="cf">function</span>(sub_n, A_mean, B_mean, A_sd, B_sd, AB_r) {
+##              -0.9986288
+```
 
-  dat &lt;-<span class="st"> </span>faux<span class="op">::</span><span class="kw">rnorm_multi</span>(
-    <span class="dt">n =</span> sub_n, 
-    <span class="dt">vars =</span> <span class="dv">2</span>, 
-    <span class="dt">cors =</span> AB_r, 
-    <span class="dt">mu =</span> <span class="kw">c</span>(A_mean, B_mean), 
-    <span class="dt">sd =</span> <span class="kw">c</span>(A_sd, B_sd), 
-    <span class="dt">varnames =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)
+### Function
+
+The function is set up the same way as before. Set the arguments to the relevant parameters, construct the data table, run the t-test, and return the values you care about.
+
+
+```r
+paired_sim <- function(sub_n, A_mean, B_mean, A_sd, B_sd, AB_r) {
+
+  dat <- faux::rnorm_multi(
+    n = sub_n, 
+    vars = 2, 
+    cors = AB_r, 
+    mu = c(A_mean, B_mean), 
+    sd = c(A_sd, B_sd), 
+    varnames = c("A", "B")
   )
-  t &lt;-<span class="st"> </span><span class="kw">t.test</span>(dat<span class="op">$</span>A, dat<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)
+  t <- t.test(dat$A, dat$B, paired = TRUE)
   
-  <span class="co"># return just the values you care about</span>
-  <span class="kw">list</span>(
-    <span class="dt">t =</span> t<span class="op">$</span>statistic,
-    <span class="dt">ci_lower =</span> t<span class="op">$</span>conf.int[<span class="dv">1</span>],
-    <span class="dt">ci_upper =</span> t<span class="op">$</span>conf.int[<span class="dv">2</span>],
-    <span class="dt">p =</span> t<span class="op">$</span>p.value,
-    <span class="dt">estimate =</span> t<span class="op">$</span>estimate
+  # return just the values you care about
+  list(
+    t = t$statistic,
+    ci_lower = t$conf.int[1],
+    ci_upper = t$conf.int[2],
+    p = t$p.value,
+    estimate = t$estimate
   )
-}</code></pre></div>
-<p>Run 1000 simulations and graph the results.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulation &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="op">~</span><span class="kw">paired_sim</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, .<span class="dv">5</span>))</code></pre></div>
-<pre><code>## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
+}
+```
+
+Run 1000 simulations and graph the results.
+
+
+```r
+simulation <- purrr::map_df(1:1000, ~paired_sim(100, 10, 11, 2.5, 2.5, .5))
+```
+
+```
+## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
 ## c(A_mean, : cors is deprecated, please use r
 
 ## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
@@ -3550,134 +3308,159 @@ AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div
 ## c(A_mean, : cors is deprecated, please use r
 
 ## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulation <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(stat, value, t<span class="op">:</span>estimate) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(value, <span class="dt">color =</span> stat), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>stat, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:ind-sim-fig"></span>
+## c(A_mean, : cors is deprecated, please use r
+```
+
+
+```r
+simulation %>%
+  gather(stat, value, t:estimate) %>%
+  ggplot() + 
+  geom_density(aes(value, color = stat), show.legend = FALSE) +
+  facet_wrap(~stat, scales = "free")
+```
+
+<div class="figure" style="text-align: center">
 <img src="03_sim_data_files/figure-html/ind-sim-fig-1.png" alt="Distribution of results from simulated paired samples data" width="100%" />
-<p class="caption">
-Figure 3.2: Distribution of results from simulated paired samples data
-</p>
+<p class="caption">(\#fig:ind-sim-fig)Distribution of results from simulated paired samples data</p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
-power &lt;-<span class="st"> </span><span class="kw">mean</span>(simulation<span class="op">$</span>p <span class="op">&lt;</span><span class="st"> </span>alpha)</code></pre></div>
-<p>Your power for the parameters above is 0.984.</p>
-</div>
-</div>
-<div id="intercept-model" class="section level2">
-<h2><span class="header-section-number">3.3</span> Intercept model</h2>
-<p>Now I'm going to show you a different way to simulate the same design. This might seem excessively complicated, but you will need this pattern when you start simulating data for <a href="sim-lmer.html#sim_lmer">mixed effects models</a>.</p>
-<div id="parameters" class="section level3">
-<h3><span class="header-section-number">3.3.1</span> Parameters</h3>
-<p>Remember, we used the following parameters to set up our simulation above:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_n &lt;-<span class="st"> </span><span class="dv">100</span>
-A_mean &lt;-<span class="st"> </span><span class="dv">10</span>
-B_mean &lt;-<span class="st"> </span><span class="dv">11</span>
-A_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
-B_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
-AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div>
-<p>From these, we can calculate the grand intercept (the overall mean regardless of condition), and the effect of condition (the mean of B minus A).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grand_i &lt;-<span class="st"> </span>(A_mean <span class="op">+</span><span class="st"> </span>B_mean)<span class="op">/</span><span class="dv">2</span>
-AB_effect &lt;-<span class="st"> </span>B_mean <span class="op">-</span><span class="st"> </span>A_mean</code></pre></div>
-<p>We also need to think about variance a little differently. First, calculate the pooled variance as the mean of the variances for A and B (remember, variance is SD squared).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pooled_var &lt;-<span class="st"> </span>(A_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>B_sd<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span></code></pre></div>
+
+
+```r
+alpha <- 0.05
+power <- mean(simulation$p < alpha)
+```
+
+Your power for the parameters above is 0.984.
+
+## Intercept model
+
+Now I'm going to show you a different way to simulate the same design. This might seem excessively complicated, but you will need this pattern when you start simulating data for [mixed effects models](#sim_lmer).
+
+### Parameters
+
+Remember, we used the following parameters to set up our simulation above:
+
+
+```r
+sub_n <- 100
+A_mean <- 10
+B_mean <- 11
+A_sd <- 2.5
+B_sd <- 2.5
+AB_r <- 0.5
+```
+
+From these, we can calculate the grand intercept (the overall mean regardless of condition), and the effect of condition (the mean of B minus A).
+
+
+```r
+grand_i <- (A_mean + B_mean)/2
+AB_effect <- B_mean - A_mean
+```
+
+We also need to think about variance a little differently. First, calculate the pooled variance as the mean of the variances for A and B (remember, variance is SD squared).
+
+
+```r
+pooled_var <- (A_sd^2 + B_sd^2)/2
+```
+
 <div class="warning">
-<p>
-If the SDs for A and B are very different, this suggests a more complicated data generation model. For this tutorial we'll assume the score variance is similar for conditions A and B.
-</p>
+<p>If the SDs for A and B are very different, this suggests a more complicated data generation model. For this tutorial we'll assume the score variance is similar for conditions A and B.</p>
 </div>
-<p>The variance of the subject intercepts is <code>r</code> times this pooled variance and the error variance is what is left over. We take the square root (<code>sqrt()</code>) to set the subject intercept and error SDs for simulation later.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>AB_r)
-error_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>AB_r))</code></pre></div>
+
+The variance of the subject intercepts is `r` times this pooled variance and the error variance is what is left over. We take the square root (`sqrt()`) to set the subject intercept and error SDs for simulation later.
+
+
+```r
+sub_sd <- sqrt(pooled_var * AB_r)
+error_sd <- sqrt(pooled_var * (1-AB_r))
+```
+
 <div class="info">
-<p>
-You can think about the subject intercept variance as how much subjects vary in the score in general, regardless of condition. If they vary a lot, in comparison to the random &quot;error&quot; variation, then scores in the two conditions will be highly correlated. If they don't vary much (or random variation from trial to trial is quite large), then scores won't be well correlated.
-</p>
+<p>You can think about the subject intercept variance as how much subjects vary in the score in general, regardless of condition. If they vary a lot, in comparison to the random &quot;error&quot; variation, then scores in the two conditions will be highly correlated. If they don't vary much (or random variation from trial to trial is quite large), then scores won't be well correlated.</p>
 </div>
-</div>
-<div id="subject-intercepts" class="section level3">
-<h3><span class="header-section-number">3.3.2</span> Subject intercepts</h3>
-<p>Now we use these variables to create a data table for our subjects. Each subject gets an ID and a <strong>random intercept</strong> (<code>sub_i</code>). The intercept is simulated from a random normal distribution with a mean of 0 and an SD of <code>sub_sd</code>. This represents how much higher or lower than the average score each subject tends to be (regardless of condition).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub &lt;-<span class="st"> </span><span class="kw">tibble</span>(
-  <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,
-  <span class="dt">sub_i =</span> <span class="kw">rnorm</span>(sub_n, <span class="dv">0</span>, sub_sd)
-)</code></pre></div>
-</div>
-<div id="observations" class="section level3">
-<h3><span class="header-section-number">3.3.3</span> Observations</h3>
-<p>Next, set up a table where each row represents one observation. We'll use one of my favourite functions for simulation: <code>expand.grid()</code>. This creates every possible combination of the listed factors. Here, we're using it to create a row for each subject in each condition, since this is a fully within-subjects design.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(
-  <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,
-  <span class="dt">condition =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)
-)</code></pre></div>
-</div>
-<div id="calculate-the-score" class="section level3">
-<h3><span class="header-section-number">3.3.4</span> Calculate the score</h3>
-<p>Next, we join the subject table so each row has the information about the subject's random intercept and then calculate the score. I've done it in a few steps below for clarity. The score is just the sum of:</p>
-<ul>
-<li>the overall mean (<code>grand_i</code>)</li>
-<li>the subject-specific intercept (<code>sub_i</code>)</li>
-<li>the effect of condition (-50% of <code>AB_effect</code> for condition A and +50% of <code>AB_effect</code> for condition B)</li>
-<li>the error term (simulated from a normal distribution with mean of 0 and SD of <code>error_sd</code>)</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>obs <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">left_join</span>(sub, <span class="dt">by =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(
-    <span class="dt">condition.e =</span> <span class="kw">recode</span>(condition, <span class="st">&quot;A&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>, <span class="st">&quot;B&quot;</span> =<span class="st"> </span><span class="fl">0.5</span>),
-    <span class="dt">effect =</span> AB_effect <span class="op">*</span><span class="st"> </span>condition.e,
-    <span class="dt">error =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, error_sd),
-    <span class="dt">score =</span> grand_i <span class="op">+</span><span class="st"> </span>sub_i <span class="op">+</span><span class="st"> </span>effect <span class="op">+</span><span class="st"> </span>error
-  )</code></pre></div>
+
+### Subject intercepts
+
+Now we use these variables to create a data table for our subjects. Each subject gets an ID and a **random intercept** (`sub_i`). The intercept is simulated from a random normal distribution with a mean of 0 and an SD of `sub_sd`. This represents how much higher or lower than the average score each subject tends to be (regardless of condition).
+
+
+```r
+sub <- tibble(
+  sub_id = 1:sub_n,
+  sub_i = rnorm(sub_n, 0, sub_sd)
+)
+```
+
+### Observations
+
+Next, set up a table where each row represents one observation. We'll use one of my favourite functions for simulation: `expand.grid()`. This creates every possible combination of the listed factors. Here, we're using it to create a row for each subject in each condition, since this is a fully within-subjects design.
+
+
+```r
+obs <- expand.grid(
+  sub_id = 1:sub_n,
+  condition = c("A", "B")
+)
+```
+
+### Calculate the score
+
+Next, we join the subject table so each row has the information about the subject's random intercept and then calculate the score. I've done it in a few steps below for clarity. The score is just the sum of:
+
+* the overall mean (`grand_i`)
+* the subject-specific intercept (`sub_i`)
+* the effect of condition (-50% of `AB_effect` for condition A and +50% of `AB_effect` for condition B)
+* the error term (simulated from a normal distribution with mean of 0 and SD of `error_sd`)
+
+
+```r
+dat <- obs %>%
+  left_join(sub, by = "sub_id") %>%
+  mutate(
+    condition.e = recode(condition, "A" = -0.5, "B" = 0.5),
+    effect = AB_effect * condition.e,
+    error = rnorm(nrow(.), 0, error_sd),
+    score = grand_i + sub_i + effect + error
+  )
+```
+
 <div class="info">
-<p>
-The variable <code>condition.e</code> &quot;effect codes&quot; condition, which we will use later in a mixed effect model. You can learn more about <a href="https://debruine.github.io/posts/coding-schemes/">coding schemes</a> here.
-</p>
+<p>The variable <code>condition.e</code> &quot;effect codes&quot; condition, which we will use later in a mixed effect model. You can learn more about <a href="https://debruine.github.io/posts/coding-schemes/">coding schemes</a> here.</p>
 </div>
-<p>You can use the following code to put the data table into a more familiar &quot;wide&quot; format.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_wide &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(sub_id, condition, score) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread</span>(condition, score)</code></pre></div>
-<p>Then you can use the <code>get_params</code> function to check this looks correct (remove the subject ID to leave it out of the table, since it's numeric).</p>
-<table>
-<thead>
-<tr class="header">
-<th align="right">n</th>
-<th align="left">var</th>
-<th align="right">A</th>
-<th align="right">B</th>
-<th align="right">mean</th>
-<th align="right">sd</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">100</td>
-<td align="left">A</td>
-<td align="right">1.00</td>
-<td align="right">0.41</td>
-<td align="right">9.93</td>
-<td align="right">2.04</td>
-</tr>
-<tr class="even">
-<td align="right">100</td>
-<td align="left">B</td>
-<td align="right">0.41</td>
-<td align="right">1.00</td>
-<td align="right">11.33</td>
-<td align="right">2.03</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="analyses" class="section level3">
-<h3><span class="header-section-number">3.3.5</span> Analyses</h3>
-<p>You can analyse the data with a paired-samples t-test from the wide format:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(dat_wide<span class="op">$</span>A, dat_wide<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## 
-##  Paired t-test
+
+You can use the following code to put the data table into a more familiar "wide" format.
+
+
+```r
+dat_wide <- dat %>%
+  select(sub_id, condition, score) %>%
+  spread(condition, score)
+```
+
+
+Then you can use the `get_params` function to check this looks correct (remove the subject ID to leave it out of the table, since it's numeric).
+
+
+   n  var       A      B    mean     sd
+----  ----  -----  -----  ------  -----
+ 100  A      1.00   0.41    9.93   2.04
+ 100  B      0.41   1.00   11.33   2.03
+
+### Analyses
+
+You can analyse the data with a paired-samples t-test from the wide format:
+
+
+```r
+t.test(dat_wide$A, dat_wide$B, paired = TRUE)
+```
+
+```
+## 
+## 	Paired t-test
 ## 
 ## data:  dat_wide$A and dat_wide$B
 ## t = -6.303, df = 99, p-value = 8.154e-09
@@ -3686,11 +3469,19 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 ##  -1.8365839 -0.9571096
 ## sample estimates:
 ## mean of the differences 
-##               -1.396847</code></pre>
-<p>Or in the long format:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(score <span class="op">~</span><span class="st"> </span>condition, dat, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## 
-##  Paired t-test
+##               -1.396847
+```
+
+Or in the long format:
+
+
+```r
+t.test(score ~ condition, dat, paired = TRUE)
+```
+
+```
+## 
+## 	Paired t-test
 ## 
 ## data:  score by condition
 ## t = -6.303, df = 99, p-value = 8.154e-09
@@ -3699,430 +3490,226 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 ##  -1.8365839 -0.9571096
 ## sample estimates:
 ## mean of the differences 
-##               -1.396847</code></pre>
-<p>You can analyse the data with ANOVA.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">afex<span class="op">::</span><span class="kw">aov_4</span>(score <span class="op">~</span><span class="st"> </span>(condition.e <span class="op">|</span><span class="st"> </span>sub_id), <span class="dt">data =</span> dat)</code></pre></div>
-<pre><code>## Anova Table (Type 3 tests)
+##               -1.396847
+```
+
+You can analyse the data with ANOVA.
+
+
+```r
+afex::aov_4(score ~ (condition.e | sub_id), data = dat)
+```
+
+```
+## Anova Table (Type 3 tests)
 ## 
 ## Response: score
 ##        Effect    df  MSE         F ges p.value
-## 1 condition.e 1, 99 2.46 39.73 *** .11  &lt;.0001
+## 1 condition.e 1, 99 2.46 39.73 *** .11  <.0001
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;+&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>You can even analyse the data with a mixed effects model.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lmem &lt;-<span class="st"> </span>lmerTest<span class="op">::</span><span class="kw">lmer</span>(score <span class="op">~</span><span class="st"> </span>condition.e <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>sub_id), <span class="dt">data =</span> dat)
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+```
 
-<span class="kw">summary</span>(lmem)<span class="op">$</span>coefficients <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="co"># nicer formatting with p-values</span>
-<span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&quot;Factor&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate_if</span>(<span class="op">~</span><span class="kw">max</span>(.) <span class="op">&lt;</span><span class="st"> </span>.<span class="dv">001</span>, <span class="op">~</span><span class="kw">as.character</span>(<span class="kw">signif</span>(., <span class="dv">3</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Factor</th>
-<th align="right">Estimate</th>
-<th align="right">Std. Error</th>
-<th align="right">df</th>
-<th align="right">t value</th>
-<th align="left">Pr(&gt;|t|)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">10.631</td>
-<td align="right">0.170</td>
-<td align="right">99</td>
-<td align="right">62.381</td>
-<td align="left">2.77e-81</td>
-</tr>
-<tr class="even">
-<td align="left">condition.e</td>
-<td align="right">1.397</td>
-<td align="right">0.222</td>
-<td align="right">99</td>
-<td align="right">6.303</td>
-<td align="left">8.15e-09</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div id="functions" class="section level2">
-<h2><span class="header-section-number">3.4</span> Functions</h2>
-<p>We can put everything together into a function where you specify the subject number, means, SDs and correlation, it translates this into the intercept specification, and returns a data table.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_paired_data &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">sub_n =</span> <span class="dv">100</span>, 
+
+You can even analyse the data with a mixed effects model. 
+
+
+```r
+lmem <- lmerTest::lmer(score ~ condition.e + (1 | sub_id), data = dat)
+
+summary(lmem)$coefficients %>% 
+  # nicer formatting with p-values
+  as_tibble(rownames = "Factor") %>%
+  mutate_if(~max(.) < .001, ~as.character(signif(., 3))) %>% 
+  knitr::kable(digits = 3)
+```
+
+
+
+Factor         Estimate   Std. Error   df   t value  Pr(>|t|) 
+------------  ---------  -----------  ---  --------  ---------
+(Intercept)      10.631        0.170   99    62.381  2.77e-81 
+condition.e       1.397        0.222   99     6.303  8.15e-09 
+
+## Functions
+
+We can put everything together into a function where you specify the subject number, means, SDs and correlation, it translates this into the intercept specification, and returns a data table.
+
+
+```r
+sim_paired_data <- function(sub_n = 100, 
                             A_mean, B_mean, 
                             A_sd, B_sd, AB_r) {
   
-  grand_i &lt;-<span class="st"> </span>(A_mean <span class="op">+</span><span class="st"> </span>B_mean)<span class="op">/</span><span class="dv">2</span>
-  AB_effect &lt;-<span class="st"> </span>B_mean <span class="op">-</span><span class="st"> </span>A_mean
-  pooled_var &lt;-<span class="st"> </span>(A_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>B_sd<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span>
-  sub_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>AB_r)
-  error_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>AB_r))
+  grand_i <- (A_mean + B_mean)/2
+  AB_effect <- B_mean - A_mean
+  pooled_var <- (A_sd^2 + B_sd^2)/2
+  sub_sd <- sqrt(pooled_var * AB_r)
+  error_sd <- sqrt(pooled_var * (1-AB_r))
   
-  sub &lt;-<span class="st"> </span><span class="kw">tibble</span>(
-    <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,
-    <span class="dt">sub_i =</span> <span class="kw">rnorm</span>(sub_n, <span class="dv">0</span>, sub_sd)
+  sub <- tibble(
+    sub_id = 1:sub_n,
+    sub_i = rnorm(sub_n, 0, sub_sd)
   )
   
-  <span class="kw">expand.grid</span>(
-    <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,
-    <span class="dt">condition =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)
-  ) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">left_join</span>(sub, <span class="dt">by =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(
-    <span class="dt">effect =</span> <span class="kw">case_when</span>(
-      condition <span class="op">==</span><span class="st"> &quot;A&quot;</span> <span class="op">~</span><span class="st"> </span>AB_effect <span class="op">*</span><span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>,
-      condition <span class="op">==</span><span class="st"> &quot;B&quot;</span> <span class="op">~</span><span class="st"> </span>AB_effect <span class="op">*</span><span class="st"> </span><span class="op">+</span><span class="fl">0.5</span>
+  expand.grid(
+    sub_id = 1:sub_n,
+    condition = c("A", "B")
+  ) %>%
+  left_join(sub, by = "sub_id") %>%
+  mutate(
+    effect = case_when(
+      condition == "A" ~ AB_effect * -0.5,
+      condition == "B" ~ AB_effect * +0.5
     ),
-    <span class="dt">error =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, error_sd),
-    <span class="dt">score =</span> grand_i <span class="op">+</span><span class="st"> </span>sub_i <span class="op">+</span><span class="st"> </span>effect <span class="op">+</span><span class="st"> </span>error
-  ) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(sub_id, condition, score) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread</span>(condition, score)
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_paired_data</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, .<span class="dv">5</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>sub_id) <span class="op">%&gt;%</span>
-<span class="st">  </span>faux<span class="op">::</span><span class="kw">get_params</span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="right">n</th>
-<th align="left">var</th>
-<th align="right">A</th>
-<th align="right">B</th>
-<th align="right">mean</th>
-<th align="right">sd</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">100</td>
-<td align="left">A</td>
-<td align="right">1.00</td>
-<td align="right">0.48</td>
-<td align="right">9.86</td>
-<td align="right">2.41</td>
-</tr>
-<tr class="even">
-<td align="right">100</td>
-<td align="left">B</td>
-<td align="right">0.48</td>
-<td align="right">1.00</td>
-<td align="right">11.84</td>
-<td align="right">2.29</td>
-</tr>
-</tbody>
-</table>
-<p>Set the <code>sub_n</code> to a very high number to see that the means, SDs and correlations are what you specified.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_paired_data</span>(<span class="dv">10000</span>, <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">25</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>sub_id) <span class="op">%&gt;%</span>
-<span class="st">  </span>faux<span class="op">::</span><span class="kw">get_params</span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="right">n</th>
-<th align="left">var</th>
-<th align="right">A</th>
-<th align="right">B</th>
-<th align="right">mean</th>
-<th align="right">sd</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">10000</td>
-<td align="left">A</td>
-<td align="right">1.00</td>
-<td align="right">0.25</td>
-<td align="right">0.0</td>
-<td align="right">1.00</td>
-</tr>
-<tr class="even">
-<td align="right">10000</td>
-<td align="left">B</td>
-<td align="right">0.25</td>
-<td align="right">1.00</td>
-<td align="right">0.5</td>
-<td align="right">1.01</td>
-</tr>
-</tbody>
-</table>
-<p>It might be more useful to create functions to translate back and forth from the distribution specification to the intercept specification.</p>
-<div id="distribution-to-intercept-specification" class="section level3">
-<h3><span class="header-section-number">3.4.1</span> Distribution to intercept specification</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dist2int &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>, <span class="dt">r =</span> <span class="dv">0</span>) {
-  A_mean &lt;-<span class="st"> </span>mu[<span class="dv">1</span>]
-  <span class="co"># set B_mean to A_mean if mu has length 1</span>
-  B_mean &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(mu[<span class="dv">2</span>]), mu[<span class="dv">1</span>], mu[<span class="dv">2</span>])
-  A_sd &lt;-<span class="st"> </span>sd[<span class="dv">1</span>]
-  <span class="co"># set B_sd to A_sd if sd has length 1</span>
-  B_sd &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(sd[<span class="dv">2</span>]), sd[<span class="dv">1</span>], sd[<span class="dv">2</span>])
-  AB_r &lt;-<span class="st"> </span>r
-  pooled_var &lt;-<span class="st"> </span>(A_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>B_sd<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span>
+    error = rnorm(nrow(.), 0, error_sd),
+    score = grand_i + sub_i + effect + error
+  ) %>%
+  select(sub_id, condition, score) %>%
+  spread(condition, score)
+}
+```
+
+
+```r
+sim_paired_data(100, 10, 12, 2.5, 2.5, .5) %>%
+  select(-sub_id) %>%
+  faux::get_params() %>% 
+  knitr::kable()
+```
+
+
+
+   n  var       A      B    mean     sd
+----  ----  -----  -----  ------  -----
+ 100  A      1.00   0.48    9.86   2.41
+ 100  B      0.48   1.00   11.84   2.29
+
+Set the `sub_n` to a very high number to see that the means, SDs and correlations are what you specified.
+
+
+```r
+sim_paired_data(10000, 0, 0.5, 1, 1, .25) %>%
+  select(-sub_id) %>%
+  faux::get_params() %>% 
+  knitr::kable()
+```
+
+     n  var       A      B   mean     sd
+------  ----  -----  -----  -----  -----
+ 10000  A      1.00   0.25    0.0   1.00
+ 10000  B      0.25   1.00    0.5   1.01
+
+It might be more useful to create functions to translate back and forth from the distribution specification to the intercept specification.
+
+### Distribution to intercept specification
+
+
+```r
+dist2int <- function(mu = 0, sd = 1, r = 0) {
+  A_mean <- mu[1]
+  # set B_mean to A_mean if mu has length 1
+  B_mean <- ifelse(is.na(mu[2]), mu[1], mu[2])
+  A_sd <- sd[1]
+  # set B_sd to A_sd if sd has length 1
+  B_sd <- ifelse(is.na(sd[2]), sd[1], sd[2])
+  AB_r <- r
+  pooled_var <- (A_sd^2 + B_sd^2)/2
   
-  <span class="kw">list</span>(
-    <span class="dt">grand_i =</span> (A_mean <span class="op">+</span><span class="st"> </span>B_mean)<span class="op">/</span><span class="dv">2</span>,
-    <span class="dt">AB_effect =</span> B_mean <span class="op">-</span><span class="st"> </span>A_mean,
-    <span class="dt">sub_sd =</span> <span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>AB_r),
-    <span class="dt">error_sd =</span> <span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>AB_r))
+  list(
+    grand_i = (A_mean + B_mean)/2,
+    AB_effect = B_mean - A_mean,
+    sub_sd = sqrt(pooled_var * AB_r),
+    error_sd = sqrt(pooled_var * (1-AB_r))
   )
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dist2int</span>()</code></pre></div>
-<table>
-<tbody>
-<tr class="odd">
-<td align="left">grand_i</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">AB_effect</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="left">sub_sd</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">error_sd</td>
-<td align="right">1</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dist2int</span>(<span class="dt">mu =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">105</span>), <span class="dt">sd =</span> <span class="kw">c</span>(<span class="fl">10.5</span>, <span class="fl">9.5</span>), <span class="dt">r =</span> <span class="fl">0.5</span>)</code></pre></div>
-<table>
-<tbody>
-<tr class="odd">
-<td align="left">grand_i</td>
-<td align="right">102.50</td>
-</tr>
-<tr class="even">
-<td align="left">AB_effect</td>
-<td align="right">5.00</td>
-</tr>
-<tr class="odd">
-<td align="left">sub_sd</td>
-<td align="right">7.08</td>
-</tr>
-<tr class="even">
-<td align="left">error_sd</td>
-<td align="right">7.08</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="intercept-to-distribution-specification" class="section level3">
-<h3><span class="header-section-number">3.4.2</span> Intercept to distribution specification</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">int2dist &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">grand_i =</span> <span class="dv">0</span>, 
-                     <span class="dt">AB_effect =</span> <span class="dv">0</span>, 
-                     <span class="dt">sub_sd =</span> <span class="dv">0</span>, 
-                     <span class="dt">error_sd =</span> <span class="dv">1</span>) {
-  pooled_var &lt;-<span class="st"> </span>sub_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>error_sd<span class="op">^</span><span class="dv">2</span>
+}
+```
+
+
+
+```r
+dist2int()
+```
+
+
+
+               
+----------  ---
+grand_i       0
+AB_effect     0
+sub_sd        0
+error_sd      1
+----------  ---
+
+
+```r
+dist2int(mu = c(100, 105), sd = c(10.5, 9.5), r = 0.5)
+```
+
+
+
+                   
+----------  -------
+grand_i      102.50
+AB_effect      5.00
+sub_sd         7.08
+error_sd       7.08
+----------  -------
+
+### Intercept to distribution specification
+
+
+```r
+int2dist <- function(grand_i = 0, 
+                     AB_effect = 0, 
+                     sub_sd = 0, 
+                     error_sd = 1) {
+  pooled_var <- sub_sd^2 + error_sd^2
    
-  <span class="kw">list</span>(
-    <span class="dt">A_mean =</span> grand_i <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>AB_effect,
-    <span class="dt">B_mean =</span> grand_i <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>AB_effect,
-    <span class="dt">A_sd =</span> <span class="kw">sqrt</span>(pooled_var),
-    <span class="dt">B_sd =</span> <span class="kw">sqrt</span>(pooled_var),
-    <span class="dt">AB_r =</span> sub_sd<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>pooled_var
+  list(
+    A_mean = grand_i - 0.5 * AB_effect,
+    B_mean = grand_i + 0.5 * AB_effect,
+    A_sd = sqrt(pooled_var),
+    B_sd = sqrt(pooled_var),
+    AB_r = sub_sd^2 / pooled_var
   )
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">int2dist</span>()</code></pre></div>
-<table>
-<tbody>
-<tr class="odd">
-<td align="left">A_mean</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">B_mean</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="left">A_sd</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">B_sd</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">AB_r</td>
-<td align="right">0</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">int2dist</span>(<span class="fl">102.5</span>, <span class="dv">5</span>, <span class="fl">0.708</span>, <span class="fl">0.708</span>)</code></pre></div>
-<table>
-<tbody>
-<tr class="odd">
-<td align="left">A_mean</td>
-<td align="right">100.000</td>
-</tr>
-<tr class="even">
-<td align="left">B_mean</td>
-<td align="right">105.000</td>
-</tr>
-<tr class="odd">
-<td align="left">A_sd</td>
-<td align="right">1.001</td>
-</tr>
-<tr class="even">
-<td align="left">B_sd</td>
-<td align="right">1.001</td>
-</tr>
-<tr class="odd">
-<td align="left">AB_r</td>
-<td align="right">0.500</td>
-</tr>
-</tbody>
-</table>
-<p>We can then use either specification to generate data with either technique.</p>
-
-</div>
-</div>
-</div>
-<div class="psyteachr_footer">
-  
-</div>
-<script>
-
-/* update total correct if #total_correct exists */
-update_total_correct = function() {
-  if (t = document.getElementById("total_correct")) {
-    t.innerHTML =
-      document.getElementsByClassName("correct").length + " of " +
-      document.getElementsByClassName("solveme").length + " correct";
-  }
 }
+```
 
-/* solution button toggling function */
-b_func = function() {
-  var cl = this.parentElement.classList;
-  if (cl.contains('open')) {
-    cl.remove("open");
-  } else {
-    cl.add("open");
-  }
-}
 
-/* function for checking solveme answers */
-solveme_func = function(e) {
-  var real_answers = JSON.parse(this.dataset.answer);
-  var my_answer = this.value;
-  var cl = this.classList;
-  if (cl.contains("ignorecase")) {
-    my_answer = my_answer.toLowerCase();
-  }
-  if (cl.contains("nospaces")) {
-    my_answer = my_answer.replace(/ /g, "");
-  }
-  
-  if (my_answer !== "" & real_answers.includes(my_answer)) {
-    cl.add("correct");
-  } else {
-    cl.remove("correct");
-  }
-  update_total_correct();
-}
+```r
+int2dist()
+```
 
-window.onload = function() {
-  /* set up solution buttons */
-  var buttons = document.getElementsByTagName("button");
 
-  for (var i = 0; i < buttons.length; i++) {
-    if (buttons[i].parentElement.classList.contains('solution')) {
-      buttons[i].onclick = b_func;
-    }
-  }
-  
-  /* set up solveme inputs */
-  var solveme = document.getElementsByClassName("solveme");
 
-  for (var i = 0; i < solveme.length; i++) {
-    /* make sure input boxes don't auto-anything */
-    solveme[i].setAttribute("autocomplete","off");
-    solveme[i].setAttribute("autocorrect", "off");
-    solveme[i].setAttribute("autocapitalize", "off"); 
-    solveme[i].setAttribute("spellcheck", "false");
-    solveme[i].value = "";
-    
-    /* adjust answer for ignorecase or nospaces */
-    var cl = solveme[i].classList;
-    var real_answer = solveme[i].dataset.answer;
-    if (cl.contains("ignorecase")) {
-      real_answer = real_answer.toLowerCase();
-    }
-    if (cl.contains("nospaces")) {
-      real_answer = real_answer.replace(/ /g, "");
-    }
-    solveme[i].dataset.answer = real_answer;
-    
-    /* attach checking function */
-    solveme[i].onkeyup = solveme_func;
-    solveme[i].onchange = solveme_func;
-  }
-  
-  update_total_correct();
-}
+            
+-------  ---
+A_mean     0
+B_mean     0
+A_sd       1
+B_sd       1
+AB_r       0
+-------  ---
 
-</script>
-            </section>
 
-          </div>
-        </div>
-      </div>
-<a href="aggregate.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="sim-lmer.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
-  </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"google": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"download": {},
-"toc": {
-"collapse": "section",
-"scroll_highlight": true
-}
-});
-});
-</script>
+```r
+int2dist(102.5, 5, 0.708, 0.708)
+```
 
-</body>
 
-</html>
+
+                 
+-------  --------
+A_mean    100.000
+B_mean    105.000
+A_sd        1.001
+B_sd        1.001
+AB_r        0.500
+-------  --------
+
+We can then use either specification to generate data with either technique.
+
+
+
+

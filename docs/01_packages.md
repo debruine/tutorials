@@ -67,7 +67,21 @@ Encoding: UTF-8
 LazyData: true
 ```
 
-Change the title, authors, and description to your own information.
+Change the title, authors, and description to your own information. If your package has multiple authors, add them as a vector like this. You can also add your [ORCiD](https://orcid.org/).
+
+```
+Authors@R: c(
+    person(given = "Lisa",
+           family = "DeBruine",
+           role = c("aut", "cre"),
+           email = "debruine@gmail.com",
+           comment = c(ORCID = "0000-0002-7523-5539")),
+    person(given = "Firstname",
+           family = "Lastname",
+           role = c("aut"),
+           email = "person@gmail.com",
+           comment = c(ORCID = "0000-0000-0000-000X")))
+```
 
 
 ### Create a LICENSE
@@ -114,18 +128,6 @@ Paste the following template into your file:
 
 
 ```r
-#' My function
-#'
-#' `myfunction` does something.
-#'
-#' @param arg1 A value to return
-#' @return Returns the value of \code{arg1}
-#' @examples
-#'
-#' myfunction(1) # returns 1
-#' 
-#' @export
-
 myfunction <- function(arg1 = "Change me") { 
   arg1 
 }
@@ -144,16 +146,16 @@ The first thing we should do in the function is check whether `p` is less than 0
 
 
 ```r
-report_p <- function(p, digits = 3) {
+report_p <- function(p) {
   if (p < .001) return("p < .001")
 }
 ```
 
 <div class="info">
-<p>Once you run the <code>return()</code> function, your function stops running.</p>
+<p>Once you call the <code>return()</code> function, your function stops running.</p>
 </div>
 
-If `p` is greater than 0.001, then we should round it to the specified number of `digits`, paste it after the string "p = ", and return it.
+If `p` is greater than 0.001, then we should round it to the specified number of `digits`, paste it after the string "p = ", and return it. So add an argument called `digits` and set the default value to 3.
 
 
 ```r
@@ -173,7 +175,7 @@ report_p <- function(p, digits = 3) {
 
 APA style omits the leading zero and pads the number out to three digits. We can do this by converting our rounded p-value into a <a class='glossary' target='_blank' title='A data type representing strings of text.' href='https://psyteachr.github.io/glossary/c#character'>character</a> string, replacing the string "0." with ".", and making sure to pad the right side with enough zeros. The `stringr` package has useful functions for this.
 
-When you use R functions from a package (not base R), you normally load the package using the `library()` function. When you're developing your own package, you need to preface every function with its package name and two colons instead, so in the code below we'll use `stringr::str_replace()` and `stringr::str_pad()`, not `str_replace()` and `str_pad()`.
+When you use R functions from a package (not base R), you normally load the package using the `library()` function. When you're developing your own package, you should preface every function with its package name and two colons instead, so in the code below we'll use `stringr::str_replace()` and `stringr::str_pad()`, not `str_replace()` and `str_pad()`.
 
 <div class="info">
 <p>One function you can't preface with the package name is the <a href="#pipes">pipe</a>. While you're testing your function, load the pipe by typing <code>library(magrittr)</code> in the console.</p>
@@ -200,7 +202,29 @@ report_p <- function(p, digits = 3) {
 
 ### Documentation
 
-Now edit the commented part before your function. The `#'` is special to `roxygen2` documentation, which we'll enable below. This generates what you see in the Help viewer. Type `?mean` into the console pane and have a look at the Help pane.
+Put your cursor somewhere on the first line of your function and choose **`Insert Roxygen Skeleton`** from the **`Code`** menu. 
+
+<div class="figure" style="text-align: center">
+<img src="images/roxygen.png" alt="Insert Roxygen Skeleton" width="100%" />
+<p class="caption">(\#fig:unnamed-chunk-7)Insert Roxygen Skeleton</p>
+</div>
+
+It will insert the following documentation before your function.
+
+
+```r
+#' Title
+#'
+#' @param p 
+#' @param digits 
+#'
+#' @return
+#' @export
+#' 
+#' @examples
+```
+
+The `#'` is special to `roxygen2` documentation, which we'll enable below. This generates what you see in the Help viewer. Type `?mean` into the console pane and have a look at the Help pane.
 
 * The first line is the name of the function in title case
 * The Description is the lines between the title and first `@param`
@@ -208,11 +232,27 @@ Now edit the commented part before your function. The `#'` is special to `roxyge
 * The Arguments section is generated from the list of `@param`argument Argument description...
 * The Value section is the text after `@return`
 * The Examples section is the text under `@examples`
-* This block should end with `@export` to make sure your function is added to your package
+* This block should include `@export` to make sure your function is available for users of your package (replace `@export` with `@keywords internal`
 
-<div class="try">
-<p>Edit the documentation for your <code>report_p</code> function.</p>
-</div>
+The documentation for your `report_p` function should look something like below:
+
+
+```r
+#' Report p-value
+#'
+#' Reports a p-value in APA style.
+#'
+#' @param p The p-value
+#' @param digits The number of digits to round to (default = 3)
+#'
+#' @return A string with the format "p = .040" or "p < .001"
+#' @examples
+#'
+#' report_p(0.02018) # returns "p = .020"
+#' report_p(0.00028) # returns "p < .001"
+#'
+#' @export
+```
 
 Save your file in the `R` directory with the name `report_p.R`. For now, we'll make a separate file for each function and give it the name of the function.
 
@@ -224,6 +264,11 @@ usethis::use_roxygen_md()
 ```
 
 Now you can automatically update the documentation for your package by running `devtools::document()`, after which you should see the following text.
+
+
+```r
+devtools::document()
+```
 
 ```
 Updating demopckg documentation
@@ -264,7 +309,14 @@ First, check everything by running `devtools::check()`. You'll get a lot of outp
 ```
 ### Build
 
-Next, run `devtools::build()`. You'll get a message that looks like this:
+Once you've fixed any errors, you can build your package.
+
+
+```r
+devtools::build()
+```
+
+You'll get a message that looks like this:
 
 ```
 ✔  checking for file ‘/Users/lisad/rproj/demopckg/DESCRIPTION’ ...
@@ -358,7 +410,7 @@ testthat::test_that("errors", {
 })
 ```
 
-The `context` function lets you know what function you're testing when you run all the unit tests in a package. The `test_that` function checks a groups of expectataions. The first set we're going to make checks if we get the error messages we expect, so we've called it "errors".
+The `context` function lets you know what function you're testing when you run all the unit tests in a package. The `test_that` function checks a groups of expectations. The first set checks if we get the error messages we expect, so we've called it "errors".
 
 We're going to check two expectations, that we'll get the error message "p cannot be less than 0" if p = -1, and that we'll get the error message "p cannot be greater than 1" id p = 2. You can test more values than these, but we'll start with just these two.
 
@@ -391,6 +443,41 @@ Now add another `testthat::test_that` block called "default values". Use the fun
 
 Run `devtools::test()` after you add each test to make sure your tests work as expected.
 
+## Documentation
+
+Now it's time to edit your README to explain how to use your package.
+
+### Vignettes
+
+A [vignette](http://r-pkgs.had.co.nz/vignettes.html) can also help users understand how to use your package. Create a new vignette with the function below.
+
+
+```r
+usethis::use_vignette("example")
+```
+
+Change the YAML header to your "Vignette Title" and "Vignette Author" and edit the text below using R Markdown.
+
+### pkgdown
+
+The package [pkgdown](https://pkgdown.r-lib.org/) creates a website for your package. Run the following function to set it up. 
+
+
+```r
+usethis::use_pkgdown()
+```
+
+This will create a directory called `docs` and a file called `_pkgdown.yml`.
+
+Whenever you edit the documentation for new function, edit the README, or edit a vignette, you need to re-build the site.
+
+
+```r
+pkgdown::build_site()
+```
+
+There will be a lot of output, then your site should automatically open up in your default web browser.
+
 ## Share your package
 
 You can do package development without a [GitHub](https://github.com) account, but this is one of the easiest ways to share your package.
@@ -409,14 +496,14 @@ Now set up a github access token with `usethis::browse_github_pat()`. Your web b
 
 <div class="figure" style="text-align: center">
 <img src="images/github_new_token.png" alt="Authorise a github token so you can create new github repositories from RStudio" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-10)Authorise a github token so you can create new github repositories from RStudio</p>
+<p class="caption">(\#fig:unnamed-chunk-13)Authorise a github token so you can create new github repositories from RStudio</p>
 </div>
 
-Copy your token (the blacked-out bit in the image below).
+Copy your token (the whited-out bit in the image below).
 
 <div class="figure" style="text-align: center">
 <img src="images/github_copy_token.png" alt="Copy your github token" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-11)Copy your github token</p>
+<p class="caption">(\#fig:unnamed-chunk-14)Copy your github token</p>
 </div>
 
 Type `usethis::edit_r_environ()` in the RStudio console pane. A new file called `.Renviron` will appear in the source pane. Add the following line to it (replace **`<YOUR-TOKEN>`** with your copied token).
@@ -432,7 +519,7 @@ Save and close the file, then restart R.
 Type `usethis::use_github(protocol="https")` into the console window and check that the suggested title and description are OK.
 
 ```
-✔ Setting active project to '/Users/lisad/rproj/demopckg'
+✔ Setting active project to '/Users/lisad/rstuff/demopckg'
 ● Check title and description
   Name:        demopckg
   Description: Demo Stuff
@@ -442,20 +529,29 @@ Are title and description ok?
 3: No
 ```
 
-If you choose **`Yeah`**, you'll see some messages and your web browser will open the github repsitory page.
+If you choose the affirmative response (not always #2), you'll see some messages and your web browser will open the github repsitory page.
 
 <div class="figure" style="text-align: center">
 <img src="images/github_demoproj.png" alt="Your new github repository" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-12)Your new github repository</p>
+<p class="caption">(\#fig:unnamed-chunk-15)Your new github repository</p>
+</div>
+
+### Set up website
+
+Click on the **`Settings`** tab and scroll down to **GitHub Pages**. Set the Source to **`master branch/docs folder`**. Now you should be able to access your pkgdown website from https://username.github.io/demopkg/ (change to your username).
+
+<div class="figure" style="text-align: center">
+<img src="images/github_pages.png" alt="Enable GitHub Pages" width="100%" />
+<p class="caption">(\#fig:unnamed-chunk-16)Enable GitHub Pages</p>
 </div>
 
 ### Install your package from GitHub
 
-Install your package using the following code (replacing `debruine` with your github username).
+Install your package using the following code (replacing `username` with your github username).
 
 
 ```r
-devtools::install_github("debruine/demopckg")
+devtools::install_github("username/demopckg")
 ```
 
 
@@ -489,8 +585,16 @@ usethis::use_pipe() # everyone needs pipes
 funcname <- "newfunction"
 imports <- c("dplyr", "tidyr")
 usethis::edit_file(paste0("R/", funcname, ".R"))
-usethis::use_test(funcname)
 for (import in imports) usethis::use_package(import)
+
+# testing a function
+usethis::use_test(funcname)
+devtools::test(filter = funcname)
+
+# documentation
+usethis::use_vignette("example")
+usethis::use_pkgdown()
+pkgdown::build_site()
 
 # building the package
 devtools::check() # can take a long time
@@ -498,10 +602,13 @@ devtools::build()
 devtools::install(paste0("../", pckg))
 
 # use these for specific tasks 
-# if check takes too long
-devtools::document()
-devtools::test()
-devtools::run_examples()
+# if check() or build_site() take too long
+devtools::document()       # updates from roxygen function documentation
+devtools::test()           # runs all your unit tests, or use filter
+devtools::run_examples()   # checks all your function examples work
+pkgdown::build_home()      # from README and DESCRIPTION
+pkgdown::build_article()   # from vignettes
+pkgdown::build_reference() # from roxygen function documentation
 ```
 
 
@@ -514,7 +621,7 @@ Here's what the full function should look like.
 ```r
 #' Report p-value
 #'
-#' `report_p` reports a p-value.
+#' Reports a p-value in APA style.
 #'
 #' @param p The p-value
 #' @param digits The number of digits to round to (default = 3)
