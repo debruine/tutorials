@@ -4,7 +4,8 @@ This tutorial details a few ways I simulate data. I'll be using some functions f
 
 ```{r lib}
 library(tidyverse)
-library(faux) # devtools::install_github("debruine/faux")
+# devtools::install_github("debruine/faux")
+library(faux) 
 set.seed(8675309) # this makes sure your script uses the same set of random numbers each time you run the full script (never set this inside a function or loop)
 ```
 
@@ -181,7 +182,7 @@ You can then use `rnorm_multi()` to generate a data table with simulated values 
 dat <- faux::rnorm_multi(
   n = sub_n, 
   vars = 2, 
-  cors = AB_r, 
+  r = AB_r, 
   mu = c(A_mean, B_mean), 
   sd = c(A_sd, B_sd), 
   varnames = c("A", "B")
@@ -215,7 +216,7 @@ paired_sim <- function(sub_n, A_mean, B_mean, A_sd, B_sd, AB_r) {
   dat <- faux::rnorm_multi(
     n = sub_n, 
     vars = 2, 
-    cors = AB_r, 
+    r = AB_r, 
     mu = c(A_mean, B_mean), 
     sd = c(A_sd, B_sd), 
     varnames = c("A", "B")

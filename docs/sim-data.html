@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Simulating Data | Tutorials</title>
-  <meta name="description" content="Tutorial materials">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="Tutorial materials" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Simulating Data | Tutorials" />
   <meta property="og:type" content="book" />
@@ -22,14 +21,14 @@
   <meta name="twitter:description" content="Tutorial materials" />
   
 
-<meta name="author" content="Lisa DeBruine">
+<meta name="author" content="Lisa DeBruine" />
 
 
-<meta name="date" content="2019-05-21">
+<meta name="date" content="2019-05-21" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
 <link rel="prev" href="aggregate.html">
@@ -51,41 +50,67 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
@@ -150,7 +175,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="1.11" data-path="packages.html"><a href="packages.html#glossary"><i class="fa fa-check"></i><b>1.11</b> Glossary</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="aggregate.html"><a href="aggregate.html"><i class="fa fa-check"></i><b>2</b> What's wrong with aggregating data?</a><ul>
+<li class="chapter" data-level="2" data-path="aggregate.html"><a href="aggregate.html"><i class="fa fa-check"></i><b>2</b> What’s wrong with aggregating data?</a><ul>
 <li class="chapter" data-level="2.0.1" data-path="aggregate.html"><a href="aggregate.html#measurement-with-error"><i class="fa fa-check"></i><b>2.0.1</b> Measurement with Error</a></li>
 <li class="chapter" data-level="2.0.2" data-path="aggregate.html"><a href="aggregate.html#aggregating-by-stimuli"><i class="fa fa-check"></i><b>2.0.2</b> Aggregating by stimuli</a></li>
 <li class="chapter" data-level="2.0.3" data-path="aggregate.html"><a href="aggregate.html#aggregating-by-raters"><i class="fa fa-check"></i><b>2.0.3</b> Aggregating by raters</a></li>
@@ -233,10 +258,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.5.3" data-path="webpages.html"><a href="webpages.html#change-global-fonts-and-colours"><i class="fa fa-check"></i><b>5.5.3</b> Change global fonts and colours</a></li>
 <li class="chapter" data-level="5.5.4" data-path="webpages.html"><a href="webpages.html#change-certain-elements"><i class="fa fa-check"></i><b>5.5.4</b> Change certain elements</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="webpages.html"><a href="webpages.html#webpage-online"><i class="fa fa-check"></i><b>5.6</b> Put your webpage online</a><ul>
-<li class="chapter" data-level="5.6.1" data-path="webpages.html"><a href="webpages.html#save-this-version-with-git"><i class="fa fa-check"></i><b>5.6.1</b> Save this version with git</a></li>
-<li class="chapter" data-level="5.6.2" data-path="webpages.html"><a href="webpages.html#github"><i class="fa fa-check"></i><b>5.6.2</b> GitHub</a></li>
-<li class="chapter" data-level="5.6.3" data-path="webpages.html"><a href="webpages.html#gitlab"><i class="fa fa-check"></i><b>5.6.3</b> GitLab</a></li>
+<li class="chapter" data-level="5.6" data-path="webpages.html"><a href="webpages.html#example-using-the-styles-above"><i class="fa fa-check"></i><b>5.6</b> Example using the styles above</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="webpages.html"><a href="webpages.html#level-3-header"><i class="fa fa-check"></i><b>5.6.1</b> Level 3 header</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="webpages.html"><a href="webpages.html#webpage-online"><i class="fa fa-check"></i><b>5.7</b> Put your webpage online</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="webpages.html"><a href="webpages.html#save-this-version-with-git"><i class="fa fa-check"></i><b>5.7.1</b> Save this version with git</a></li>
+<li class="chapter" data-level="5.7.2" data-path="webpages.html"><a href="webpages.html#github"><i class="fa fa-check"></i><b>5.7.2</b> GitHub</a></li>
+<li class="chapter" data-level="5.7.3" data-path="webpages.html"><a href="webpages.html#gitlab"><i class="fa fa-check"></i><b>5.7.3</b> GitLab</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendices</b></span></li>
@@ -283,13 +311,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="sim_data" class="section level1">
 <h1><span class="header-section-number">Chapter 3</span> Simulating Data</h1>
-<p>This tutorial details a few ways I simulate data. I'll be using some functions from my <a href="https://github.com/debruine/faux"><code>faux</code> package</a> to make it easier to generate sets of variables with specific correlations.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-<span class="kw">library</span>(faux) <span class="co"># devtools::install_github(&quot;debruine/faux&quot;)</span>
-<span class="kw">set.seed</span>(<span class="dv">8675309</span>) <span class="co"># this makes sure your script uses the same set of random numbers each time you run the full script (never set this inside a function or loop)</span></code></pre></div>
+<p>This tutorial details a few ways I simulate data. I’ll be using some functions from my <a href="https://github.com/debruine/faux"><code>faux</code> package</a> to make it easier to generate sets of variables with specific correlations.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="co"># devtools::install_github(&quot;debruine/faux&quot;)</span>
+<span class="kw">library</span>(faux) 
+<span class="kw">set.seed</span>(<span class="dv">8675309</span>) <span class="co"># this makes sure your script uses the same set of random numbers each time you run the full script (never set this inside a function or loop)</span></code></pre>
 <div id="independent-samples" class="section level2">
 <h2><span class="header-section-number">3.1</span> Independent samples</h2>
-<p>Let's start with a simple independent-samples design where the variables are from a normal distribution. Each subject produces one score (in condition A or B). What we need to know about these scores is:</p>
+<p>Let’s start with a simple independent-samples design where the variables are from a normal distribution. Each subject produces one score (in condition A or B). What we need to know about these scores is:</p>
 <ul>
 <li>How many subjects are in each condition?</li>
 <li>What are the score means?</li>
@@ -298,33 +327,33 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="ind-params" class="section level3">
 <h3><span class="header-section-number">3.1.1</span> Parameters</h3>
 <p>I start simulation scripts by setting parameters for these values.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">A_sub_n &lt;-<span class="st"> </span><span class="dv">50</span>
+<pre class="sourceCode r"><code class="sourceCode r">A_sub_n &lt;-<span class="st"> </span><span class="dv">50</span>
 B_sub_n &lt;-<span class="st"> </span><span class="dv">50</span>
 A_mean &lt;-<span class="st"> </span><span class="dv">10</span>
 B_mean &lt;-<span class="st"> </span><span class="dv">11</span>
 A_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
-B_sd &lt;-<span class="st"> </span><span class="fl">2.5</span></code></pre></div>
+B_sd &lt;-<span class="st"> </span><span class="fl">2.5</span></code></pre>
 </div>
 <div id="scores" class="section level3">
 <h3><span class="header-section-number">3.1.2</span> Scores</h3>
 <p>We can the generate the scores using the <code>rnorm()</code> <a class='glossary' target='_blank' title='A named section of code that can be reused.' href='https://psyteachr.github.io/glossary/f#function'>function</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">A_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(A_sub_n, A_mean, A_sd)
-B_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(B_sub_n, B_mean, B_sd)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">A_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(A_sub_n, A_mean, A_sd)
+B_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(B_sub_n, B_mean, B_sd)</code></pre>
 <p>You can stop here and just analyse your simulated data with <code>t.test(A_scores, B_scores)</code>, but usualy you want to get your simulated data into a data table that looks like what you might eventually import from a CSV file with your actual experimental data.</p>
-<p>I always use the <code>tidyverse</code> for <a class='glossary' target='_blank' title='The process of preparing data for visualisation and statistical analysis.' href='https://psyteachr.github.io/glossary/d#data-wrangling'>data wrangling</a>, so I'll create a data table using the <code>tibble()</code> function (but you can use <code>data.frame()</code> if you must). We need to know what condition each subject is in, so set the first <code>A_sub_n</code> values to &quot;A&quot; and the next <code>B_sub_n</code> values to &quot;B&quot;. Then set the score to the <code>A_scores</code> <a class='glossary' target='_blank' title='To combine strings or vectors.' href='https://psyteachr.github.io/glossary/c#concatenate'>concatenated</a> to the <code>B_scores</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+<p>I always use the <code>tidyverse</code> for <a class='glossary' target='_blank' title='The process of preparing data for visualisation and statistical analysis.' href='https://psyteachr.github.io/glossary/d#data-wrangling'>data wrangling</a>, so I’ll create a data table using the <code>tibble()</code> function (but you can use <code>data.frame()</code> if you must). We need to know what condition each subject is in, so set the first <code>A_sub_n</code> values to “A” and the next <code>B_sub_n</code> values to “B”. Then set the score to the <code>A_scores</code> <a class='glossary' target='_blank' title='To combine strings or vectors.' href='https://psyteachr.github.io/glossary/c#concatenate'>concatenated</a> to the <code>B_scores</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">sub_condition =</span> <span class="kw">rep</span>( <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="kw">c</span>(A_sub_n, B_sub_n) ),
   <span class="dt">score =</span> <span class="kw">c</span>(A_scores, B_scores)
-)</code></pre></div>
+)</code></pre>
 </div>
 <div id="check-your-data" class="section level3">
 <h3><span class="header-section-number">3.1.3</span> Check your data</h3>
 <p>Always examine your simulated data after you generate it to make sure it looks like you want.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">summary_dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">summary_dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(sub_condition) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>() ,
             <span class="dt">mean =</span> <span class="kw">mean</span>(score),
-            <span class="dt">sd =</span> <span class="kw">sd</span>(score))</code></pre></div>
+            <span class="dt">sd =</span> <span class="kw">sd</span>(score))</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -351,14 +380,14 @@ B_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(B_sub_n, B_
 </table>
 <div class="info">
 <p>
-Your means and SDs won't be <strong>exactly</strong> what you specified because those parameters are for population and you are taking a sample. The larger your <code>sub_n</code>, the closer these values will usually be to the parameters you specify.
+Your means and SDs won’t be <strong>exactly</strong> what you specified because those parameters are for population and you are taking a sample. The larger your <code>sub_n</code>, the closer these values will usually be to the parameters you specify.
 </p>
 </div>
 </div>
 <div id="analysis" class="section level3">
 <h3><span class="header-section-number">3.1.4</span> Analysis</h3>
 <p>Now you can analyse your simulated data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(score<span class="op">~</span>sub_condition, dat)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(score<span class="op">~</span>sub_condition, dat)</code></pre>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -374,7 +403,7 @@ Your means and SDs won't be <strong>exactly</strong> what you specified because 
 <div id="function" class="section level3">
 <h3><span class="header-section-number">3.1.5</span> Function</h3>
 <p>You can wrap all this in a function so you can run it many times to do a power calculation. Put all your parameters as <a class='glossary' target='_blank' title='A variable that provides input to a function.' href='https://psyteachr.github.io/glossary/a#argument'>arguments</a> to the function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ind_sim &lt;-<span class="st"> </span><span class="cf">function</span>(A_sub_n, B_sub_n, A_mean, B_mean, A_sd, B_sd) {
+<pre class="sourceCode r"><code class="sourceCode r">ind_sim &lt;-<span class="st"> </span><span class="cf">function</span>(A_sub_n, B_sub_n, A_mean, B_mean, A_sd, B_sd) {
   A_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(A_sub_n, A_mean, A_sd)
   B_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(B_sub_n, B_mean, B_sd)
   
@@ -392,9 +421,9 @@ Your means and SDs won't be <strong>exactly</strong> what you specified because 
     <span class="dt">p =</span> t<span class="op">$</span>p.value,
     <span class="dt">estimate =</span> t<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>t<span class="op">$</span>estimate[<span class="dv">2</span>]
   )
-}</code></pre></div>
+}</code></pre>
 <p>Now run your new function with the values you used above.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ind_sim</span>(<span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ind_sim</span>(<span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>)</code></pre>
 <pre><code>## $t
 ##        t 
 ## -1.16975 
@@ -417,21 +446,21 @@ Run the function with the parameters from the example above. Run it a few times 
 </p>
 </div>
 <p>Now you can use this function to run many simulations. There are a lot of ways to do this. The pattern below uses the <code>map_df</code> function from the <code>purrr</code> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulation &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="op">~</span><span class="kw">ind_sim</span>(<span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">simulation &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="op">~</span><span class="kw">ind_sim</span>(<span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>))</code></pre>
 <div class="info">
 <p>
 The function <code>map_df</code> takes two arguments, a vector and a function, and returns a dataframe. It runs the function once for each item in the vector, so the vector <code>1:1000</code> above runs the <code>ind_sim()</code> function 1000 times.
 </p>
 <p>
-The <code>purrr::map()</code> functions can also set arguments in the function from the items in the vector. We aren't doing that here, but will use that pattern later.
+The <code>purrr::map()</code> functions can also set arguments in the function from the items in the vector. We aren’t doing that here, but will use that pattern later.
 </p>
 </div>
 <p>Now you can graph the data from your simulations.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulation <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">simulation <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">gather</span>(stat, value, t<span class="op">:</span>estimate) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(value, <span class="dt">color =</span> stat), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>stat, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>stat, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:paired-sim-fig"></span>
 <img src="03_sim_data_files/figure-html/paired-sim-fig-1.png" alt="Distribution of results from simulated independent samples data" width="100%" />
 <p class="caption">
@@ -439,14 +468,14 @@ Figure 3.1: Distribution of results from simulated independent samples data
 </p>
 </div>
 <p>You can calculate power as the proportion of simulations on which the p-value was less than your alpha.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
-power &lt;-<span class="st"> </span><span class="kw">mean</span>(simulation<span class="op">$</span>p <span class="op">&lt;</span><span class="st"> </span>alpha)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
+power &lt;-<span class="st"> </span><span class="kw">mean</span>(simulation<span class="op">$</span>p <span class="op">&lt;</span><span class="st"> </span>alpha)</code></pre>
 <p>Your power for the parameters above is 0.496.</p>
 </div>
 </div>
 <div id="paired-samples" class="section level2">
 <h2><span class="header-section-number">3.2</span> Paired samples</h2>
-<p>Now let's try a paired-samples design where the variables are from a normal distribution. Each subject produces two scores (in conditions A and B). What we need to know about these two scores is:</p>
+<p>Now let’s try a paired-samples design where the variables are from a normal distribution. Each subject produces two scores (in conditions A and B). What we need to know about these two scores is:</p>
 <ul>
 <li>How many subjects?</li>
 <li>What are the score means?</li>
@@ -455,26 +484,24 @@ power &lt;-<span class="st"> </span><span class="kw">mean</span>(simulation<span
 </ul>
 <div id="paired-params" class="section level3">
 <h3><span class="header-section-number">3.2.1</span> Parameters</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_n &lt;-<span class="st"> </span><span class="dv">100</span>
+<pre class="sourceCode r"><code class="sourceCode r">sub_n &lt;-<span class="st"> </span><span class="dv">100</span>
 A_mean &lt;-<span class="st"> </span><span class="dv">10</span>
 B_mean &lt;-<span class="st"> </span><span class="dv">11</span>
 A_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
 B_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
-AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div>
+AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre>
 </div>
 <div id="correlated-scores" class="section level3">
 <h3><span class="header-section-number">3.2.2</span> Correlated Scores</h3>
 <p>You can then use <code>rnorm_multi()</code> to generate a data table with simulated values for correlated scores:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>faux<span class="op">::</span><span class="kw">rnorm_multi</span>(
+<pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>faux<span class="op">::</span><span class="kw">rnorm_multi</span>(
   <span class="dt">n =</span> sub_n, 
   <span class="dt">vars =</span> <span class="dv">2</span>, 
-  <span class="dt">cors =</span> AB_r, 
+  <span class="dt">r =</span> AB_r, 
   <span class="dt">mu =</span> <span class="kw">c</span>(A_mean, B_mean), 
   <span class="dt">sd =</span> <span class="kw">c</span>(A_sd, B_sd), 
   <span class="dt">varnames =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)
-)</code></pre></div>
-<pre><code>## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r</code></pre>
+)</code></pre>
 </div>
 <div id="check-your-data-1" class="section level3">
 <h3><span class="header-section-number">3.2.3</span> Check your data</h3>
@@ -513,7 +540,7 @@ AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div
 <div id="analysis-1" class="section level3">
 <h3><span class="header-section-number">3.2.4</span> Analysis</h3>
 <p>Finally, you can analyse your simulated data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(dat<span class="op">$</span>A, dat<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(dat<span class="op">$</span>A, dat<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre>
 <pre><code>## 
 ##  Paired t-test
 ## 
@@ -529,12 +556,12 @@ AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div
 <div id="function-1" class="section level3">
 <h3><span class="header-section-number">3.2.5</span> Function</h3>
 <p>The function is set up the same way as before. Set the arguments to the relevant parameters, construct the data table, run the t-test, and return the values you care about.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">paired_sim &lt;-<span class="st"> </span><span class="cf">function</span>(sub_n, A_mean, B_mean, A_sd, B_sd, AB_r) {
+<pre class="sourceCode r"><code class="sourceCode r">paired_sim &lt;-<span class="st"> </span><span class="cf">function</span>(sub_n, A_mean, B_mean, A_sd, B_sd, AB_r) {
 
   dat &lt;-<span class="st"> </span>faux<span class="op">::</span><span class="kw">rnorm_multi</span>(
     <span class="dt">n =</span> sub_n, 
     <span class="dt">vars =</span> <span class="dv">2</span>, 
-    <span class="dt">cors =</span> AB_r, 
+    <span class="dt">r =</span> AB_r, 
     <span class="dt">mu =</span> <span class="kw">c</span>(A_mean, B_mean), 
     <span class="dt">sd =</span> <span class="kw">c</span>(A_sd, B_sd), 
     <span class="dt">varnames =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)
@@ -549,3098 +576,99 @@ AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div
     <span class="dt">p =</span> t<span class="op">$</span>p.value,
     <span class="dt">estimate =</span> t<span class="op">$</span>estimate
   )
-}</code></pre></div>
+}</code></pre>
 <p>Run 1000 simulations and graph the results.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulation &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="op">~</span><span class="kw">paired_sim</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, .<span class="dv">5</span>))</code></pre></div>
-<pre><code>## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r
-
-## Warning in faux::rnorm_multi(n = sub_n, vars = 2, cors = AB_r, mu =
-## c(A_mean, : cors is deprecated, please use r</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulation <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">simulation &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="op">~</span><span class="kw">paired_sim</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">.5</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">simulation <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">gather</span>(stat, value, t<span class="op">:</span>estimate) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(value, <span class="dt">color =</span> stat), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>stat, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>stat, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:ind-sim-fig"></span>
 <img src="03_sim_data_files/figure-html/ind-sim-fig-1.png" alt="Distribution of results from simulated paired samples data" width="100%" />
 <p class="caption">
 Figure 3.2: Distribution of results from simulated paired samples data
 </p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
-power &lt;-<span class="st"> </span><span class="kw">mean</span>(simulation<span class="op">$</span>p <span class="op">&lt;</span><span class="st"> </span>alpha)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
+power &lt;-<span class="st"> </span><span class="kw">mean</span>(simulation<span class="op">$</span>p <span class="op">&lt;</span><span class="st"> </span>alpha)</code></pre>
 <p>Your power for the parameters above is 0.984.</p>
 </div>
 </div>
 <div id="intercept-model" class="section level2">
 <h2><span class="header-section-number">3.3</span> Intercept model</h2>
-<p>Now I'm going to show you a different way to simulate the same design. This might seem excessively complicated, but you will need this pattern when you start simulating data for <a href="sim-lmer.html#sim_lmer">mixed effects models</a>.</p>
+<p>Now I’m going to show you a different way to simulate the same design. This might seem excessively complicated, but you will need this pattern when you start simulating data for <a href="sim-lmer.html#sim_lmer">mixed effects models</a>.</p>
 <div id="parameters" class="section level3">
 <h3><span class="header-section-number">3.3.1</span> Parameters</h3>
 <p>Remember, we used the following parameters to set up our simulation above:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_n &lt;-<span class="st"> </span><span class="dv">100</span>
+<pre class="sourceCode r"><code class="sourceCode r">sub_n &lt;-<span class="st"> </span><span class="dv">100</span>
 A_mean &lt;-<span class="st"> </span><span class="dv">10</span>
 B_mean &lt;-<span class="st"> </span><span class="dv">11</span>
 A_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
 B_sd &lt;-<span class="st"> </span><span class="fl">2.5</span>
-AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre></div>
+AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></code></pre>
 <p>From these, we can calculate the grand intercept (the overall mean regardless of condition), and the effect of condition (the mean of B minus A).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grand_i &lt;-<span class="st"> </span>(A_mean <span class="op">+</span><span class="st"> </span>B_mean)<span class="op">/</span><span class="dv">2</span>
-AB_effect &lt;-<span class="st"> </span>B_mean <span class="op">-</span><span class="st"> </span>A_mean</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">grand_i &lt;-<span class="st"> </span>(A_mean <span class="op">+</span><span class="st"> </span>B_mean)<span class="op">/</span><span class="dv">2</span>
+AB_effect &lt;-<span class="st"> </span>B_mean <span class="op">-</span><span class="st"> </span>A_mean</code></pre>
 <p>We also need to think about variance a little differently. First, calculate the pooled variance as the mean of the variances for A and B (remember, variance is SD squared).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pooled_var &lt;-<span class="st"> </span>(A_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>B_sd<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">pooled_var &lt;-<span class="st"> </span>(A_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>B_sd<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span></code></pre>
 <div class="warning">
 <p>
-If the SDs for A and B are very different, this suggests a more complicated data generation model. For this tutorial we'll assume the score variance is similar for conditions A and B.
+If the SDs for A and B are very different, this suggests a more complicated data generation model. For this tutorial we’ll assume the score variance is similar for conditions A and B.
 </p>
 </div>
 <p>The variance of the subject intercepts is <code>r</code> times this pooled variance and the error variance is what is left over. We take the square root (<code>sqrt()</code>) to set the subject intercept and error SDs for simulation later.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>AB_r)
-error_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>AB_r))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">sub_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>AB_r)
+error_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>AB_r))</code></pre>
 <div class="info">
 <p>
-You can think about the subject intercept variance as how much subjects vary in the score in general, regardless of condition. If they vary a lot, in comparison to the random &quot;error&quot; variation, then scores in the two conditions will be highly correlated. If they don't vary much (or random variation from trial to trial is quite large), then scores won't be well correlated.
+You can think about the subject intercept variance as how much subjects vary in the score in general, regardless of condition. If they vary a lot, in comparison to the random “error” variation, then scores in the two conditions will be highly correlated. If they don’t vary much (or random variation from trial to trial is quite large), then scores won’t be well correlated.
 </p>
 </div>
 </div>
 <div id="subject-intercepts" class="section level3">
 <h3><span class="header-section-number">3.3.2</span> Subject intercepts</h3>
 <p>Now we use these variables to create a data table for our subjects. Each subject gets an ID and a <strong>random intercept</strong> (<code>sub_i</code>). The intercept is simulated from a random normal distribution with a mean of 0 and an SD of <code>sub_sd</code>. This represents how much higher or lower than the average score each subject tends to be (regardless of condition).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+<pre class="sourceCode r"><code class="sourceCode r">sub &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,
   <span class="dt">sub_i =</span> <span class="kw">rnorm</span>(sub_n, <span class="dv">0</span>, sub_sd)
-)</code></pre></div>
+)</code></pre>
 </div>
 <div id="observations" class="section level3">
 <h3><span class="header-section-number">3.3.3</span> Observations</h3>
-<p>Next, set up a table where each row represents one observation. We'll use one of my favourite functions for simulation: <code>expand.grid()</code>. This creates every possible combination of the listed factors. Here, we're using it to create a row for each subject in each condition, since this is a fully within-subjects design.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(
+<p>Next, set up a table where each row represents one observation. We’ll use one of my favourite functions for simulation: <code>expand.grid()</code>. This creates every possible combination of the listed factors. Here, we’re using it to create a row for each subject in each condition, since this is a fully within-subjects design.</p>
+<pre class="sourceCode r"><code class="sourceCode r">obs &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(
   <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,
   <span class="dt">condition =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)
-)</code></pre></div>
+)</code></pre>
 </div>
 <div id="calculate-the-score" class="section level3">
 <h3><span class="header-section-number">3.3.4</span> Calculate the score</h3>
-<p>Next, we join the subject table so each row has the information about the subject's random intercept and then calculate the score. I've done it in a few steps below for clarity. The score is just the sum of:</p>
+<p>Next, we join the subject table so each row has the information about the subject’s random intercept and then calculate the score. I’ve done it in a few steps below for clarity. The score is just the sum of:</p>
 <ul>
 <li>the overall mean (<code>grand_i</code>)</li>
 <li>the subject-specific intercept (<code>sub_i</code>)</li>
 <li>the effect of condition (-50% of <code>AB_effect</code> for condition A and +50% of <code>AB_effect</code> for condition B)</li>
 <li>the error term (simulated from a normal distribution with mean of 0 and SD of <code>error_sd</code>)</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>obs <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>obs <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">left_join</span>(sub, <span class="dt">by =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(
-    <span class="dt">condition.e =</span> <span class="kw">recode</span>(condition, <span class="st">&quot;A&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>, <span class="st">&quot;B&quot;</span> =<span class="st"> </span><span class="fl">0.5</span>),
+    <span class="dt">condition.e =</span> <span class="kw">recode</span>(condition, <span class="st">&quot;A&quot;</span> =<span class="st"> </span><span class="fl">-0.5</span>, <span class="st">&quot;B&quot;</span> =<span class="st"> </span><span class="fl">0.5</span>),
     <span class="dt">effect =</span> AB_effect <span class="op">*</span><span class="st"> </span>condition.e,
     <span class="dt">error =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, error_sd),
     <span class="dt">score =</span> grand_i <span class="op">+</span><span class="st"> </span>sub_i <span class="op">+</span><span class="st"> </span>effect <span class="op">+</span><span class="st"> </span>error
-  )</code></pre></div>
+  )</code></pre>
 <div class="info">
 <p>
-The variable <code>condition.e</code> &quot;effect codes&quot; condition, which we will use later in a mixed effect model. You can learn more about <a href="https://debruine.github.io/posts/coding-schemes/">coding schemes</a> here.
+The variable <code>condition.e</code> “effect codes” condition, which we will use later in a mixed effect model. You can learn more about <a href="https://debruine.github.io/posts/coding-schemes/">coding schemes</a> here.
 </p>
 </div>
-<p>You can use the following code to put the data table into a more familiar &quot;wide&quot; format.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_wide &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span>
+<p>You can use the following code to put the data table into a more familiar “wide” format.</p>
+<pre class="sourceCode r"><code class="sourceCode r">dat_wide &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(sub_id, condition, score) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread</span>(condition, score)</code></pre></div>
-<p>Then you can use the <code>get_params</code> function to check this looks correct (remove the subject ID to leave it out of the table, since it's numeric).</p>
+<span class="st">  </span><span class="kw">spread</span>(condition, score)</code></pre>
+<p>Then you can use the <code>get_params</code> function to check this looks correct (remove the subject ID to leave it out of the table, since it’s numeric).</p>
 <table>
 <thead>
 <tr class="header">
@@ -3675,7 +703,7 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <div id="analyses" class="section level3">
 <h3><span class="header-section-number">3.3.5</span> Analyses</h3>
 <p>You can analyse the data with a paired-samples t-test from the wide format:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(dat_wide<span class="op">$</span>A, dat_wide<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(dat_wide<span class="op">$</span>A, dat_wide<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre>
 <pre><code>## 
 ##  Paired t-test
 ## 
@@ -3688,7 +716,7 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 ## mean of the differences 
 ##               -1.396847</code></pre>
 <p>Or in the long format:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(score <span class="op">~</span><span class="st"> </span>condition, dat, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(score <span class="op">~</span><span class="st"> </span>condition, dat, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre>
 <pre><code>## 
 ##  Paired t-test
 ## 
@@ -3701,7 +729,13 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 ## mean of the differences 
 ##               -1.396847</code></pre>
 <p>You can analyse the data with ANOVA.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">afex<span class="op">::</span><span class="kw">aov_4</span>(score <span class="op">~</span><span class="st"> </span>(condition.e <span class="op">|</span><span class="st"> </span>sub_id), <span class="dt">data =</span> dat)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">afex<span class="op">::</span><span class="kw">aov_4</span>(score <span class="op">~</span><span class="st"> </span>(condition.e <span class="op">|</span><span class="st"> </span>sub_id), <span class="dt">data =</span> dat)</code></pre>
+<pre><code>## Registered S3 methods overwritten by &#39;lme4&#39;:
+##   method                          from
+##   cooks.distance.influence.merMod car 
+##   influence.merMod                car 
+##   dfbeta.influence.merMod         car 
+##   dfbetas.influence.merMod        car</code></pre>
 <pre><code>## Anova Table (Type 3 tests)
 ## 
 ## Response: score
@@ -3710,13 +744,13 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;+&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>You can even analyse the data with a mixed effects model.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lmem &lt;-<span class="st"> </span>lmerTest<span class="op">::</span><span class="kw">lmer</span>(score <span class="op">~</span><span class="st"> </span>condition.e <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>sub_id), <span class="dt">data =</span> dat)
+<pre class="sourceCode r"><code class="sourceCode r">lmem &lt;-<span class="st"> </span>lmerTest<span class="op">::</span><span class="kw">lmer</span>(score <span class="op">~</span><span class="st"> </span>condition.e <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>sub_id), <span class="dt">data =</span> dat)
 
 <span class="kw">summary</span>(lmem)<span class="op">$</span>coefficients <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="co"># nicer formatting with p-values</span>
 <span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&quot;Factor&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate_if</span>(<span class="op">~</span><span class="kw">max</span>(.) <span class="op">&lt;</span><span class="st"> </span>.<span class="dv">001</span>, <span class="op">~</span><span class="kw">as.character</span>(<span class="kw">signif</span>(., <span class="dv">3</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">mutate_if</span>(<span class="op">~</span><span class="kw">max</span>(.) <span class="op">&lt;</span><span class="st"> </span><span class="fl">.001</span>, <span class="op">~</span><span class="kw">as.character</span>(<span class="kw">signif</span>(., <span class="dv">3</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -3752,7 +786,7 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <div id="functions" class="section level2">
 <h2><span class="header-section-number">3.4</span> Functions</h2>
 <p>We can put everything together into a function where you specify the subject number, means, SDs and correlation, it translates this into the intercept specification, and returns a data table.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_paired_data &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">sub_n =</span> <span class="dv">100</span>, 
+<pre class="sourceCode r"><code class="sourceCode r">sim_paired_data &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">sub_n =</span> <span class="dv">100</span>, 
                             A_mean, B_mean, 
                             A_sd, B_sd, AB_r) {
   
@@ -3774,19 +808,19 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <span class="st">  </span><span class="kw">left_join</span>(sub, <span class="dt">by =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(
     <span class="dt">effect =</span> <span class="kw">case_when</span>(
-      condition <span class="op">==</span><span class="st"> &quot;A&quot;</span> <span class="op">~</span><span class="st"> </span>AB_effect <span class="op">*</span><span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>,
-      condition <span class="op">==</span><span class="st"> &quot;B&quot;</span> <span class="op">~</span><span class="st"> </span>AB_effect <span class="op">*</span><span class="st"> </span><span class="op">+</span><span class="fl">0.5</span>
+      condition <span class="op">==</span><span class="st"> &quot;A&quot;</span> <span class="op">~</span><span class="st"> </span>AB_effect <span class="op">*</span><span class="st"> </span><span class="fl">-0.5</span>,
+      condition <span class="op">==</span><span class="st"> &quot;B&quot;</span> <span class="op">~</span><span class="st"> </span>AB_effect <span class="op">*</span><span class="st"> </span><span class="fl">+0.5</span>
     ),
     <span class="dt">error =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, error_sd),
     <span class="dt">score =</span> grand_i <span class="op">+</span><span class="st"> </span>sub_i <span class="op">+</span><span class="st"> </span>effect <span class="op">+</span><span class="st"> </span>error
   ) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(sub_id, condition, score) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">spread</span>(condition, score)
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_paired_data</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, .<span class="dv">5</span>) <span class="op">%&gt;%</span>
+}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_paired_data</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">.5</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>sub_id) <span class="op">%&gt;%</span>
 <span class="st">  </span>faux<span class="op">::</span><span class="kw">get_params</span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -3818,10 +852,10 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 </tbody>
 </table>
 <p>Set the <code>sub_n</code> to a very high number to see that the means, SDs and correlations are what you specified.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_paired_data</span>(<span class="dv">10000</span>, <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">25</span>) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_paired_data</span>(<span class="dv">10000</span>, <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.25</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>sub_id) <span class="op">%&gt;%</span>
 <span class="st">  </span>faux<span class="op">::</span><span class="kw">get_params</span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -3855,7 +889,7 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 <p>It might be more useful to create functions to translate back and forth from the distribution specification to the intercept specification.</p>
 <div id="distribution-to-intercept-specification" class="section level3">
 <h3><span class="header-section-number">3.4.1</span> Distribution to intercept specification</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dist2int &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>, <span class="dt">r =</span> <span class="dv">0</span>) {
+<pre class="sourceCode r"><code class="sourceCode r">dist2int &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>, <span class="dt">r =</span> <span class="dv">0</span>) {
   A_mean &lt;-<span class="st"> </span>mu[<span class="dv">1</span>]
   <span class="co"># set B_mean to A_mean if mu has length 1</span>
   B_mean &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(mu[<span class="dv">2</span>]), mu[<span class="dv">1</span>], mu[<span class="dv">2</span>])
@@ -3871,8 +905,8 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
     <span class="dt">sub_sd =</span> <span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>AB_r),
     <span class="dt">error_sd =</span> <span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>AB_r))
   )
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dist2int</span>()</code></pre></div>
+}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dist2int</span>()</code></pre>
 <table>
 <tbody>
 <tr class="odd">
@@ -3893,7 +927,7 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 </tr>
 </tbody>
 </table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dist2int</span>(<span class="dt">mu =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">105</span>), <span class="dt">sd =</span> <span class="kw">c</span>(<span class="fl">10.5</span>, <span class="fl">9.5</span>), <span class="dt">r =</span> <span class="fl">0.5</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dist2int</span>(<span class="dt">mu =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">105</span>), <span class="dt">sd =</span> <span class="kw">c</span>(<span class="fl">10.5</span>, <span class="fl">9.5</span>), <span class="dt">r =</span> <span class="fl">0.5</span>)</code></pre>
 <table>
 <tbody>
 <tr class="odd">
@@ -3917,7 +951,7 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 </div>
 <div id="intercept-to-distribution-specification" class="section level3">
 <h3><span class="header-section-number">3.4.2</span> Intercept to distribution specification</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">int2dist &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">grand_i =</span> <span class="dv">0</span>, 
+<pre class="sourceCode r"><code class="sourceCode r">int2dist &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">grand_i =</span> <span class="dv">0</span>, 
                      <span class="dt">AB_effect =</span> <span class="dv">0</span>, 
                      <span class="dt">sub_sd =</span> <span class="dv">0</span>, 
                      <span class="dt">error_sd =</span> <span class="dv">1</span>) {
@@ -3930,8 +964,8 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
     <span class="dt">B_sd =</span> <span class="kw">sqrt</span>(pooled_var),
     <span class="dt">AB_r =</span> sub_sd<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>pooled_var
   )
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">int2dist</span>()</code></pre></div>
+}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">int2dist</span>()</code></pre>
 <table>
 <tbody>
 <tr class="odd">
@@ -3956,7 +990,7 @@ The variable <code>condition.e</code> &quot;effect codes&quot; condition, which 
 </tr>
 </tbody>
 </table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">int2dist</span>(<span class="fl">102.5</span>, <span class="dv">5</span>, <span class="fl">0.708</span>, <span class="fl">0.708</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">int2dist</span>(<span class="fl">102.5</span>, <span class="dv">5</span>, <span class="fl">0.708</span>, <span class="fl">0.708</span>)</code></pre>
 <table>
 <tbody>
 <tr class="odd">
