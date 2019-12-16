@@ -52,7 +52,7 @@ sub <- tibble(
 ```
 
 <div class="info">
-<p>If you already have <a href="/data/pilot_data.csv">pilot data</a>, you can estimate a realistic SD for the subjects' random intercepts using the following code.</p>
+<p>If you already have <a href="/data/pilot_data.csv">pilot data</a>, you can estimate a realistic SD for the subjects’ random intercepts using the following code.</p>
 </div>
 
 
@@ -174,7 +174,7 @@ error_sd         <- 25  # residual (error) SD
 ```
 
 <div class="info">
-<p>We set the error SD fairly low here so that it's easier to see how the parameters we set map onto the analysis output. You can calculate a realistic error SD from pilot data with the code below.</p>
+<p>We set the error SD fairly low here so that it’s easier to see how the parameters we set map onto the analysis output. You can calculate a realistic error SD from pilot data with the code below.</p>
 </div>
 
 
@@ -377,16 +377,11 @@ mod.sum
 ## Number of obs: 20000, groups:  sub_id, 200; stim_id, 50
 ## 
 ## Fixed effects:
-##                            Estimate Std. Error        df t value Pr(>|t|)
-## (Intercept)                 401.937     10.360   131.411   38.80   <2e-16
-## sub_cond.e                   11.146     13.555   198.000    0.82     0.41
-## stim_version.e               74.574      0.355 19749.000  210.31   <2e-16
-## sub_cond.e:stim_version.e    51.053      0.709 19749.000   71.99   <2e-16
-##                              
-## (Intercept)               ***
-## sub_cond.e                   
-## stim_version.e            ***
-## sub_cond.e:stim_version.e ***
+##                            Estimate Std. Error        df t value Pr(>|t|)    
+## (Intercept)                 401.937     10.360   131.411   38.80   <2e-16 ***
+## sub_cond.e                   11.146     13.555   198.000    0.82     0.41    
+## stim_version.e               74.574      0.355 19749.000  210.31   <2e-16 ***
+## sub_cond.e:stim_version.e    51.053      0.709 19749.000   71.99   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -581,16 +576,11 @@ sim_lmer()
 ## Number of obs: 20000, groups:  sub_id, 200; stim_id, 50
 ## 
 ## Fixed effects:
-##                            Estimate Std. Error        df t value Pr(>|t|)
-## (Intercept)                 390.831      9.873   140.402   39.58   <2e-16
-## sub_cond.e                  -12.626     13.313   197.996   -0.95     0.34
-## stim_version.e               75.093      0.355 19749.001  211.61   <2e-16
-## sub_cond.e:stim_version.e    50.586      0.710 19749.001   71.28   <2e-16
-##                              
-## (Intercept)               ***
-## sub_cond.e                   
-## stim_version.e            ***
-## sub_cond.e:stim_version.e ***
+##                            Estimate Std. Error        df t value Pr(>|t|)    
+## (Intercept)                 390.831      9.873   140.402   39.58   <2e-16 ***
+## sub_cond.e                  -12.626     13.313   197.996   -0.95     0.34    
+## stim_version.e               75.093      0.355 19749.001  211.61   <2e-16 ***
+## sub_cond.e:stim_version.e    50.586      0.710 19749.001   71.28   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -612,9 +602,8 @@ sim_lmer(hard_congr = 0,
 ```
 
 ```
-## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl =
-## control$checkConv, : Model failed to converge with max|grad| = 0.00336514
-## (tol = 0.002, component 1)
+## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
+## Model failed to converge with max|grad| = 0.00336514 (tol = 0.002, component 1)
 ```
 
 ```
@@ -637,16 +626,11 @@ sim_lmer(hard_congr = 0,
 ## Number of obs: 20000, groups:  sub_id, 200; stim_id, 50
 ## 
 ## Fixed effects:
-##                            Estimate Std. Error        df t value Pr(>|t|)
-## (Intercept)                 407.692     10.601   165.095   38.46   <2e-16
-## sub_cond.e                   -7.251     15.301   197.982   -0.47    0.636
-## stim_version.e               -0.888      0.353 19748.994   -2.52    0.012
-## sub_cond.e:stim_version.e    -0.849      0.706 19748.994   -1.20    0.229
-##                              
-## (Intercept)               ***
-## sub_cond.e                   
-## stim_version.e            *  
-## sub_cond.e:stim_version.e    
+##                            Estimate Std. Error        df t value Pr(>|t|)    
+## (Intercept)                 407.692     10.601   165.095   38.46   <2e-16 ***
+## sub_cond.e                   -7.251     15.301   197.982   -0.47    0.636    
+## stim_version.e               -0.888      0.353 19748.994   -2.52    0.012 *  
+## sub_cond.e:stim_version.e    -0.849      0.706 19748.994   -1.20    0.229    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -708,8 +692,8 @@ sub <- rnorm_multi(
 ```
 
 ```
-## Warning in rnorm_multi(n = sub_n, vars = 2, cors = sub_i_version_cor, mu =
-## 0, : cors is deprecated, please use r
+## Warning in rnorm_multi(n = sub_n, vars = 2, cors = sub_i_version_cor, mu = 0, :
+## cors is deprecated, please use r
 ```
 
 Plot to double-check it looks sensible.
@@ -873,9 +857,8 @@ mod <- lmer(dv ~ sub_cond.e * stim_version.e +
 ```
 
 ```
-## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl =
-## control$checkConv, : Model failed to converge with max|grad| = 0.0132569
-## (tol = 0.002, component 1)
+## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
+## Model failed to converge with max|grad| = 0.0132569 (tol = 0.002, component 1)
 ```
 
 ```r
@@ -887,8 +870,7 @@ mod.sum
 ```
 ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
 ## lmerModLmerTest]
-## Formula: 
-## dv ~ sub_cond.e * stim_version.e + (1 + stim_version.e | sub_id) +  
+## Formula: dv ~ sub_cond.e * stim_version.e + (1 + stim_version.e | sub_id) +  
 ##     (1 + stim_version.e * sub_cond.e | stim_id)
 ##    Data: dat
 ## 

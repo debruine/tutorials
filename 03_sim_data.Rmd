@@ -1,11 +1,14 @@
 # Simulating Data {#sim_data}
 
-This tutorial details a few ways I simulate data. I'll be using some functions from my [`faux` package](https://github.com/debruine/faux) to make it easier to generate sets of variables with specific correlations.
+This tutorial details a few ways I simulate data. I'll be using some functions from my [`faux` package](https://debruine.github.io/faux/) to make it easier to generate sets of variables with specific correlations.
 
-```{r lib}
+```{r lib, message=FALSE}
 library(tidyverse)
-# devtools::install_github("debruine/faux")
+# devtools::install_github("debruine/faux", build_vignettes = TRUE)
 library(faux) 
+library(afex) # for anova and lmer
+library(broom.mixed) # to make tidy tables of lmer output
+library(kableExtra) # to make nicer graphs
 set.seed(8675309) # this makes sure your script uses the same set of random numbers each time you run the full script (never set this inside a function or loop)
 ```
 
@@ -15,7 +18,7 @@ Let's start with a simple independent-samples design where the variables are fro
 
 * How many subjects are in each condition?
 * What are the score means?
-* What are the score variances?
+* What are the score variances (or SDs)?
 
 ### Parameters {#ind-params}
 
@@ -25,10 +28,10 @@ I start simulation scripts by setting parameters for these values.
 
 A_sub_n <- 50
 B_sub_n <- 50
-A_mean <- 10
-B_mean <- 11
-A_sd <- 2.5
-B_sd <- 2.5
+A_mean  <- 10
+B_mean  <- 11
+A_sd    <- 2.5
+B_sd    <- 2.5
 
 ```
 
@@ -66,7 +69,7 @@ summary_dat <- dat %>%
 
 
 ```{r ind-check-table, echo=FALSE, results = 'asis'}
-knitr::kable(summary_dat, digits = 3)
+kable(summary_dat, digits = 3)
 ```
 
 ```{block, type="info"}
@@ -99,11 +102,11 @@ ind_sim <- function(A_sub_n, B_sub_n, A_mean, B_mean, A_sd, B_sd) {
   
   # return just the values you care about
   list(
-    t = t$statistic,
-    ci_lower = t$conf.int[1],
-    ci_upper = t$conf.int[2],
-    p = t$p.value,
-    estimate = t$estimate[1] - t$estimate[2]
+    t = t$statistic[[1]],
+    ci_lower = t$conf.int[[1]],
+    ci_upper = t$conf.int[[2]],
+    p = t$p.value[[1]],
+    estimate = t$estimate[[1]] - t$estimate[[2]]
   )
 }
 
@@ -112,7 +115,8 @@ ind_sim <- function(A_sub_n, B_sub_n, A_mean, B_mean, A_sd, B_sd) {
 Now run your new function with the values you used above.
 
 ```{r}
-ind_sim(50, 50, 10, 11, 2.5, 2.5)
+# str() prints the resulting list in a shorter format
+ind_sim(50, 50, 10, 11, 2.5, 2.5) %>% str()
 ```
 
 
@@ -123,7 +127,7 @@ Run the function with the parameters from the example above. Run it a few times 
 Now you can use this function to run many simulations. There are a lot of ways to do this. The pattern below uses the `map_df` function from the `purrr` package.
 
 ```{r}
-simulation <- purrr::map_df(1:1000, ~ind_sim(50, 50, 10, 11, 2.5, 2.5))
+simulation <- map_df(1:1000, ~ind_sim(50, 50, 10, 11, 2.5, 2.5))
 ```
 
 ```{block, type="info"}
@@ -158,7 +162,7 @@ Now let's try a paired-samples design where the variables are from a normal dist
 
 * How many subjects?
 * What are the score means?
-* What are the score variances?
+* What are the score variances (or SDs)?
 * What is the correlation between the scores?
 
 ### Parameters {#paired-params}
@@ -178,15 +182,15 @@ AB_r <- 0.5
 
 You can then use `rnorm_multi()` to generate a data table with simulated values for correlated scores:
 
-```{r paired-dat}
+```{r sim-design}
 dat <- faux::rnorm_multi(
-  n = sub_n, 
-  vars = 2, 
-  r = AB_r, 
-  mu = c(A_mean, B_mean), 
-  sd = c(A_sd, B_sd), 
-  varnames = c("A", "B")
-)
+    n = sub_n, 
+    vars = 2, 
+    r = AB_r, 
+    mu = c(A_mean, B_mean), 
+    sd = c(A_sd, B_sd), 
+    varnames = c("A", "B")
+  )
 ```
 
 ### Check your data
@@ -194,7 +198,7 @@ dat <- faux::rnorm_multi(
 Now check your data; `faux` has a function `get_params()` that gives you the correlation table, means, and SDs for each numeric column in a data table.
 
 ```{r paired-check, echo = FALSE, results='asis'}
-faux::get_params(dat) %>% knitr::kable()
+faux::get_params(dat) %>% kable()
 ```
 
 ### Analysis
@@ -225,11 +229,11 @@ paired_sim <- function(sub_n, A_mean, B_mean, A_sd, B_sd, AB_r) {
   
   # return just the values you care about
   list(
-    t = t$statistic,
-    ci_lower = t$conf.int[1],
-    ci_upper = t$conf.int[2],
-    p = t$p.value,
-    estimate = t$estimate
+    t = t$statistic[[1]],
+    ci_lower = t$conf.int[[1]],
+    ci_upper = t$conf.int[[2]],
+    p = t$p.value[[1]],
+    estimate = t$estimate[[1]]
   )
 }
 
@@ -238,7 +242,7 @@ paired_sim <- function(sub_n, A_mean, B_mean, A_sd, B_sd, AB_r) {
 Run 1000 simulations and graph the results.
 
 ```{r}
-simulation <- purrr::map_df(1:1000, ~paired_sim(100, 10, 11, 2.5, 2.5, .5))
+simulation <- map_df(1:1000, ~paired_sim(100, 10, 11, 2.5, 2.5, .5))
 ```
 
 ```{r ind-sim-fig, fig.cap = "Distribution of results from simulated paired samples data"}
@@ -265,18 +269,18 @@ Now I'm going to show you a different way to simulate the same design. This migh
 Remember, we used the following parameters to set up our simulation above:
 
 ```{r paired-vars2}
-sub_n <- 100
+sub_n  <- 100
 A_mean <- 10
 B_mean <- 11
-A_sd <- 2.5
-B_sd <- 2.5
-AB_r <- 0.5
+A_sd   <- 2.5
+B_sd   <- 2.5
+AB_r   <- 0.5
 ```
 
 From these, we can calculate the grand intercept (the overall mean regardless of condition), and the effect of condition (the mean of B minus A).
 
 ```{r}
-grand_i <- (A_mean + B_mean)/2
+grand_i   <- (A_mean + B_mean)/2
 AB_effect <- B_mean - A_mean
 ```
 
@@ -293,7 +297,7 @@ If the SDs for A and B are very different, this suggests a more complicated data
 The variance of the subject intercepts is `r` times this pooled variance and the error variance is what is left over. We take the square root (`sqrt()`) to set the subject intercept and error SDs for simulation later.
 
 ```{r}
-sub_sd <- sqrt(pooled_var * AB_r)
+sub_sd   <- sqrt(pooled_var * AB_r)
 error_sd <- sqrt(pooled_var * (1-AB_r))
 ```
 
@@ -314,10 +318,10 @@ sub <- tibble(
 
 ### Observations
 
-Next, set up a table where each row represents one observation. We'll use one of my favourite functions for simulation: `expand.grid()`. This creates every possible combination of the listed factors. Here, we're using it to create a row for each subject in each condition, since this is a fully within-subjects design.
+Next, set up a table where each row represents one observation. We'll use one of my favourite functions for simulation: `crossing()`. This creates every possible combination of the listed factors (it works the same as `expand.grid()`, but the results are in a more intuitive order). Here, we're using it to create a row for each subject in each condition, since this is a fully within-subjects design.
 
 ```{r}
-obs <- expand.grid(
+obs <- crossing(
   sub_id = 1:sub_n,
   condition = c("A", "B")
 )
@@ -329,7 +333,7 @@ Next, we join the subject table so each row has the information about the subjec
 
 * the overall mean (`grand_i`)
 * the subject-specific intercept (`sub_i`)
-* the effect of condition (-50% of `AB_effect` for condition A and +50% of `AB_effect` for condition B)
+* the effect (`effect`): the numeric code for condition (`condition.e`) multiplied by the effect of condition (`AB_effect`)
 * the error term (simulated from a normal distribution with mean of 0 and SD of `error_sd`)
 
 ```{r}
@@ -362,7 +366,7 @@ Then you can use the `get_params` function to check this looks correct (remove t
 dat_wide %>%
   select(-sub_id) %>%
   faux::get_params() %>%
-  knitr::kable()
+  kable()
 ```
 
 ### Analyses
@@ -379,23 +383,22 @@ Or in the long format:
 t.test(score ~ condition, dat, paired = TRUE)
 ```
 
-You can analyse the data with ANOVA.
+You can analyse the data with ANOVA using the `aov_4()` function from `afex`.
 
 ```{r}
 afex::aov_4(score ~ (condition.e | sub_id), data = dat)
 ```
 
 
-You can even analyse the data with a mixed effects model. 
+You can even analyse the data with a mixed effects model using the `lmer` function (the `afex` version gives you p-values, but the `lme4` version does not). 
 
 ```{r}
-lmem <- lmerTest::lmer(score ~ condition.e + (1 | sub_id), data = dat)
+lmem <- afex::lmer(score ~ condition.e + (1 | sub_id), data = dat)
 
-summary(lmem)$coefficients %>% 
+broom.mixed::tidy(lmem, effects = "fixed")%>% 
   # nicer formatting with p-values
-  as_tibble(rownames = "Factor") %>%
   mutate_if(~max(.) < .001, ~as.character(signif(., 3))) %>% 
-  knitr::kable(digits = 3)
+  kable(digits = 3)
 ```
 
 ## Functions
@@ -419,16 +422,14 @@ sim_paired_data <- function(sub_n = 100,
     sub_i = rnorm(sub_n, 0, sub_sd)
   )
   
-  expand.grid(
+  crossing(
     sub_id = 1:sub_n,
     condition = c("A", "B")
   ) %>%
   left_join(sub, by = "sub_id") %>%
   mutate(
-    effect = case_when(
-      condition == "A" ~ AB_effect * -0.5,
-      condition == "B" ~ AB_effect * +0.5
-    ),
+    condition.e = recode(condition,  "A" = -0.5, "B" = +0.5),
+    effect = AB_effect * condition.e,
     error = rnorm(nrow(.), 0, error_sd),
     score = grand_i + sub_i + effect + error
   ) %>%
@@ -441,7 +442,7 @@ sim_paired_data <- function(sub_n = 100,
 sim_paired_data(100, 10, 12, 2.5, 2.5, .5) %>%
   select(-sub_id) %>%
   faux::get_params() %>% 
-  knitr::kable()
+  kable()
 ```
 
 Set the `sub_n` to a very high number to see that the means, SDs and correlations are what you specified.
@@ -450,7 +451,7 @@ Set the `sub_n` to a very high number to see that the means, SDs and correlation
 sim_paired_data(10000, 0, 0.5, 1, 1, .25) %>%
   select(-sub_id) %>%
   faux::get_params() %>% 
-  knitr::kable()
+  kable()
 ```
 
 It might be more useful to create functions to translate back and forth from the distribution specification to the intercept specification.
@@ -487,7 +488,7 @@ dist2int()
 dist2int() %>%
   as_tibble() %>%
   t() %>%
-  knitr::kable(col.names = "")
+  kable(col.names = "")
 ```
 
 ```{r, eval = FALSE}
@@ -499,7 +500,7 @@ dist2int(mu = c(100, 105), sd = c(10.5, 9.5), r = 0.5)
 dist2int(mu = c(100, 105), sd = c(10.5, 9.5), r = 0.5) %>%
   as_tibble() %>%
   t() %>%
-  knitr::kable(col.names = "", digits = 3)
+  kable(col.names = "", digits = 3)
 ```
 
 ### Intercept to distribution specification
@@ -530,7 +531,7 @@ int2dist()
 int2dist() %>%
   as_tibble() %>%
   t() %>%
-  knitr::kable(col.names = "")
+  kable(col.names = "")
 ```
 
 ```{r, eval = FALSE}
@@ -542,30 +543,27 @@ int2dist(102.5, 5, 0.708, 0.708)
 int2dist(102.5, 5, 0.708, 0.708) %>%
   as_tibble() %>%
   t() %>%
-  knitr::kable(col.names = "", digits = 3)
+  kable(col.names = "", digits = 3)
 ```
 
 We can then use either specification to generate data with either technique.
 
-
 ```{r func-check, eval = FALSE, echo = FALSE}
 
-library(purrr)
-
-sim <- expand.grid(
+sim <- crossing(
   A = 0:5,
   B = 0:5,
   SD = 1:5,
-  cor = seq(0,0.8, .1)
+  cor = seq(0, 0.8, 0.1)
 ) %>%
   mutate(
     int = pmap(
       list(A, B, SD, cor),
       function(A, B, SD, cor) { dist2int(c(A, B), c(SD, SD), cor) }
     ),
-    int = purrr::map(int, as_tibble)
+    int = map(int, as_tibble)
   ) %>%
-  unnest() %>%
+  unnest(cols = int) %>%
   mutate(
     dist = pmap(
       list(grand_i, AB_effect, sub_sd, error_sd),
@@ -573,7 +571,7 @@ sim <- expand.grid(
     ),
     dist = map(dist, as_tibble)
   ) %>%
-  unnest()
+  unnest(cols = dist)
 
 plot(sim$A,sim$A_mean)
 plot(sim$B, sim$B_mean)

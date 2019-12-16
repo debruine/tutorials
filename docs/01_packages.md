@@ -178,7 +178,7 @@ APA style omits the leading zero and pads the number out to three digits. We can
 When you use R functions from a package (not base R), you normally load the package using the `library()` function. When you're developing your own package, you should preface every function with its package name and two colons instead, so in the code below we'll use `stringr::str_replace()` and `stringr::str_pad()`, not `str_replace()` and `str_pad()`.
 
 <div class="info">
-<p>One function you can't preface with the package name is the <a href="#pipes">pipe</a>. While you're testing your function, load the pipe by typing <code>library(magrittr)</code> in the console.</p>
+<p>One function you can’t preface with the package name is the <a href="#pipes">pipe</a>. While you’re testing your function, load the pipe by typing <code>library(magrittr)</code> in the console.</p>
 </div>
 
 
@@ -292,7 +292,7 @@ usethis::use_package("stringr")
 You can't import the whole `tidyverse`, but you can import each package separately (i.e., ggplot2, purrr, tibble, dplyr, tidyr, stringr, readr, forcats). Import just the packages you actually need.
 
 <div class="warning">
-<p><img src="images/pipe_sticker.png" style="float:right; width:100px"> If you use pipes (even if you've imported <code>dplyr</code>), you also need to run <code>usethis::use_pipe()</code>. It will add a file called <code>utils-pipe.R</code> to your <code>R</code> directory and add <code>magrittr</code> to your Imports.</p>
+<p><img src="images/pipe_sticker.png" style="float:right; width:100px"> If you use pipes (even if you’ve imported <code>dplyr</code>), you also need to run <code>usethis::use_pipe()</code>. It will add a file called <code>utils-pipe.R</code> to your <code>R</code> directory and add <code>magrittr</code> to your Imports.</p>
 </div>
 
 

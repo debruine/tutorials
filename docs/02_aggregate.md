@@ -138,13 +138,13 @@ t.test(dat_agg_by_stim$mean_estimate ~ dat_agg_by_stim$birthday)
 ## 	Welch Two Sample t-test
 ## 
 ## data:  dat_agg_by_stim$mean_estimate by dat_agg_by_stim$birthday
-## t = 1.5779, df = 32.127, p-value = 0.1244
+## t = 1.7225, df = 32.893, p-value = 0.09436
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -0.837759  6.600587
+##  -0.5794833  6.9732793
 ## sample estimates:
 ##  mean in group odd mean in group even 
-##           157.3599           154.4785
+##           157.4442           154.2473
 ```
 
 ### Aggregating by raters
@@ -166,13 +166,13 @@ t.test(dat_agg_by_rater$odd, dat_agg_by_rater$even, paired = TRUE)
 ## 	Paired t-test
 ## 
 ## data:  dat_agg_by_rater$odd and dat_agg_by_rater$even
-## t = 12.196, df = 19, p-value = 1.971e-10
+## t = 10.572, df = 19, p-value = 2.131e-09
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  2.386903 3.375925
+##  2.564008 3.829787
 ## sample estimates:
 ## mean of the differences 
-##                2.881414
+##                3.196898
 ```
 
 Now the difference between the odd- and even-birthday groups is highly significant! What's going is that you now have a relatively accurate estimate of the difference between the 20 women in the odd-birthday group and the 20 women in the even-birthday group. Since raters are the unit of analysis, this effect is likely to generalise to the larger population of potential raters, but only when they are rating **these exact stimuli**. Your conclusions cannot generalise beyond the stimulus set used here.
@@ -197,50 +197,41 @@ mod <- lmer(estimate ~ birthday.e +
               # random intercept for variation in stim height
               (1 | stim_id), 
             data = dat)
-```
 
-```
-## boundary (singular) fit: see ?isSingular
-```
-
-```r
 summary(mod)
 ```
 
 ```
 ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
 ## lmerModLmerTest]
-## Formula: 
-## estimate ~ birthday.e + (1 + birthday.e | rater_id) + (1 | stim_id)
+## Formula: estimate ~ birthday.e + (1 + birthday.e | rater_id) + (1 | stim_id)
 ##    Data: dat
 ## 
-## REML criterion at convergence: 4575.7
+## REML criterion at convergence: 4663.9
 ## 
 ## Scaled residuals: 
 ##      Min       1Q   Median       3Q      Max 
-## -3.14168 -0.68113 -0.00709  0.63446  2.38690 
+## -2.81564 -0.65108  0.01132  0.67334  2.57077 
 ## 
 ## Random effects:
-##  Groups   Name        Variance Std.Dev. Corr
-##  stim_id  (Intercept) 32.64291 5.7134       
-##  rater_id (Intercept)  3.19343 1.7870       
-##           birthday.e   0.05248 0.2291   1.00
-##  Residual             14.04287 3.7474       
+##  Groups   Name        Variance Std.Dev. Corr 
+##  stim_id  (Intercept) 33.6592  5.8017        
+##  rater_id (Intercept)  3.0802  1.7551        
+##           birthday.e   0.2528  0.5028   -0.55
+##  Residual             15.7552  3.9693        
 ## Number of obs: 800, groups:  stim_id, 40; rater_id, 20
 ## 
 ## Fixed effects:
-##             Estimate Std. Error       df t value Pr(>|t|)    
-## (Intercept) 155.9192     0.9966  49.4844 156.444   <2e-16 ***
-## birthday.e    2.8814     1.8268  38.0626   1.577    0.123    
+##             Estimate Std. Error      df t value Pr(>|t|)    
+## (Intercept)  155.846      1.008  48.827 154.676   <2e-16 ***
+## birthday.e     3.197      1.859  38.221   1.719   0.0936 .  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Correlation of Fixed Effects:
 ##            (Intr)
-## birthday.e 0.011 
-## convergence code: 0
-## boundary (singular) fit: see ?isSingular
+## birthday.e -0.013
 ```
 
 
-The estimate for `(Intercept)` is just the mean height estimate (155.92 cm) and the estimate for `birthday.e` is the mean difference between the odd and even birthday groups (2.88 cm).
+The estimate for `(Intercept)` is just the mean height estimate (155.85 cm) and the estimate for `birthday.e` is the mean difference between the odd and even birthday groups (3.2 cm).

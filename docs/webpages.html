@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Webpages | Tutorials</title>
-  <meta name="description" content="Tutorial materials">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="Tutorial materials" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Webpages | Tutorials" />
   <meta property="og:type" content="book" />
@@ -22,18 +21,18 @@
   <meta name="twitter:description" content="Tutorial materials" />
   
 
-<meta name="author" content="Lisa DeBruine">
+<meta name="author" content="Lisa DeBruine" />
 
 
-<meta name="date" content="2019-05-21">
+<meta name="date" content="2019-12-14" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="sim-lmer.html">
-<link rel="next" href="installing-r.html">
+<link rel="prev" href="sim-lmer.html"/>
+<link rel="next" href="installing-r.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,41 +50,66 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
@@ -150,7 +174,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="1.11" data-path="packages.html"><a href="packages.html#glossary"><i class="fa fa-check"></i><b>1.11</b> Glossary</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="aggregate.html"><a href="aggregate.html"><i class="fa fa-check"></i><b>2</b> What's wrong with aggregating data?</a><ul>
+<li class="chapter" data-level="2" data-path="aggregate.html"><a href="aggregate.html"><i class="fa fa-check"></i><b>2</b> What’s wrong with aggregating data?</a><ul>
 <li class="chapter" data-level="2.0.1" data-path="aggregate.html"><a href="aggregate.html#measurement-with-error"><i class="fa fa-check"></i><b>2.0.1</b> Measurement with Error</a></li>
 <li class="chapter" data-level="2.0.2" data-path="aggregate.html"><a href="aggregate.html#aggregating-by-stimuli"><i class="fa fa-check"></i><b>2.0.2</b> Aggregating by stimuli</a></li>
 <li class="chapter" data-level="2.0.3" data-path="aggregate.html"><a href="aggregate.html#aggregating-by-raters"><i class="fa fa-check"></i><b>2.0.3</b> Aggregating by raters</a></li>
@@ -299,64 +323,55 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="create-a-project" class="section level3">
 <h3><span class="header-section-number">5.2.1</span> Create a project</h3>
 <ol style="list-style-type: decimal">
-<li>Choose <code>New Project...</code> from the <code>File</code> menu (don't save any workspaces)</li>
-<li>Choose the <code>Version Control</code> option If you don't have this option, <a href="setup-git.html#setup-git">set up git</a> using the instructions in Appendix @ref(#setup-git).</li>
+<li>Choose <code>New Project...</code> from the <code>File</code> menu (don’t save any workspaces)</li>
+<li>Choose the <code>Version Control</code> option
+If you don’t have this option, <a href="setup-git.html#setup-git">set up git</a> using the instructions in Appendix @ref(#setup-git).</li>
 <li>Choose the <code>Git</code> option to clone a project from a git repository</li>
-<li><p>Set the <code>Repository URL</code> This will look something like <code>ssh://git@github.com/USERNAME/mywebpage.git</code> or <code>git@gitlab.com:USERNAME/mywebpage.git</code>. Make sure to replace <code>USERNAME</code> with your GitHub or GitLab username and <code>mywebpage</code> with the name of your project if you didn't use that name.</p>
+<li><p>Set the <code>Repository URL</code>
+This will look something like <code>ssh://git@github.com/USERNAME/mywebpage.git</code> or <code>git@gitlab.com:USERNAME/mywebpage.git</code>.
+Make sure to replace <code>USERNAME</code> with your GitHub or GitLab username and
+<code>mywebpage</code> with the name of your project if you didn’t use that name.</p>
 <img src="images/clone_git.png" /></li>
 <li><p>Type in your SSH passphrase</p></li>
 </ol>
 </div>
 <div id="site-header" class="section level3">
 <h3><span class="header-section-number">5.2.2</span> Site header</h3>
-<p>This is where you can set options like whether to show a table of contents and what the navigation bar will look like. We'll edit this later to add a section menu.</p>
+<p>This is where you can set options like whether to show a table of contents and what the navigation bar will look like. We’ll edit this later to add a section menu.</p>
 <ol style="list-style-type: decimal">
-<li>Make a new file Choose <code>New File &gt; Text File</code> from the <code>File</code> menu</li>
-<li><p>Put the following text in the file:</p>
-<pre><code>name: &quot;mywebpage&quot;  
-author: &quot;YOUR NAME&quot;  
-output_dir: &quot;docs&quot;  
-output:  
-  html_document:  
-    self_contained: no  
-    theme: flatly  
-navbar:  
-  title: &quot;My First Webpage&quot;  </code></pre></li>
-<li><p>Save the file as <code>_site.yml</code> (do not change the name)</p></li>
+<li>Make a new file
+Choose <code>New File &gt; Text File</code> from the <code>File</code> menu</li>
+<li>Put the following text in the file:
+<code>name: &quot;mywebpage&quot;    author: &quot;YOUR NAME&quot;    output_dir: &quot;docs&quot;    output:      html_document:        self_contained: no        theme: flatly    navbar:      title: &quot;My First Webpage&quot;</code></li>
+<li>Save the file as <code>_site.yml</code> (do not change the name)</li>
 </ol>
 </div>
 <div id="site-script-only-for-gitlab" class="section level3">
 <h3><span class="header-section-number">5.2.3</span> Site script (only for GitLab)</h3>
-<p>This file contains instructions for copying files from your private GitLab repository to the public web resources. You don't need it for a GitHub website because all the files are public.</p>
+<p>This file contains instructions for copying files from your private GitLab repository to the public web resources. You don’t need it for a GitHub website because all the files are public.</p>
 <ol style="list-style-type: decimal">
-<li>Make a new file Choose <code>New File &gt; Text File</code> from the <code>File</code> menu</li>
-<li><p>Put the following text in the file:</p>
-<pre><code>pages:
-  stage: deploy
-  script:
-  - mkdir .public
-  - cp -r docs/* .public
-  - mv .public public
-  artifacts:
-    paths:
-    - public
-  only:
-  - master</code></pre></li>
-<li><p>Save the file as <code>.gitlab-ci.yml</code> (do not change the name)</p></li>
+<li>Make a new file
+Choose <code>New File &gt; Text File</code> from the <code>File</code> menu</li>
+<li>Put the following text in the file:
+<code>pages:    stage: deploy    script:    - mkdir .public    - cp -r docs/* .public    - mv .public public    artifacts:      paths:      - public    only:    - master</code></li>
+<li>Save the file as <code>.gitlab-ci.yml</code> (do not change the name)</li>
 </ol>
 </div>
 <div id="main-page" class="section level3">
 <h3><span class="header-section-number">5.2.4</span> Main page</h3>
 <ol style="list-style-type: decimal">
-<li>Make a new file Choose <code>New File &gt; R Markdown...</code> from the <code>File</code> menu <img src="images/new_rmarkdown.png" /></li>
-<li><p>Replace all of the default text with the following text:</p>
-<pre><code>---
-title: &quot;My Website Name&quot;
----
-
-I am a postgraduate student in the University of Glasgow&#39;s
-[Institute of Neuroscience and Psychology](http://www.gla.ac.uk/researchinstitutes/neurosciencepsychology/).
-I work with [Supervisor&#39;s Name](http://supervisor/website)</code></pre></li>
+<li>Make a new file
+Choose <code>New File &gt; R Markdown...</code> from the <code>File</code> menu
+<img src="images/new_rmarkdown.png" /></li>
+<li><p>Replace all of the default text with the following text:
+```
+—
+title: “My Website Name”
+—</p>
+I am a postgraduate student in the University of Glasgow’s
+<a href="http://www.gla.ac.uk/researchinstitutes/neurosciencepsychology/">Institute of Neuroscience and Psychology</a>.
+I work with <a href="http://supervisor/website">Supervisor’s Name</a>
+```</li>
 <li>Personalise the website name, supervisor name, and supervisor website link.</li>
 <li><p>Save the file as <code>index.Rmd</code> (do not change the name)</p></li>
 </ol>
@@ -367,17 +382,17 @@ I work with [Supervisor&#39;s Name](http://supervisor/website)</code></pre></li>
 <li>Type <code>rmarkdown::render_site()</code> into the lower left Console pane. You might get some error messages about the graphics engine. You can ignore those for now.</li>
 <li>Click on the <code>docs</code> directory in the <code>Files</code> tab of the lower right pane</li>
 <li>Click on <code>index.html</code> and choose <code>View in Web Browser</code></li>
-<li>Check if your links work, edit and repeat if they don't</li>
+<li>Check if your links work, edit and repeat if they don’t</li>
 </ol>
 </div>
 </div>
 <div id="webpage-content" class="section level2">
 <h2><span class="header-section-number">5.3</span> Add content</h2>
-<p>If you are comfortable with HTML, you can write most of your page in HTML. If not, I'd suggest using rmarkdown, whcih is a simple way to indicate headings, paragraphs, links, lists and images.</p>
+<p>If you are comfortable with HTML, you can write most of your page in HTML. If not, I’d suggest using rmarkdown, whcih is a simple way to indicate headings, paragraphs, links, lists and images.</p>
 <div id="headings-and-paragraphs" class="section level3">
 <h3><span class="header-section-number">5.3.1</span> Headings and paragraphs</h3>
 <p>Headings are prefaces with hashes <code>#</code>. The largest, title heading gets one hash and each subheading level adds another hash.</p>
-<p>Paragraphs don't require any special marks, they are just automatically created when you skip a line between blocks of text.</p>
+<p>Paragraphs don’t require any special marks, they are just automatically created when you skip a line between blocks of text.</p>
 <pre><code>### Headings and paragraphs
 
 Headings are prefaces with hashes `#`. The largest, title heading gets one hash and each subheading level adds another hash. 
@@ -386,7 +401,7 @@ Paragraphs don&#39;t require any special marks, they are just automatically crea
 </div>
 <div id="links" class="section level3">
 <h3><span class="header-section-number">5.3.2</span> Links</h3>
-<p>Links are just text surrounded by square brackets, followed by the URL surrounded by parentheses. Start the URL with <code>http://</code> if it's an external website. If you want to link to one of your own pages, you can just put the name of the page.</p>
+<p>Links are just text surrounded by square brackets, followed by the URL surrounded by parentheses. Start the URL with <code>http://</code> if it’s an external website. If you want to link to one of your own pages, you can just put the name of the page.</p>
 <p>I can link to <a href="http://google.com">Google</a> or to <a href="index.html">my own main page</a>.</p>
 <pre><code>I can link to [Google](http://google.com) or to [my own main page](index.html).</code></pre>
 </div>
@@ -486,7 +501,7 @@ navbar:
 <h3><span class="header-section-number">5.5.2</span> Add custom styles</h3>
 <p>You can also add a custom style sheet (a document that determines how each element of your website should look) by adding the line <code>css: style.css</code> under <code>html_document:</code> in the <code>_site.yml</code> file (as above).</p>
 <p>Then you need to create a file named <code>style.css</code> and add your custom styles there. The web has thousands of guides to CSS, but <a href="https://www.codecademy.com/en/tracks/htmlcss">codeacademy</a> has great interactive tutorials for learning html, css, and even more advanced web coding like javascript.</p>
-<p>However, the basics of css are easy to learn and it's best to just start playing around with it. Add the following text to your <code>style.css</code> file and re-render the website using <code>rmarkdown::render_site()</code>.</p>
+<p>However, the basics of css are easy to learn and it’s best to just start playing around with it. Add the following text to your <code>style.css</code> file and re-render the website using <code>rmarkdown::render_site()</code>.</p>
 </div>
 <div id="change-global-fonts-and-colours" class="section level3">
 <h3><span class="header-section-number">5.5.3</span> Change global fonts and colours</h3>
@@ -575,17 +590,23 @@ ul {
 <div id="save-this-version-with-git" class="section level3">
 <h3><span class="header-section-number">5.6.1</span> Save this version with git</h3>
 <ol style="list-style-type: decimal">
-<li>Click on the <code>git</code> tab in the upper right pane <img src="images/git_tab.png" /></li>
-<li>Stage your files Select all (cmd-A) and click on a checkbox in the <code>Staged</code> column to select all files <img src="images/git_stage_all.png" /></li>
-<li>Commit your changes Click <code>Commit</code>. A new window will open. Type <code>Added site and index pages</code> in the <code>Commit message</code> box and click <a class="btn btn-default btn-xs">Commit</a> <img src="images/initial_commit.png" /></li>
+<li>Click on the <code>git</code> tab in the upper right pane
+<img src="images/git_tab.png" /></li>
+<li>Stage your files
+Select all (cmd-A) and click on a checkbox in the <code>Staged</code> column to select all files
+<img src="images/git_stage_all.png" /></li>
+<li>Commit your changes
+Click <code>Commit</code>. A new window will open. Type <code>Added site and index pages</code> in the <code>Commit message</code> box and click <a class="btn btn-default btn-xs">Commit</a>
+<img src="images/initial_commit.png" /></li>
 <li>Close the progress window and the commit window</li>
 <li>Upload your changes
 <ul>
 <li>Click <code>Push</code> (the green up arrow)</li>
 <li>Enter your SSH passphrase</li>
-<li>Close the window when it's done</li>
+<li>Close the window when it’s done</li>
 </ul></li>
-<li>Go to your GitHub or GitLab page; the new files should be in your repository <img src="images/first_commit.png" /></li>
+<li>Go to your GitHub or GitLab page; the new files should be in your repository
+<img src="images/first_commit.png" /></li>
 </ol>
 </div>
 <div id="github" class="section level3">
@@ -594,7 +615,8 @@ ul {
 <ol style="list-style-type: decimal">
 <li>Go to the website for your GitHub repository (e.g., <code>https://github.com/username/mywebpage</code>)</li>
 <li>Click on the <code>Settings</code> tab and scroll down to <code>GitHub Pages</code></li>
-<li>Under <strong><code>Source</code></strong>, choose <code>master branch /docs folder</code> and click <strong><code>Save</code></strong> <img src="images/github_docs.png" /></li>
+<li>Under <strong><code>Source</code></strong>, choose <code>master branch /docs folder</code> and click <strong><code>Save</code></strong>
+<img src="images/github_docs.png" /></li>
 <li>Click on the link that appears above (e.g., <code>https://debruine.github.io/mywebpage/</code>)</li>
 </ol>
 </div>
