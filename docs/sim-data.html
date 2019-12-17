@@ -311,6 +311,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="sim_data" class="section level1">
 <h1><span class="header-section-number">Chapter 3</span> Simulating Data</h1>
 <p>This tutorial details a few ways I simulate data. I’ll be using some functions from my <a href="https://debruine.github.io/faux/"><code>faux</code> package</a> to make it easier to generate sets of variables with specific correlations.</p>
+<p>Download an RMarkdown file for this lesson <a href="R/03_sim_data_code.Rmd">with code</a> or <a href="R/03_sim_data_stub.Rmd">without code</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># devtools::install_github(&quot;debruine/faux&quot;, build_vignettes = TRUE)</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(faux) </a>
@@ -429,25 +430,27 @@ Your means and SDs won’t be <strong>exactly</strong> what you specified becaus
 <div id="function" class="section level3">
 <h3><span class="header-section-number">3.1.5</span> Function</h3>
 <p>You can wrap all this in a function so you can run it many times to do a power calculation. Put all your parameters as <a class='glossary' target='_blank' title='A variable that provides input to a function.' href='https://psyteachr.github.io/glossary/a#argument'>arguments</a> to the function.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">ind_sim &lt;-<span class="st"> </span><span class="cf">function</span>(A_sub_n, B_sub_n, A_mean, B_mean, A_sd, B_sd) {</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">  A_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(A_sub_n, A_mean, A_sd)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">  B_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(B_sub_n, B_mean, B_sd)</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">  </a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">  dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">    <span class="dt">sub_condition =</span> <span class="kw">rep</span>( <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="kw">c</span>(A_sub_n, B_sub_n) ),</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">    <span class="dt">score =</span> <span class="kw">c</span>(A_scores, B_scores)</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">  )</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">  t &lt;-<span class="st"> </span><span class="kw">t.test</span>(score<span class="op">~</span>sub_condition, dat)</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">  </a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">  <span class="co"># return just the values you care about</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">  <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb8-13" data-line-number="13">    <span class="dt">t =</span> t<span class="op">$</span>statistic[[<span class="dv">1</span>]],</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">    <span class="dt">ci_lower =</span> t<span class="op">$</span>conf.int[[<span class="dv">1</span>]],</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">    <span class="dt">ci_upper =</span> t<span class="op">$</span>conf.int[[<span class="dv">2</span>]],</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">    <span class="dt">p =</span> t<span class="op">$</span>p.value[[<span class="dv">1</span>]],</a>
-<a class="sourceLine" id="cb8-17" data-line-number="17">    <span class="dt">estimate =</span> t<span class="op">$</span>estimate[[<span class="dv">1</span>]] <span class="op">-</span><span class="st"> </span>t<span class="op">$</span>estimate[[<span class="dv">2</span>]]</a>
-<a class="sourceLine" id="cb8-18" data-line-number="18">  )</a>
-<a class="sourceLine" id="cb8-19" data-line-number="19">}</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">ind_sim &lt;-<span class="st"> </span><span class="cf">function</span>(A_sub_n, B_sub_n, </a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">                    A_mean, B_mean, </a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">                    A_sd, B_sd) {</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">  A_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(A_sub_n, A_mean, A_sd)</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">  B_scores &lt;-<span class="st"> </span><span class="kw">rnorm</span>(B_sub_n, B_mean, B_sd)</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">  dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">    <span class="dt">sub_condition =</span> <span class="kw">rep</span>( <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="kw">c</span>(A_sub_n, B_sub_n) ),</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">    <span class="dt">score =</span> <span class="kw">c</span>(A_scores, B_scores)</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">  )</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">  t &lt;-<span class="st"> </span><span class="kw">t.test</span>(score<span class="op">~</span>sub_condition, dat)</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">  </a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">  <span class="co"># return just the values you care about</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">  <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">    <span class="dt">t =</span> t<span class="op">$</span>statistic[[<span class="dv">1</span>]],</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">    <span class="dt">ci_lower =</span> t<span class="op">$</span>conf.int[[<span class="dv">1</span>]],</a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">    <span class="dt">ci_upper =</span> t<span class="op">$</span>conf.int[[<span class="dv">2</span>]],</a>
+<a class="sourceLine" id="cb8-18" data-line-number="18">    <span class="dt">p =</span> t<span class="op">$</span>p.value[[<span class="dv">1</span>]],</a>
+<a class="sourceLine" id="cb8-19" data-line-number="19">    <span class="dt">estimate =</span> t<span class="op">$</span>estimate[[<span class="dv">1</span>]] <span class="op">-</span><span class="st"> </span>t<span class="op">$</span>estimate[[<span class="dv">2</span>]]</a>
+<a class="sourceLine" id="cb8-20" data-line-number="20">  )</a>
+<a class="sourceLine" id="cb8-21" data-line-number="21">}</a></code></pre></div>
 <p>Now run your new function with the values you used above.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># str() prints the resulting list in a shorter format</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw">ind_sim</span>(<span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str</span>()</a></code></pre></div>
@@ -463,7 +466,7 @@ Run the function with the parameters from the example above. Run it a few times 
 </p>
 </div>
 <p>Now you can use this function to run many simulations. There are a lot of ways to do this. The pattern below uses the <code>map_df</code> function from the <code>purrr</code> package.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">simulation &lt;-<span class="st"> </span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="op">~</span><span class="kw">ind_sim</span>(<span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">mysim &lt;-<span class="st"> </span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="op">~</span><span class="kw">ind_sim</span>(<span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>))</a></code></pre></div>
 <div class="info">
 <p>
 The function <code>map_df</code> takes two arguments, a vector and a function, and returns a dataframe. It runs the function once for each item in the vector, so the vector <code>1:1000</code> above runs the <code>ind_sim()</code> function 1000 times.
@@ -473,7 +476,7 @@ The <code>purrr::map()</code> functions can also set arguments in the function f
 </p>
 </div>
 <p>Now you can graph the data from your simulations.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">simulation <span class="op">%&gt;%</span></a>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">mysim <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(stat, value, t<span class="op">:</span>estimate) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(value, <span class="dt">color =</span> stat), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
@@ -486,7 +489,7 @@ Figure 3.1: Distribution of results from simulated independent samples data
 </div>
 <p>You can calculate power as the proportion of simulations on which the p-value was less than your alpha.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">power &lt;-<span class="st"> </span><span class="kw">mean</span>(simulation<span class="op">$</span>p <span class="op">&lt;</span><span class="st"> </span>alpha)</a></code></pre></div>
+<a class="sourceLine" id="cb13-2" data-line-number="2">power &lt;-<span class="st"> </span><span class="kw">mean</span>(mysim<span class="op">$</span>p <span class="op">&lt;</span><span class="st"> </span>alpha)</a></code></pre></div>
 <p>Your power for the parameters above is 0.496.</p>
 </div>
 </div>
@@ -507,6 +510,11 @@ Figure 3.1: Distribution of results from simulated independent samples data
 <a class="sourceLine" id="cb14-4" data-line-number="4">A_sd &lt;-<span class="st"> </span><span class="fl">2.5</span></a>
 <a class="sourceLine" id="cb14-5" data-line-number="5">B_sd &lt;-<span class="st"> </span><span class="fl">2.5</span></a>
 <a class="sourceLine" id="cb14-6" data-line-number="6">AB_r &lt;-<span class="st"> </span><span class="fl">0.5</span></a></code></pre></div>
+<div class="info">
+<p>
+In a paired-samples design, the larger the correlation between your variables, the higher the power of your test. Imagine a case where <code>A</code> and <code>B</code> are perfectly correlated, such that <code>B</code> is always equal to <code>A</code> plus 1. This means there is no variance at all in the difference scores (they are all exactly 1) and you have perfect power to detect any effect. If <code>A</code> and <code>B</code> are not correlated at all, the power of a paired-samples test is identical to an independent-samples test with the same parameters.
+</p>
+</div>
 </div>
 <div id="correlated-scores" class="section level3">
 <h3><span class="header-section-number">3.2.2</span> Correlated Scores</h3>
@@ -519,6 +527,26 @@ Figure 3.1: Distribution of results from simulated independent samples data
 <a class="sourceLine" id="cb15-6" data-line-number="6">    <span class="dt">sd =</span> <span class="kw">c</span>(A_sd, B_sd), </a>
 <a class="sourceLine" id="cb15-7" data-line-number="7">    <span class="dt">varnames =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)</a>
 <a class="sourceLine" id="cb15-8" data-line-number="8">  )</a></code></pre></div>
+<p>You can also do this using the <code>MASS::mvrnorm</code> function, but <code>faux::rnorm_multi</code> is easier when you have more variables to simulate.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># make the correlation matrix</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">cormat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(   <span class="dv">1</span>, AB_r,</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">                   AB_r,    <span class="dv">1</span>), </a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">             <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co"># make a corresponding matrix of the variance </span></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co"># (multiply the SDs for each cell)</span></a>
+<a class="sourceLine" id="cb16-8" data-line-number="8">varmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(A_sd <span class="op">*</span><span class="st"> </span>A_sd, A_sd <span class="op">*</span><span class="st"> </span>B_sd,</a>
+<a class="sourceLine" id="cb16-9" data-line-number="9">                   A_sd <span class="op">*</span><span class="st"> </span>B_sd, B_sd <span class="op">*</span><span class="st"> </span>B_sd), </a>
+<a class="sourceLine" id="cb16-10" data-line-number="10">             <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>) </a>
+<a class="sourceLine" id="cb16-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co"># create correlated variables with the specified parameters</span></a>
+<a class="sourceLine" id="cb16-13" data-line-number="13">S &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">mvrnorm</span>(<span class="dt">n =</span> sub_n, </a>
+<a class="sourceLine" id="cb16-14" data-line-number="14">                   <span class="dt">mu =</span> <span class="kw">c</span>(A_mean, B_mean), </a>
+<a class="sourceLine" id="cb16-15" data-line-number="15">                   <span class="dt">Sigma =</span> cormat <span class="op">*</span><span class="st"> </span>varmat)</a>
+<a class="sourceLine" id="cb16-16" data-line-number="16">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb16-17" data-line-number="17">  <span class="dt">A =</span> S[, <span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb16-18" data-line-number="18">  <span class="dt">B =</span> S[, <span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb16-19" data-line-number="19">)</a></code></pre></div>
 </div>
 <div id="check-your-data-1" class="section level3">
 <h3><span class="header-section-number">3.2.3</span> Check your data</h3>
@@ -560,13 +588,13 @@ A
 1.00
 </td>
 <td style="text-align:right;">
-0.51
+0.54
 </td>
 <td style="text-align:right;">
-9.81
+9.47
 </td>
 <td style="text-align:right;">
-2.29
+2.68
 </td>
 </tr>
 <tr>
@@ -577,13 +605,13 @@ A
 B
 </td>
 <td style="text-align:right;">
-0.51
+0.54
 </td>
 <td style="text-align:right;">
 1.00
 </td>
 <td style="text-align:right;">
-10.81
+10.65
 </td>
 <td style="text-align:right;">
 2.57
@@ -595,58 +623,58 @@ B
 <div id="analysis-1" class="section level3">
 <h3><span class="header-section-number">3.2.4</span> Analysis</h3>
 <p>Finally, you can analyse your simulated data.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">t.test</span>(dat<span class="op">$</span>A, dat<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">t.test</span>(dat<span class="op">$</span>A, dat<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
 ## data:  dat$A and dat$B
-## t = -4.1238, df = 99, p-value = 7.761e-05
+## t = -4.6924, df = 99, p-value = 8.674e-06
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.479129 -0.518129
+##  -1.6762660 -0.6799322
 ## sample estimates:
 ## mean of the differences 
-##              -0.9986288</code></pre>
+##               -1.178099</code></pre>
 </div>
 <div id="function-1" class="section level3">
 <h3><span class="header-section-number">3.2.5</span> Function</h3>
 <p>The function is set up the same way as before. Set the arguments to the relevant parameters, construct the data table, run the t-test, and return the values you care about.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">paired_sim &lt;-<span class="st"> </span><span class="cf">function</span>(sub_n, A_mean, B_mean, A_sd, B_sd, AB_r) {</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">  dat &lt;-<span class="st"> </span>faux<span class="op">::</span><span class="kw">rnorm_multi</span>(</a>
-<a class="sourceLine" id="cb19-4" data-line-number="4">    <span class="dt">n =</span> sub_n, </a>
-<a class="sourceLine" id="cb19-5" data-line-number="5">    <span class="dt">vars =</span> <span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb19-6" data-line-number="6">    <span class="dt">r =</span> AB_r, </a>
-<a class="sourceLine" id="cb19-7" data-line-number="7">    <span class="dt">mu =</span> <span class="kw">c</span>(A_mean, B_mean), </a>
-<a class="sourceLine" id="cb19-8" data-line-number="8">    <span class="dt">sd =</span> <span class="kw">c</span>(A_sd, B_sd), </a>
-<a class="sourceLine" id="cb19-9" data-line-number="9">    <span class="dt">varnames =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)</a>
-<a class="sourceLine" id="cb19-10" data-line-number="10">  )</a>
-<a class="sourceLine" id="cb19-11" data-line-number="11">  t &lt;-<span class="st"> </span><span class="kw">t.test</span>(dat<span class="op">$</span>A, dat<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb19-12" data-line-number="12">  </a>
-<a class="sourceLine" id="cb19-13" data-line-number="13">  <span class="co"># return just the values you care about</span></a>
-<a class="sourceLine" id="cb19-14" data-line-number="14">  <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb19-15" data-line-number="15">    <span class="dt">t =</span> t<span class="op">$</span>statistic[[<span class="dv">1</span>]],</a>
-<a class="sourceLine" id="cb19-16" data-line-number="16">    <span class="dt">ci_lower =</span> t<span class="op">$</span>conf.int[[<span class="dv">1</span>]],</a>
-<a class="sourceLine" id="cb19-17" data-line-number="17">    <span class="dt">ci_upper =</span> t<span class="op">$</span>conf.int[[<span class="dv">2</span>]],</a>
-<a class="sourceLine" id="cb19-18" data-line-number="18">    <span class="dt">p =</span> t<span class="op">$</span>p.value[[<span class="dv">1</span>]],</a>
-<a class="sourceLine" id="cb19-19" data-line-number="19">    <span class="dt">estimate =</span> t<span class="op">$</span>estimate[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb19-20" data-line-number="20">  )</a>
-<a class="sourceLine" id="cb19-21" data-line-number="21">}</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">paired_sim &lt;-<span class="st"> </span><span class="cf">function</span>(sub_n, A_mean, B_mean, A_sd, B_sd, AB_r) {</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">  dat &lt;-<span class="st"> </span>faux<span class="op">::</span><span class="kw">rnorm_multi</span>(</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">    <span class="dt">n =</span> sub_n, </a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">    <span class="dt">vars =</span> <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb20-6" data-line-number="6">    <span class="dt">r =</span> AB_r, </a>
+<a class="sourceLine" id="cb20-7" data-line-number="7">    <span class="dt">mu =</span> <span class="kw">c</span>(A_mean, B_mean), </a>
+<a class="sourceLine" id="cb20-8" data-line-number="8">    <span class="dt">sd =</span> <span class="kw">c</span>(A_sd, B_sd), </a>
+<a class="sourceLine" id="cb20-9" data-line-number="9">    <span class="dt">varnames =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)</a>
+<a class="sourceLine" id="cb20-10" data-line-number="10">  )</a>
+<a class="sourceLine" id="cb20-11" data-line-number="11">  t &lt;-<span class="st"> </span><span class="kw">t.test</span>(dat<span class="op">$</span>A, dat<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb20-12" data-line-number="12">  </a>
+<a class="sourceLine" id="cb20-13" data-line-number="13">  <span class="co"># return just the values you care about</span></a>
+<a class="sourceLine" id="cb20-14" data-line-number="14">  <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb20-15" data-line-number="15">    <span class="dt">t =</span> t<span class="op">$</span>statistic[[<span class="dv">1</span>]],</a>
+<a class="sourceLine" id="cb20-16" data-line-number="16">    <span class="dt">ci_lower =</span> t<span class="op">$</span>conf.int[[<span class="dv">1</span>]],</a>
+<a class="sourceLine" id="cb20-17" data-line-number="17">    <span class="dt">ci_upper =</span> t<span class="op">$</span>conf.int[[<span class="dv">2</span>]],</a>
+<a class="sourceLine" id="cb20-18" data-line-number="18">    <span class="dt">p =</span> t<span class="op">$</span>p.value[[<span class="dv">1</span>]],</a>
+<a class="sourceLine" id="cb20-19" data-line-number="19">    <span class="dt">estimate =</span> t<span class="op">$</span>estimate[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb20-20" data-line-number="20">  )</a>
+<a class="sourceLine" id="cb20-21" data-line-number="21">}</a></code></pre></div>
 <p>Run 1000 simulations and graph the results.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">simulation &lt;-<span class="st"> </span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="op">~</span><span class="kw">paired_sim</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">.5</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">simulation <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(stat, value, t<span class="op">:</span>estimate) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(value, <span class="dt">color =</span> stat), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>stat, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">mysim_p &lt;-<span class="st"> </span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="op">~</span><span class="kw">paired_sim</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">.5</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">mysim_p <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(stat, value, t<span class="op">:</span>estimate) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(value, <span class="dt">color =</span> stat), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>stat, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:ind-sim-fig"></span>
 <img src="03_sim_data_files/figure-html/ind-sim-fig-1.png" alt="Distribution of results from simulated paired samples data" width="100%" />
 <p class="caption">
 Figure 3.2: Distribution of results from simulated paired samples data
 </p>
 </div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">power &lt;-<span class="st"> </span><span class="kw">mean</span>(simulation<span class="op">$</span>p <span class="op">&lt;</span><span class="st"> </span>alpha)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">power &lt;-<span class="st"> </span><span class="kw">mean</span>(mysim_p<span class="op">$</span>p <span class="op">&lt;</span><span class="st"> </span>alpha)</a></code></pre></div>
 <p>Your power for the parameters above is 0.984.</p>
 </div>
 </div>
@@ -656,25 +684,25 @@ Figure 3.2: Distribution of results from simulated paired samples data
 <div id="parameters" class="section level3">
 <h3><span class="header-section-number">3.3.1</span> Parameters</h3>
 <p>Remember, we used the following parameters to set up our simulation above:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">sub_n  &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb23-2" data-line-number="2">A_mean &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3">B_mean &lt;-<span class="st"> </span><span class="dv">11</span></a>
-<a class="sourceLine" id="cb23-4" data-line-number="4">A_sd   &lt;-<span class="st"> </span><span class="fl">2.5</span></a>
-<a class="sourceLine" id="cb23-5" data-line-number="5">B_sd   &lt;-<span class="st"> </span><span class="fl">2.5</span></a>
-<a class="sourceLine" id="cb23-6" data-line-number="6">AB_r   &lt;-<span class="st"> </span><span class="fl">0.5</span></a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">sub_n  &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2">A_mean &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb24-3" data-line-number="3">B_mean &lt;-<span class="st"> </span><span class="dv">11</span></a>
+<a class="sourceLine" id="cb24-4" data-line-number="4">A_sd   &lt;-<span class="st"> </span><span class="fl">2.5</span></a>
+<a class="sourceLine" id="cb24-5" data-line-number="5">B_sd   &lt;-<span class="st"> </span><span class="fl">2.5</span></a>
+<a class="sourceLine" id="cb24-6" data-line-number="6">AB_r   &lt;-<span class="st"> </span><span class="fl">0.5</span></a></code></pre></div>
 <p>From these, we can calculate the grand intercept (the overall mean regardless of condition), and the effect of condition (the mean of B minus A).</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">grand_i   &lt;-<span class="st"> </span>(A_mean <span class="op">+</span><span class="st"> </span>B_mean)<span class="op">/</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2">AB_effect &lt;-<span class="st"> </span>B_mean <span class="op">-</span><span class="st"> </span>A_mean</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">grand_i   &lt;-<span class="st"> </span>(A_mean <span class="op">+</span><span class="st"> </span>B_mean)<span class="op">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">AB_effect &lt;-<span class="st"> </span>B_mean <span class="op">-</span><span class="st"> </span>A_mean</a></code></pre></div>
 <p>We also need to think about variance a little differently. First, calculate the pooled variance as the mean of the variances for A and B (remember, variance is SD squared).</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">pooled_var &lt;-<span class="st"> </span>(A_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>B_sd<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span></a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">pooled_var &lt;-<span class="st"> </span>(A_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>B_sd<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span></a></code></pre></div>
 <div class="warning">
 <p>
 If the SDs for A and B are very different, this suggests a more complicated data generation model. For this tutorial we’ll assume the score variance is similar for conditions A and B.
 </p>
 </div>
 <p>The variance of the subject intercepts is <code>r</code> times this pooled variance and the error variance is what is left over. We take the square root (<code>sqrt()</code>) to set the subject intercept and error SDs for simulation later.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">sub_sd   &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>AB_r)</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">error_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>AB_r))</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">sub_sd   &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>AB_r)</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">error_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>AB_r))</a></code></pre></div>
 <div class="info">
 <p>
 You can think about the subject intercept variance as how much subjects vary in the score in general, regardless of condition. If they vary a lot, in comparison to the random “error” variation, then scores in the two conditions will be highly correlated. If they don’t vary much (or random variation from trial to trial is quite large), then scores won’t be well correlated.
@@ -684,18 +712,18 @@ You can think about the subject intercept variance as how much subjects vary in 
 <div id="subject-intercepts" class="section level3">
 <h3><span class="header-section-number">3.3.2</span> Subject intercepts</h3>
 <p>Now we use these variables to create a data table for our subjects. Each subject gets an ID and a <strong>random intercept</strong> (<code>sub_i</code>). The intercept is simulated from a random normal distribution with a mean of 0 and an SD of <code>sub_sd</code>. This represents how much higher or lower than the average score each subject tends to be (regardless of condition).</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">sub &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb27-2" data-line-number="2">  <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,</a>
-<a class="sourceLine" id="cb27-3" data-line-number="3">  <span class="dt">sub_i =</span> <span class="kw">rnorm</span>(sub_n, <span class="dv">0</span>, sub_sd)</a>
-<a class="sourceLine" id="cb27-4" data-line-number="4">)</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">sub &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb28-2" data-line-number="2">  <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3">  <span class="dt">sub_i =</span> <span class="kw">rnorm</span>(sub_n, <span class="dv">0</span>, sub_sd)</a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">)</a></code></pre></div>
 </div>
 <div id="observations" class="section level3">
 <h3><span class="header-section-number">3.3.3</span> Observations</h3>
 <p>Next, set up a table where each row represents one observation. We’ll use one of my favourite functions for simulation: <code>crossing()</code>. This creates every possible combination of the listed factors (it works the same as <code>expand.grid()</code>, but the results are in a more intuitive order). Here, we’re using it to create a row for each subject in each condition, since this is a fully within-subjects design.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">obs &lt;-<span class="st"> </span><span class="kw">crossing</span>(</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2">  <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,</a>
-<a class="sourceLine" id="cb28-3" data-line-number="3">  <span class="dt">condition =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)</a>
-<a class="sourceLine" id="cb28-4" data-line-number="4">)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">obs &lt;-<span class="st"> </span><span class="kw">crossing</span>(</a>
+<a class="sourceLine" id="cb29-2" data-line-number="2">  <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,</a>
+<a class="sourceLine" id="cb29-3" data-line-number="3">  <span class="dt">condition =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)</a>
+<a class="sourceLine" id="cb29-4" data-line-number="4">)</a></code></pre></div>
 </div>
 <div id="calculate-the-score" class="section level3">
 <h3><span class="header-section-number">3.3.4</span> Calculate the score</h3>
@@ -706,23 +734,23 @@ You can think about the subject intercept variance as how much subjects vary in 
 <li>the effect (<code>effect</code>): the numeric code for condition (<code>condition.e</code>) multiplied by the effect of condition (<code>AB_effect</code>)</li>
 <li>the error term (simulated from a normal distribution with mean of 0 and SD of <code>error_sd</code>)</li>
 </ul>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">dat &lt;-<span class="st"> </span>obs <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(sub, <span class="dt">by =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb29-4" data-line-number="4">    <span class="dt">condition.e =</span> <span class="kw">recode</span>(condition, <span class="st">&quot;A&quot;</span> =<span class="st"> </span><span class="fl">-0.5</span>, <span class="st">&quot;B&quot;</span> =<span class="st"> </span><span class="fl">0.5</span>),</a>
-<a class="sourceLine" id="cb29-5" data-line-number="5">    <span class="dt">effect =</span> AB_effect <span class="op">*</span><span class="st"> </span>condition.e,</a>
-<a class="sourceLine" id="cb29-6" data-line-number="6">    <span class="dt">error =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, error_sd),</a>
-<a class="sourceLine" id="cb29-7" data-line-number="7">    <span class="dt">score =</span> grand_i <span class="op">+</span><span class="st"> </span>sub_i <span class="op">+</span><span class="st"> </span>effect <span class="op">+</span><span class="st"> </span>error</a>
-<a class="sourceLine" id="cb29-8" data-line-number="8">  )</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">dat &lt;-<span class="st"> </span>obs <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(sub, <span class="dt">by =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(</a>
+<a class="sourceLine" id="cb30-4" data-line-number="4">    <span class="dt">condition.e =</span> <span class="kw">recode</span>(condition, <span class="st">&quot;A&quot;</span> =<span class="st"> </span><span class="fl">-0.5</span>, <span class="st">&quot;B&quot;</span> =<span class="st"> </span><span class="fl">0.5</span>),</a>
+<a class="sourceLine" id="cb30-5" data-line-number="5">    <span class="dt">effect =</span> AB_effect <span class="op">*</span><span class="st"> </span>condition.e,</a>
+<a class="sourceLine" id="cb30-6" data-line-number="6">    <span class="dt">error =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, error_sd),</a>
+<a class="sourceLine" id="cb30-7" data-line-number="7">    <span class="dt">score =</span> grand_i <span class="op">+</span><span class="st"> </span>sub_i <span class="op">+</span><span class="st"> </span>effect <span class="op">+</span><span class="st"> </span>error</a>
+<a class="sourceLine" id="cb30-8" data-line-number="8">  )</a></code></pre></div>
 <div class="info">
 <p>
 The variable <code>condition.e</code> “effect codes” condition, which we will use later in a mixed effect model. You can learn more about <a href="https://debruine.github.io/posts/coding-schemes/">coding schemes</a> here.
 </p>
 </div>
 <p>You can use the following code to put the data table into a more familiar “wide” format.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">dat_wide &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(sub_id, condition, score) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="st">  </span><span class="kw">spread</span>(condition, score)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">dat_wide &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(sub_id, condition, score) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="st">  </span><span class="kw">spread</span>(condition, score)</a></code></pre></div>
 <p>Then you can use the <code>get_params</code> function to check this looks correct (remove the subject ID to leave it out of the table, since it’s numeric).</p>
 <pre><code>## Warning: All elements of `...` must be named.
 ## Did you want `multisim_data = c(A, B)`?</code></pre>
@@ -758,16 +786,16 @@ sd
 A
 </td>
 <td style="text-align:right;">
-1.0
+1.00
 </td>
 <td style="text-align:right;">
-0.4
+0.42
 </td>
 <td style="text-align:right;">
-10.01
+10.46
 </td>
 <td style="text-align:right;">
-2.25
+2.53
 </td>
 </tr>
 <tr>
@@ -778,16 +806,16 @@ A
 B
 </td>
 <td style="text-align:right;">
-0.4
+0.42
 </td>
 <td style="text-align:right;">
-1.0
+1.00
 </td>
 <td style="text-align:right;">
-11.25
+10.78
 </td>
 <td style="text-align:right;">
-2.18
+2.68
 </td>
 </tr>
 </tbody>
@@ -796,47 +824,47 @@ B
 <div id="analyses" class="section level3">
 <h3><span class="header-section-number">3.3.5</span> Analyses</h3>
 <p>You can analyse the data with a paired-samples t-test from the wide format:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">t.test</span>(dat_wide<span class="op">$</span>A, dat_wide<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">t.test</span>(dat_wide<span class="op">$</span>A, dat_wide<span class="op">$</span>B, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
 ## data:  dat_wide$A and dat_wide$B
-## t = -5.135, df = 99, p-value = 1.414e-06
+## t = -1.1408, df = 99, p-value = 0.2567
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.7258516 -0.7638154
+##  -0.8812060  0.2378312
 ## sample estimates:
 ## mean of the differences 
-##               -1.244834</code></pre>
+##              -0.3216874</code></pre>
 <p>Or in the long format:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">t.test</span>(score <span class="op">~</span><span class="st"> </span>condition, dat, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">t.test</span>(score <span class="op">~</span><span class="st"> </span>condition, dat, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
 ## data:  score by condition
-## t = -5.135, df = 99, p-value = 1.414e-06
+## t = -1.1408, df = 99, p-value = 0.2567
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.7258516 -0.7638154
+##  -0.8812060  0.2378312
 ## sample estimates:
 ## mean of the differences 
-##               -1.244834</code></pre>
-<p>You can analyse the data with ANOVA using the <code>aov_4()</code> function from <code>afex</code>.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">afex<span class="op">::</span><span class="kw">aov_4</span>(score <span class="op">~</span><span class="st"> </span>(condition.e <span class="op">|</span><span class="st"> </span>sub_id), <span class="dt">data =</span> dat)</a></code></pre></div>
+##              -0.3216874</code></pre>
+<p>You can analyse the data with ANOVA using the <code>aov_4()</code> function from <code>afex</code>. (Notice how the F-value is the square of the t-value above.)</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">afex<span class="op">::</span><span class="kw">aov_4</span>(score <span class="op">~</span><span class="st"> </span>(condition.e <span class="op">|</span><span class="st"> </span>sub_id), <span class="dt">data =</span> dat)</a></code></pre></div>
 <pre><code>## Anova Table (Type 3 tests)
 ## 
 ## Response: score
-##        Effect    df  MSE         F ges p.value
-## 1 condition.e 1, 99 2.94 26.37 *** .07  &lt;.0001
+##        Effect    df  MSE    F  ges p.value
+## 1 condition.e 1, 99 3.98 1.30 .004     .26
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;+&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>You can even analyse the data with a mixed effects model using the <code>lmer</code> function (the <code>afex</code> version gives you p-values, but the <code>lme4</code> version does not).</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">lmem &lt;-<span class="st"> </span>afex<span class="op">::</span><span class="kw">lmer</span>(score <span class="op">~</span><span class="st"> </span>condition.e <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>sub_id), <span class="dt">data =</span> dat)</a>
-<a class="sourceLine" id="cb38-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb38-3" data-line-number="3">broom.mixed<span class="op">::</span><span class="kw">tidy</span>(lmem, <span class="dt">effects =</span> <span class="st">&quot;fixed&quot;</span>)<span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb38-4" data-line-number="4"><span class="st">  </span><span class="co"># nicer formatting with p-values</span></a>
-<a class="sourceLine" id="cb38-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate_if</span>(<span class="op">~</span><span class="kw">max</span>(.) <span class="op">&lt;</span><span class="st"> </span><span class="fl">.001</span>, <span class="op">~</span><span class="kw">as.character</span>(<span class="kw">signif</span>(., <span class="dv">3</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb38-6" data-line-number="6"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">lmem &lt;-<span class="st"> </span>afex<span class="op">::</span><span class="kw">lmer</span>(score <span class="op">~</span><span class="st"> </span>condition.e <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>sub_id), <span class="dt">data =</span> dat)</a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb39-3" data-line-number="3">broom.mixed<span class="op">::</span><span class="kw">tidy</span>(lmem, <span class="dt">effects =</span> <span class="st">&quot;fixed&quot;</span>)<span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb39-4" data-line-number="4"><span class="st">  </span><span class="co"># nicer formatting with p-values</span></a>
+<a class="sourceLine" id="cb39-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate_if</span>(<span class="op">~</span><span class="kw">max</span>(.) <span class="op">&lt;</span><span class="st"> </span><span class="fl">.001</span>, <span class="op">~</span><span class="kw">as.character</span>(<span class="kw">signif</span>(., <span class="dv">3</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb39-6" data-line-number="6"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -858,7 +886,7 @@ statistic
 <th style="text-align:right;">
 df
 </th>
-<th style="text-align:left;">
+<th style="text-align:right;">
 p.value
 </th>
 </tr>
@@ -872,19 +900,19 @@ fixed
 (Intercept)
 </td>
 <td style="text-align:right;">
-10.631
+10.621
 </td>
 <td style="text-align:right;">
-0.185
+0.219
 </td>
 <td style="text-align:right;">
-57.310
+48.454
 </td>
 <td style="text-align:right;">
 99
 </td>
-<td style="text-align:left;">
-9.78e-78
+<td style="text-align:right;">
+0.000
 </td>
 </tr>
 <tr>
@@ -895,19 +923,19 @@ fixed
 condition.e
 </td>
 <td style="text-align:right;">
-1.245
+0.322
 </td>
 <td style="text-align:right;">
-0.242
+0.282
 </td>
 <td style="text-align:right;">
-5.135
+1.141
 </td>
 <td style="text-align:right;">
 99
 </td>
-<td style="text-align:left;">
-1.41e-06
+<td style="text-align:right;">
+0.257
 </td>
 </tr>
 </tbody>
@@ -917,39 +945,39 @@ condition.e
 <div id="functions" class="section level2">
 <h2><span class="header-section-number">3.4</span> Functions</h2>
 <p>We can put everything together into a function where you specify the subject number, means, SDs and correlation, it translates this into the intercept specification, and returns a data table.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">sim_paired_data &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">sub_n =</span> <span class="dv">100</span>, </a>
-<a class="sourceLine" id="cb39-2" data-line-number="2">                            A_mean, B_mean, </a>
-<a class="sourceLine" id="cb39-3" data-line-number="3">                            A_sd, B_sd, AB_r) {</a>
-<a class="sourceLine" id="cb39-4" data-line-number="4">  </a>
-<a class="sourceLine" id="cb39-5" data-line-number="5">  grand_i &lt;-<span class="st"> </span>(A_mean <span class="op">+</span><span class="st"> </span>B_mean)<span class="op">/</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb39-6" data-line-number="6">  AB_effect &lt;-<span class="st"> </span>B_mean <span class="op">-</span><span class="st"> </span>A_mean</a>
-<a class="sourceLine" id="cb39-7" data-line-number="7">  pooled_var &lt;-<span class="st"> </span>(A_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>B_sd<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb39-8" data-line-number="8">  sub_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>AB_r)</a>
-<a class="sourceLine" id="cb39-9" data-line-number="9">  error_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>AB_r))</a>
-<a class="sourceLine" id="cb39-10" data-line-number="10">  </a>
-<a class="sourceLine" id="cb39-11" data-line-number="11">  sub &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb39-12" data-line-number="12">    <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,</a>
-<a class="sourceLine" id="cb39-13" data-line-number="13">    <span class="dt">sub_i =</span> <span class="kw">rnorm</span>(sub_n, <span class="dv">0</span>, sub_sd)</a>
-<a class="sourceLine" id="cb39-14" data-line-number="14">  )</a>
-<a class="sourceLine" id="cb39-15" data-line-number="15">  </a>
-<a class="sourceLine" id="cb39-16" data-line-number="16">  <span class="kw">crossing</span>(</a>
-<a class="sourceLine" id="cb39-17" data-line-number="17">    <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,</a>
-<a class="sourceLine" id="cb39-18" data-line-number="18">    <span class="dt">condition =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)</a>
-<a class="sourceLine" id="cb39-19" data-line-number="19">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb39-20" data-line-number="20"><span class="st">  </span><span class="kw">left_join</span>(sub, <span class="dt">by =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb39-21" data-line-number="21"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb39-22" data-line-number="22">    <span class="dt">condition.e =</span> <span class="kw">recode</span>(condition,  <span class="st">&quot;A&quot;</span> =<span class="st"> </span><span class="fl">-0.5</span>, <span class="st">&quot;B&quot;</span> =<span class="st"> </span><span class="fl">+0.5</span>),</a>
-<a class="sourceLine" id="cb39-23" data-line-number="23">    <span class="dt">effect =</span> AB_effect <span class="op">*</span><span class="st"> </span>condition.e,</a>
-<a class="sourceLine" id="cb39-24" data-line-number="24">    <span class="dt">error =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, error_sd),</a>
-<a class="sourceLine" id="cb39-25" data-line-number="25">    <span class="dt">score =</span> grand_i <span class="op">+</span><span class="st"> </span>sub_i <span class="op">+</span><span class="st"> </span>effect <span class="op">+</span><span class="st"> </span>error</a>
-<a class="sourceLine" id="cb39-26" data-line-number="26">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb39-27" data-line-number="27"><span class="st">  </span><span class="kw">select</span>(sub_id, condition, score) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb39-28" data-line-number="28"><span class="st">  </span><span class="kw">spread</span>(condition, score)</a>
-<a class="sourceLine" id="cb39-29" data-line-number="29">}</a></code></pre></div>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">sim_paired_data</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">.5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>sub_id) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">  </span>faux<span class="op">::</span><span class="kw">get_params</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">sim_paired_data &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">sub_n =</span> <span class="dv">100</span>, </a>
+<a class="sourceLine" id="cb40-2" data-line-number="2">                            A_mean, B_mean, </a>
+<a class="sourceLine" id="cb40-3" data-line-number="3">                            A_sd, B_sd, AB_r) {</a>
+<a class="sourceLine" id="cb40-4" data-line-number="4">  </a>
+<a class="sourceLine" id="cb40-5" data-line-number="5">  grand_i &lt;-<span class="st"> </span>(A_mean <span class="op">+</span><span class="st"> </span>B_mean)<span class="op">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb40-6" data-line-number="6">  AB_effect &lt;-<span class="st"> </span>B_mean <span class="op">-</span><span class="st"> </span>A_mean</a>
+<a class="sourceLine" id="cb40-7" data-line-number="7">  pooled_var &lt;-<span class="st"> </span>(A_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>B_sd<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb40-8" data-line-number="8">  sub_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>AB_r)</a>
+<a class="sourceLine" id="cb40-9" data-line-number="9">  error_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>AB_r))</a>
+<a class="sourceLine" id="cb40-10" data-line-number="10">  </a>
+<a class="sourceLine" id="cb40-11" data-line-number="11">  sub &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb40-12" data-line-number="12">    <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,</a>
+<a class="sourceLine" id="cb40-13" data-line-number="13">    <span class="dt">sub_i =</span> <span class="kw">rnorm</span>(sub_n, <span class="dv">0</span>, sub_sd)</a>
+<a class="sourceLine" id="cb40-14" data-line-number="14">  )</a>
+<a class="sourceLine" id="cb40-15" data-line-number="15">  </a>
+<a class="sourceLine" id="cb40-16" data-line-number="16">  <span class="kw">crossing</span>(</a>
+<a class="sourceLine" id="cb40-17" data-line-number="17">    <span class="dt">sub_id =</span> <span class="dv">1</span><span class="op">:</span>sub_n,</a>
+<a class="sourceLine" id="cb40-18" data-line-number="18">    <span class="dt">condition =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)</a>
+<a class="sourceLine" id="cb40-19" data-line-number="19">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-20" data-line-number="20"><span class="st">  </span><span class="kw">left_join</span>(sub, <span class="dt">by =</span> <span class="st">&quot;sub_id&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-21" data-line-number="21"><span class="st">  </span><span class="kw">mutate</span>(</a>
+<a class="sourceLine" id="cb40-22" data-line-number="22">    <span class="dt">condition.e =</span> <span class="kw">recode</span>(condition,  <span class="st">&quot;A&quot;</span> =<span class="st"> </span><span class="fl">-0.5</span>, <span class="st">&quot;B&quot;</span> =<span class="st"> </span><span class="fl">+0.5</span>),</a>
+<a class="sourceLine" id="cb40-23" data-line-number="23">    <span class="dt">effect =</span> AB_effect <span class="op">*</span><span class="st"> </span>condition.e,</a>
+<a class="sourceLine" id="cb40-24" data-line-number="24">    <span class="dt">error =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, error_sd),</a>
+<a class="sourceLine" id="cb40-25" data-line-number="25">    <span class="dt">score =</span> grand_i <span class="op">+</span><span class="st"> </span>sub_i <span class="op">+</span><span class="st"> </span>effect <span class="op">+</span><span class="st"> </span>error</a>
+<a class="sourceLine" id="cb40-26" data-line-number="26">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-27" data-line-number="27"><span class="st">  </span><span class="kw">select</span>(sub_id, condition, score) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-28" data-line-number="28"><span class="st">  </span><span class="kw">spread</span>(condition, score)</a>
+<a class="sourceLine" id="cb40-29" data-line-number="29">}</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">sim_paired_data</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">.5</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>sub_id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="st">  </span>faux<span class="op">::</span><span class="kw">get_params</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
 <pre><code>## Warning: All elements of `...` must be named.
 ## Did you want `multisim_data = c(A, B)`?</code></pre>
 <table>
@@ -987,13 +1015,13 @@ A
 1.00
 </td>
 <td style="text-align:right;">
-0.56
+0.44
 </td>
 <td style="text-align:right;">
 10.12
 </td>
 <td style="text-align:right;">
-2.57
+2.24
 </td>
 </tr>
 <tr>
@@ -1004,25 +1032,25 @@ A
 B
 </td>
 <td style="text-align:right;">
-0.56
+0.44
 </td>
 <td style="text-align:right;">
 1.00
 </td>
 <td style="text-align:right;">
-11.58
+12.07
 </td>
 <td style="text-align:right;">
-2.78
+2.17
 </td>
 </tr>
 </tbody>
 </table>
 <p>Set the <code>sub_n</code> to a very high number to see that the means, SDs and correlations are what you specified.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">sim_paired_data</span>(<span class="dv">10000</span>, <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.25</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>sub_id) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb42-3" data-line-number="3"><span class="st">  </span>faux<span class="op">::</span><span class="kw">get_params</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb42-4" data-line-number="4"><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">sim_paired_data</span>(<span class="dv">10000</span>, <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">.25</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>sub_id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="st">  </span>faux<span class="op">::</span><span class="kw">get_params</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
 <pre><code>## Warning: All elements of `...` must be named.
 ## Did you want `multisim_data = c(A, B)`?</code></pre>
 <table>
@@ -1066,7 +1094,7 @@ A
 0.01
 </td>
 <td style="text-align:right;">
-1.00
+1.01
 </td>
 </tr>
 <tr>
@@ -1086,7 +1114,7 @@ B
 0.49
 </td>
 <td style="text-align:right;">
-1.01
+1.00
 </td>
 </tr>
 </tbody>
@@ -1094,24 +1122,24 @@ B
 <p>It might be more useful to create functions to translate back and forth from the distribution specification to the intercept specification.</p>
 <div id="distribution-to-intercept-specification" class="section level3">
 <h3><span class="header-section-number">3.4.1</span> Distribution to intercept specification</h3>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">dist2int &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>, <span class="dt">r =</span> <span class="dv">0</span>) {</a>
-<a class="sourceLine" id="cb44-2" data-line-number="2">  A_mean &lt;-<span class="st"> </span>mu[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb44-3" data-line-number="3">  <span class="co"># set B_mean to A_mean if mu has length 1</span></a>
-<a class="sourceLine" id="cb44-4" data-line-number="4">  B_mean &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(mu[<span class="dv">2</span>]), mu[<span class="dv">1</span>], mu[<span class="dv">2</span>])</a>
-<a class="sourceLine" id="cb44-5" data-line-number="5">  A_sd &lt;-<span class="st"> </span>sd[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb44-6" data-line-number="6">  <span class="co"># set B_sd to A_sd if sd has length 1</span></a>
-<a class="sourceLine" id="cb44-7" data-line-number="7">  B_sd &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(sd[<span class="dv">2</span>]), sd[<span class="dv">1</span>], sd[<span class="dv">2</span>])</a>
-<a class="sourceLine" id="cb44-8" data-line-number="8">  AB_r &lt;-<span class="st"> </span>r</a>
-<a class="sourceLine" id="cb44-9" data-line-number="9">  pooled_var &lt;-<span class="st"> </span>(A_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>B_sd<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb44-10" data-line-number="10">  </a>
-<a class="sourceLine" id="cb44-11" data-line-number="11">  <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb44-12" data-line-number="12">    <span class="dt">grand_i =</span> (A_mean <span class="op">+</span><span class="st"> </span>B_mean)<span class="op">/</span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb44-13" data-line-number="13">    <span class="dt">AB_effect =</span> B_mean <span class="op">-</span><span class="st"> </span>A_mean,</a>
-<a class="sourceLine" id="cb44-14" data-line-number="14">    <span class="dt">sub_sd =</span> <span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>AB_r),</a>
-<a class="sourceLine" id="cb44-15" data-line-number="15">    <span class="dt">error_sd =</span> <span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>AB_r))</a>
-<a class="sourceLine" id="cb44-16" data-line-number="16">  )</a>
-<a class="sourceLine" id="cb44-17" data-line-number="17">}</a></code></pre></div>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">dist2int</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">dist2int &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>, <span class="dt">r =</span> <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb45-2" data-line-number="2">  A_mean &lt;-<span class="st"> </span>mu[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb45-3" data-line-number="3">  <span class="co"># set B_mean to A_mean if mu has length 1</span></a>
+<a class="sourceLine" id="cb45-4" data-line-number="4">  B_mean &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(mu[<span class="dv">2</span>]), mu[<span class="dv">1</span>], mu[<span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb45-5" data-line-number="5">  A_sd &lt;-<span class="st"> </span>sd[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb45-6" data-line-number="6">  <span class="co"># set B_sd to A_sd if sd has length 1</span></a>
+<a class="sourceLine" id="cb45-7" data-line-number="7">  B_sd &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(sd[<span class="dv">2</span>]), sd[<span class="dv">1</span>], sd[<span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb45-8" data-line-number="8">  AB_r &lt;-<span class="st"> </span>r</a>
+<a class="sourceLine" id="cb45-9" data-line-number="9">  pooled_var &lt;-<span class="st"> </span>(A_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>B_sd<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb45-10" data-line-number="10">  </a>
+<a class="sourceLine" id="cb45-11" data-line-number="11">  <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb45-12" data-line-number="12">    <span class="dt">grand_i =</span> (A_mean <span class="op">+</span><span class="st"> </span>B_mean)<span class="op">/</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb45-13" data-line-number="13">    <span class="dt">AB_effect =</span> B_mean <span class="op">-</span><span class="st"> </span>A_mean,</a>
+<a class="sourceLine" id="cb45-14" data-line-number="14">    <span class="dt">sub_sd =</span> <span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>AB_r),</a>
+<a class="sourceLine" id="cb45-15" data-line-number="15">    <span class="dt">error_sd =</span> <span class="kw">sqrt</span>(pooled_var <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>AB_r))</a>
+<a class="sourceLine" id="cb45-16" data-line-number="16">  )</a>
+<a class="sourceLine" id="cb45-17" data-line-number="17">}</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw">dist2int</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1156,7 +1184,7 @@ error_sd
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw">dist2int</span>(<span class="dt">mu =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">105</span>), <span class="dt">sd =</span> <span class="kw">c</span>(<span class="fl">10.5</span>, <span class="fl">9.5</span>), <span class="dt">r =</span> <span class="fl">0.5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw">dist2int</span>(<span class="dt">mu =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">105</span>), <span class="dt">sd =</span> <span class="kw">c</span>(<span class="fl">10.5</span>, <span class="fl">9.5</span>), <span class="dt">r =</span> <span class="fl">0.5</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1204,21 +1232,21 @@ error_sd
 </div>
 <div id="intercept-to-distribution-specification" class="section level3">
 <h3><span class="header-section-number">3.4.2</span> Intercept to distribution specification</h3>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">int2dist &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">grand_i =</span> <span class="dv">0</span>, </a>
-<a class="sourceLine" id="cb47-2" data-line-number="2">                     <span class="dt">AB_effect =</span> <span class="dv">0</span>, </a>
-<a class="sourceLine" id="cb47-3" data-line-number="3">                     <span class="dt">sub_sd =</span> <span class="dv">0</span>, </a>
-<a class="sourceLine" id="cb47-4" data-line-number="4">                     <span class="dt">error_sd =</span> <span class="dv">1</span>) {</a>
-<a class="sourceLine" id="cb47-5" data-line-number="5">  pooled_var &lt;-<span class="st"> </span>sub_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>error_sd<span class="op">^</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb47-6" data-line-number="6">   </a>
-<a class="sourceLine" id="cb47-7" data-line-number="7">  <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb47-8" data-line-number="8">    <span class="dt">A_mean =</span> grand_i <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>AB_effect,</a>
-<a class="sourceLine" id="cb47-9" data-line-number="9">    <span class="dt">B_mean =</span> grand_i <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>AB_effect,</a>
-<a class="sourceLine" id="cb47-10" data-line-number="10">    <span class="dt">A_sd =</span> <span class="kw">sqrt</span>(pooled_var),</a>
-<a class="sourceLine" id="cb47-11" data-line-number="11">    <span class="dt">B_sd =</span> <span class="kw">sqrt</span>(pooled_var),</a>
-<a class="sourceLine" id="cb47-12" data-line-number="12">    <span class="dt">AB_r =</span> sub_sd<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>pooled_var</a>
-<a class="sourceLine" id="cb47-13" data-line-number="13">  )</a>
-<a class="sourceLine" id="cb47-14" data-line-number="14">}</a></code></pre></div>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">int2dist</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">int2dist &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">grand_i =</span> <span class="dv">0</span>, </a>
+<a class="sourceLine" id="cb48-2" data-line-number="2">                     <span class="dt">AB_effect =</span> <span class="dv">0</span>, </a>
+<a class="sourceLine" id="cb48-3" data-line-number="3">                     <span class="dt">sub_sd =</span> <span class="dv">0</span>, </a>
+<a class="sourceLine" id="cb48-4" data-line-number="4">                     <span class="dt">error_sd =</span> <span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb48-5" data-line-number="5">  pooled_var &lt;-<span class="st"> </span>sub_sd<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>error_sd<span class="op">^</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb48-6" data-line-number="6">   </a>
+<a class="sourceLine" id="cb48-7" data-line-number="7">  <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb48-8" data-line-number="8">    <span class="dt">A_mean =</span> grand_i <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>AB_effect,</a>
+<a class="sourceLine" id="cb48-9" data-line-number="9">    <span class="dt">B_mean =</span> grand_i <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>AB_effect,</a>
+<a class="sourceLine" id="cb48-10" data-line-number="10">    <span class="dt">A_sd =</span> <span class="kw">sqrt</span>(pooled_var),</a>
+<a class="sourceLine" id="cb48-11" data-line-number="11">    <span class="dt">B_sd =</span> <span class="kw">sqrt</span>(pooled_var),</a>
+<a class="sourceLine" id="cb48-12" data-line-number="12">    <span class="dt">AB_r =</span> sub_sd<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>pooled_var</a>
+<a class="sourceLine" id="cb48-13" data-line-number="13">  )</a>
+<a class="sourceLine" id="cb48-14" data-line-number="14">}</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw">int2dist</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1271,7 +1299,7 @@ AB_r
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw">int2dist</span>(<span class="fl">102.5</span>, <span class="dv">5</span>, <span class="fl">0.708</span>, <span class="fl">0.708</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">int2dist</span>(<span class="fl">102.5</span>, <span class="dv">5</span>, <span class="fl">7.08</span>, <span class="fl">7.08</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1303,7 +1331,7 @@ B_mean
 A_sd
 </td>
 <td style="text-align:right;">
-1.001
+10.013
 </td>
 </tr>
 <tr>
@@ -1311,7 +1339,7 @@ A_sd
 B_sd
 </td>
 <td style="text-align:right;">
-1.001
+10.013
 </td>
 </tr>
 <tr>

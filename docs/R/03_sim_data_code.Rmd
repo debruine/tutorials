@@ -1,8 +1,7 @@
-# Simulating Data {#sim_data}
-
-This tutorial details a few ways I simulate data. I'll be using some functions from my [`faux` package](https://debruine.github.io/faux/) to make it easier to generate sets of variables with specific correlations.
-
-Download an RMarkdown file for this lesson [with code](R/03_sim_data_code.Rmd) or [without code](R/03_sim_data_stub.Rmd).
+---
+title: "Simulating Data Stub File"
+author: "Lisa DeBruine"
+---
 
 ```{r lib, message=FALSE}
 library(tidyverse)
@@ -22,7 +21,7 @@ Let's start with a simple independent-samples design where the variables are fro
 * What are the score means?
 * What are the score variances (or SDs)?
 
-### Parameters {#ind-params}
+### Parameters
 
 I start simulation scripts by setting parameters for these values.
 
@@ -39,7 +38,7 @@ B_sd    <- 2.5
 
 ### Scores
 
-We can the generate the scores using the `rnorm()` `r glossary("function")`.
+We can the generate the scores using the `rnorm()` function.
 
 ```{r ind-dat}
 A_scores <- rnorm(A_sub_n, A_mean, A_sd)
@@ -47,8 +46,6 @@ B_scores <- rnorm(B_sub_n, B_mean, B_sd)
 ```
 
 You can stop here and just analyse your simulated data with `t.test(A_scores, B_scores)`, but usualy you want to get your simulated data into a data table that looks like what you might eventually import from a CSV file with your actual experimental data.
-
-I always use the `tidyverse` for `r glossary("data wrangling")`, so I'll create a data table using the `tibble()` function (but you can use `data.frame()` if you must). We need to know what condition each subject is in, so set the first `A_sub_n` values to "A" and the next `B_sub_n` values to "B". Then set the score to the `A_scores` `r glossary("concatenate", "concatenated")` to the `B_scores`.
 
 ```{r ind-tibble}
 dat <- tibble(
@@ -67,20 +64,12 @@ summary_dat <- dat %>%
   summarise(n = n() ,
             mean = mean(score),
             sd = sd(score))
+
+summary_dat
 ```
 
-
-```{r ind-check-table, echo=FALSE, results = 'asis'}
-kable(summary_dat, digits = 3)
-```
-
-```{block, type="info"}
-Your means and SDs won't be **exactly** what you specified because those parameters are for population and you are taking a sample. The larger your `sub_n`, the closer these values will usually be to the parameters you specify.
-```
 
 ### Analysis
-
-Now you can analyse your simulated data.
 
 ```{r ind-test}
 t.test(score~sub_condition, dat)
@@ -88,7 +77,7 @@ t.test(score~sub_condition, dat)
 
 ### Function
 
-You can wrap all this in a function so you can run it many times to do a power calculation. Put all your parameters as `r glossary("argument", "arguments")` to the function.
+You can wrap all this in a function so you can run it many times to do a power calculation. Put all your parameters as arguments to the function.
 
 ```{r ind-func}
 
@@ -123,21 +112,10 @@ Now run your new function with the values you used above.
 ind_sim(50, 50, 10, 11, 2.5, 2.5) %>% str()
 ```
 
-
-```{block, type = "try"}
-Run the function with the parameters from the example above. Run it a few times and see how the results compare. What happens if you change a parameter? Edit the list at the end of the function to return more values of interest, like the means for A and B.
-```
-
-Now you can use this function to run many simulations. There are a lot of ways to do this. The pattern below uses the `map_df` function from the `purrr` package.
+Now you can use this function to run many simulations. 
 
 ```{r}
 mysim <- map_df(1:1000, ~ind_sim(50, 50, 10, 11, 2.5, 2.5))
-```
-
-```{block, type="info"}
-The function `map_df` takes two arguments, a vector and a function, and returns a dataframe. It runs the function once for each item in the vector, so the vector `1:1000` above runs the `ind_sim()` function 1000 times. 
-
-The `purrr::map()` functions can also set arguments in the function from the items in the vector. We aren't doing that here, but will use that pattern later.
 ```
 
 Now you can graph the data from your simulations.
@@ -155,9 +133,9 @@ You can calculate power as the proportion of simulations on which the p-value wa
 ```{r}
 alpha <- 0.05
 power <- mean(mysim$p < alpha)
+power
 ```
 
-Your power for the parameters above is `r power`.
 
 
 ## Paired samples
@@ -182,9 +160,6 @@ AB_r <- 0.5
 
 ```
 
-```{block type="info"}
-In a paired-samples design, the larger the correlation between your variables, the higher the power of your test. Imagine a case where `A` and `B` are perfectly correlated, such that `B` is always equal to `A` plus 1. This means there is no variance at all in the difference scores (they are all exactly 1) and you have perfect power to detect any effect. If `A` and `B` are not correlated at all, the power of a paired-samples test is identical to an independent-samples test with the same parameters.
-```
 
 ### Correlated Scores
 
@@ -231,21 +206,17 @@ dat <- data.frame(
 
 Now check your data; `faux` has a function `get_params()` that gives you the correlation table, means, and SDs for each numeric column in a data table.
 
-```{r paired-check, echo = FALSE, results='asis'}
-faux::get_params(dat) %>% kable()
+```{r paired-check}
+faux::get_params(dat)
 ```
 
 ### Analysis
-
-Finally, you can analyse your simulated data.
 
 ```{r paired-test}
 t.test(dat$A, dat$B, paired = TRUE)
 ```
 
 ### Function
-
-The function is set up the same way as before. Set the arguments to the relevant parameters, construct the data table, run the t-test, and return the values you care about.
 
 ```{r paired-func}
 
@@ -290,13 +261,13 @@ mysim_p %>%
 ```{r}
 alpha <- 0.05
 power <- mean(mysim_p$p < alpha)
+power
 ```
 
-Your power for the parameters above is `r power`.
 
 ## Intercept model
 
-Now I'm going to show you a different way to simulate the same design. This might seem excessively complicated, but you will need this pattern when you start simulating data for [mixed effects models](#sim_lmer).
+Now I'm going to show you a different way to simulate the same design. This might seem excessively complicated, but you will need this pattern when you start simulating data for mixed effects models.
 
 ### Parameters
 
@@ -324,10 +295,6 @@ We also need to think about variance a little differently. First, calculate the 
 pooled_var <- (A_sd^2 + B_sd^2)/2
 ```
 
-```{block, type="warning"}
-If the SDs for A and B are very different, this suggests a more complicated data generation model. For this tutorial we'll assume the score variance is similar for conditions A and B.
-```
-
 The variance of the subject intercepts is `r` times this pooled variance and the error variance is what is left over. We take the square root (`sqrt()`) to set the subject intercept and error SDs for simulation later.
 
 ```{r}
@@ -335,9 +302,6 @@ sub_sd   <- sqrt(pooled_var * AB_r)
 error_sd <- sqrt(pooled_var * (1-AB_r))
 ```
 
-```{block type="info"}
-You can think about the subject intercept variance as how much subjects vary in the score in general, regardless of condition. If they vary a lot, in comparison to the random "error" variation, then scores in the two conditions will be highly correlated. If they don't vary much (or random variation from trial to trial is quite large), then scores won't be well correlated.
-```
 
 ### Subject intercepts
 
@@ -381,10 +345,6 @@ dat <- obs %>%
   )
 ```
 
-```{block, type="info"}
-The variable `condition.e` "effect codes" condition, which we will use later in a mixed effect model. You can learn more about [coding schemes](https://debruine.github.io/posts/coding-schemes/) here.
-```
-
 You can use the following code to put the data table into a more familiar "wide" format.
 
 ```{r}
@@ -396,11 +356,10 @@ dat_wide <- dat %>%
 
 Then you can use the `get_params` function to check this looks correct (remove the subject ID to leave it out of the table, since it's numeric).
 
-```{r, echo = FALSE, results='asis'}
+```{r}
 dat_wide %>%
   select(-sub_id) %>%
-  faux::get_params() %>%
-  kable()
+  faux::get_params()
 ```
 
 ### Analyses
@@ -431,8 +390,7 @@ lmem <- afex::lmer(score ~ condition.e + (1 | sub_id), data = dat)
 
 broom.mixed::tidy(lmem, effects = "fixed")%>% 
   # nicer formatting with p-values
-  mutate_if(~max(.) < .001, ~as.character(signif(., 3))) %>% 
-  kable(digits = 3)
+  mutate_if(~max(.) < .001, ~as.character(signif(., 3)))
 ```
 
 ## Functions
@@ -472,20 +430,18 @@ sim_paired_data <- function(sub_n = 100,
 }
 ```
 
-```{r, results = 'asis'}
+```{r}
 sim_paired_data(100, 10, 12, 2.5, 2.5, .5) %>%
   select(-sub_id) %>%
-  faux::get_params() %>% 
-  kable()
+  faux::get_params()
 ```
 
 Set the `sub_n` to a very high number to see that the means, SDs and correlations are what you specified.
 
-```{r, results = 'asis'}
+```{r}
 sim_paired_data(10000, 0, 0.5, 1, 1, .25) %>%
   select(-sub_id) %>%
-  faux::get_params() %>% 
-  kable()
+  faux::get_params()
 ```
 
 It might be more useful to create functions to translate back and forth from the distribution specification to the intercept specification.
@@ -513,29 +469,16 @@ dist2int <- function(mu = 0, sd = 1, r = 0) {
 ```
 
 
-```{r, eval = FALSE}
+```{r}
 dist2int()
 ```
 
 
-```{r, echo = FALSE}
-dist2int() %>%
-  as_tibble() %>%
-  t() %>%
-  kable(col.names = "")
-```
 
-```{r, eval = FALSE}
+```{r}
 dist2int(mu = c(100, 105), sd = c(10.5, 9.5), r = 0.5)
 ```
 
-
-```{r, echo = FALSE}
-dist2int(mu = c(100, 105), sd = c(10.5, 9.5), r = 0.5) %>%
-  as_tibble() %>%
-  t() %>%
-  kable(col.names = "", digits = 3)
-```
 
 ### Intercept to distribution specification
 
@@ -556,63 +499,12 @@ int2dist <- function(grand_i = 0,
 }
 ```
 
-```{r, eval = FALSE}
+```{r}
 int2dist()
 ```
 
 
-```{r, echo = FALSE}
-int2dist() %>%
-  as_tibble() %>%
-  t() %>%
-  kable(col.names = "")
-```
-
-```{r, eval = FALSE}
+```{r}
 int2dist(102.5, 5, 7.08, 7.08)
-```
-
-
-```{r, echo = FALSE}
-int2dist(102.5, 5, 7.08, 7.08) %>%
-  as_tibble() %>%
-  t() %>%
-  kable(col.names = "", digits = 3)
-```
-
-We can then use either specification to generate data with either technique.
-
-```{r func-check, eval = FALSE, echo = FALSE}
-
-sim <- crossing(
-  A = 0:5,
-  B = 0:5,
-  SD = 1:5,
-  cor = seq(0, 0.8, 0.1)
-) %>%
-  mutate(
-    int = pmap(
-      list(A, B, SD, cor),
-      function(A, B, SD, cor) { dist2int(c(A, B), c(SD, SD), cor) }
-    ),
-    int = map(int, as_tibble)
-  ) %>%
-  unnest(cols = int) %>%
-  mutate(
-    dist = pmap(
-      list(grand_i, AB_effect, sub_sd, error_sd),
-      int2dist
-    ),
-    dist = map(dist, as_tibble)
-  ) %>%
-  unnest(cols = dist)
-
-plot(sim$A,sim$A_mean)
-plot(sim$B, sim$B_mean)
-plot(sim$SD, sim$A_sd)
-plot(sim$SD, sim$B_sd)
-plot(sim$cor, sim$AB_r)
-
-
 ```
 

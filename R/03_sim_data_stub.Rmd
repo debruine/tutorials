@@ -1,0 +1,347 @@
+---
+title: "Simulating Data Stub File"
+author: "Lisa DeBruine"
+---
+
+```{r lib, message=FALSE}
+library(tidyverse)
+# devtools::install_github("debruine/faux", build_vignettes = TRUE)
+library(faux) 
+library(afex) # for anova and lmer
+library(broom.mixed) # to make tidy tables of lmer output
+library(kableExtra) # to make nicer graphs
+set.seed(8675309) # this makes sure your script uses the same set of random numbers each time you run the full script (never set this inside a function or loop)
+```
+
+## Independent samples
+
+Let's start with a simple independent-samples design where the variables are from a normal distribution. Each subject produces one score (in condition A or B). What we need to know about these scores is:
+
+* How many subjects are in each condition?
+* What are the score means?
+* What are the score variances (or SDs)?
+
+### Parameters
+
+I start simulation scripts by setting parameters for these values.
+
+```{r ind-vars}
+
+A_sub_n <- NULL
+B_sub_n <- NULL
+A_mean  <- NULL
+B_mean  <- NULL
+A_sd    <- NULL
+B_sd    <- NULL
+
+```
+
+### Scores
+
+We can the generate the scores using the `rnorm()` function.
+
+```{r ind-dat}
+A_scores <- NULL
+B_scores <- NULL
+```
+
+You can stop here and just analyse your simulated data with `t.test(A_scores, B_scores)`, but usualy you want to get your simulated data into a data table that looks like what you might eventually import from a CSV file with your actual experimental data.
+
+```{r ind-tibble}
+dat <- NULL
+```
+
+### Check your data
+
+Always examine your simulated data after you generate it to make sure it looks like you want.
+
+```{r ind-check}
+summary_dat <- NULL
+
+summary_dat
+```
+
+
+### Analysis
+
+```{r ind-test}
+
+```
+
+### Function
+
+You can wrap all this in a function so you can run it many times to do a power calculation. Put all your parameters as arguments to the function.
+
+```{r ind-func}
+
+ind_sim <- function(){}
+
+```
+
+Now run your new function with the values you used above.
+
+```{r}
+
+
+```
+
+Now you can use this function to run many simulations. 
+
+```{r}
+mysim <- NULL
+```
+
+Now you can graph the data from your simulations.
+
+```{r paired-sim-fig, fig.cap = "Distribution of results from simulated independent samples data"}
+
+
+```
+
+You can calculate power as the proportion of simulations on which the p-value was less than your alpha.
+
+```{r}
+alpha <- NULL
+power <- NULL
+power
+```
+
+
+
+## Paired samples
+
+Now let's try a paired-samples design where the variables are from a normal distribution. Each subject produces two scores (in conditions A and B). What we need to know about these two scores is:
+
+* How many subjects?
+* What are the score means?
+* What are the score variances (or SDs)?
+* What is the correlation between the scores?
+
+### Parameters {#paired-params}
+
+```{r paired-vars}
+
+sub_n  <- NULL
+A_mean <- NULL
+B_mean <- NULL
+A_sd   <- NULL
+B_sd   <- NULL
+AB_r   <- NULL
+
+```
+
+
+### Correlated Scores
+
+You can then use `rnorm_multi()` to generate a data table with simulated values for correlated scores:
+
+```{r sim-design}
+dat <- NULL
+```
+
+You can also do this using the `MASS::mvrnorm` function, but `faux::rnorm_multi` is easier when you have more variables to simulate.
+
+```{r}
+# make the correlation matrix
+cormat <- NULL
+
+# make a corresponding matrix of the variance 
+# (multiply the SDs for each cell)
+varmat <- NULL
+# create correlated variables with the specified parameters
+S <- NULL
+
+dat <- NULL
+
+```
+
+
+### Check your data
+
+Now check your data; `faux` has a function `get_params()` that gives you the correlation table, means, and SDs for each numeric column in a data table.
+
+```{r paired-check}
+
+```
+
+### Analysis
+
+```{r paired-test}
+
+```
+
+### Function
+
+```{r paired-func}
+
+paired_sim <- function() {}
+
+```
+
+Run 1000 simulations and graph the results.
+
+```{r}
+mysim_p <- NULL
+```
+
+```{r ind-sim-fig, fig.cap = "Distribution of results from simulated paired samples data"}
+
+
+```
+
+```{r}
+alpha <- NULL
+power <- NULL
+power
+```
+
+
+## Intercept model
+
+Now I'm going to show you a different way to simulate the same design. This might seem excessively complicated, but you will need this pattern when you start simulating data for mixed effects models.
+
+### Parameters
+
+Remember, we used the following parameters to set up our simulation above:
+
+```{r paired-vars2}
+sub_n  <- NULL
+A_mean <- NULL
+B_mean <- NULL
+A_sd   <- NULL
+B_sd   <- NULL
+AB_r   <- NULL
+```
+
+From these, we can calculate the grand intercept (the overall mean regardless of condition), and the effect of condition (the mean of B minus A).
+
+```{r}
+grand_i   <- NULL
+AB_effect <- NULL
+```
+
+We also need to think about variance a little differently. First, calculate the pooled variance as the mean of the variances for A and B (remember, variance is SD squared).
+
+```{r}
+pooled_var <- NULL
+```
+
+The variance of the subject intercepts is `r` times this pooled variance and the error variance is what is left over. We take the square root (`sqrt()`) to set the subject intercept and error SDs for simulation later.
+
+```{r}
+sub_sd   <- NULL
+error_sd <- NULL
+```
+
+
+### Subject intercepts
+
+Now we use these variables to create a data table for our subjects. Each subject gets an ID and a **random intercept** (`sub_i`). The intercept is simulated from a random normal distribution with a mean of 0 and an SD of `sub_sd`. This represents how much higher or lower than the average score each subject tends to be (regardless of condition).
+
+```{r}
+sub <- NULL
+```
+
+### Observations
+
+Next, set up a table where each row represents one observation. We'll use one of my favourite functions for simulation: `crossing()`. This creates every possible combination of the listed factors (it works the same as `expand.grid()`, but the results are in a more intuitive order). Here, we're using it to create a row for each subject in each condition, since this is a fully within-subjects design.
+
+```{r}
+obs <- NULL
+```
+
+### Calculate the score
+
+Next, we join the subject table so each row has the information about the subject's random intercept and then calculate the score. I've done it in a few steps below for clarity. The score is just the sum of:
+
+* the overall mean (`grand_i`)
+* the subject-specific intercept (`sub_i`)
+* the effect (`effect`): the numeric code for condition (`condition.e`) multiplied by the effect of condition (`AB_effect`)
+* the error term (simulated from a normal distribution with mean of 0 and SD of `error_sd`)
+
+```{r}
+dat <- NULL
+```
+
+You can use the following code to put the data table into a more familiar "wide" format.
+
+```{r}
+dat_wide <- NULL
+```
+
+
+Then you can use the `get_params` function to check this looks correct (remove the subject ID to leave it out of the table, since it's numeric).
+
+```{r}
+
+```
+
+### Analyses
+
+You can analyse the data with a paired-samples t-test from the wide format:
+
+```{r}
+
+```
+
+Or in the long format:
+
+```{r}
+
+```
+
+You can analyse the data with ANOVA using the `aov_4()` function from `afex`. (Notice how the F-value is the square of the t-value above.)
+
+```{r}
+
+```
+
+
+You can even analyse the data with a mixed effects model using the `lmer` function (the `afex` version gives you p-values, but the `lme4` version does not). 
+
+```{r}
+lmem <- NULL
+```
+
+## Functions
+
+We can put everything together into a function where you specify the subject number, means, SDs and correlation, it translates this into the intercept specification, and returns a data table.
+
+```{r sim-paired-dat-func}
+
+sim_paired_data <- function() {}
+```
+
+```{r}
+
+```
+
+Set the `sub_n` to a very high number to see that the means, SDs and correlations are what you specified.
+
+```{r}
+
+```
+
+It might be more useful to create functions to translate back and forth from the distribution specification to the intercept specification.
+
+### Distribution to intercept specification
+
+```{r dist2int-func}
+dist2int <- function() {}
+```
+
+```{r}
+dist2int()
+```
+
+### Intercept to distribution specification
+
+```{r int2dist-func}
+int2dist <- function() {}
+```
+
+```{r}
+int2dist()
+```
+
+

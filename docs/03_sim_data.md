@@ -3,6 +3,8 @@
 
 This tutorial details a few ways I simulate data. I'll be using some functions from my [`faux` package](https://debruine.github.io/faux/) to make it easier to generate sets of variables with specific correlations.
 
+Download an RMarkdown file for this lesson [with code](R/03_sim_data_code.Rmd) or [without code](R/03_sim_data_stub.Rmd).
+
 
 ```r
 library(tidyverse)
@@ -130,7 +132,9 @@ You can wrap all this in a function so you can run it many times to do a power c
 
 
 ```r
-ind_sim <- function(A_sub_n, B_sub_n, A_mean, B_mean, A_sd, B_sd) {
+ind_sim <- function(A_sub_n, B_sub_n, 
+                    A_mean, B_mean, 
+                    A_sd, B_sd) {
   A_scores <- rnorm(A_sub_n, A_mean, A_sd)
   B_scores <- rnorm(B_sub_n, B_mean, B_sd)
   
@@ -177,7 +181,7 @@ Now you can use this function to run many simulations. There are a lot of ways t
 
 
 ```r
-simulation <- map_df(1:1000, ~ind_sim(50, 50, 10, 11, 2.5, 2.5))
+mysim <- map_df(1:1000, ~ind_sim(50, 50, 10, 11, 2.5, 2.5))
 ```
 
 <div class="info">
@@ -189,7 +193,7 @@ Now you can graph the data from your simulations.
 
 
 ```r
-simulation %>%
+mysim %>%
   gather(stat, value, t:estimate) %>%
   ggplot() + 
   geom_density(aes(value, color = stat), show.legend = FALSE) +
@@ -206,7 +210,7 @@ You can calculate power as the proportion of simulations on which the p-value wa
 
 ```r
 alpha <- 0.05
-power <- mean(simulation$p < alpha)
+power <- mean(mysim$p < alpha)
 ```
 
 Your power for the parameters above is 0.496.
@@ -233,6 +237,10 @@ B_sd <- 2.5
 AB_r <- 0.5
 ```
 
+<div class="info">
+<p>In a paired-samples design, the larger the correlation between your variables, the higher the power of your test. Imagine a case where <code>A</code> and <code>B</code> are perfectly correlated, such that <code>B</code> is always equal to <code>A</code> plus 1. This means there is no variance at all in the difference scores (they are all exactly 1) and you have perfect power to detect any effect. If <code>A</code> and <code>B</code> are not correlated at all, the power of a paired-samples test is identical to an independent-samples test with the same parameters.</p>
+</div>
+
 ### Correlated Scores
 
 You can then use `rnorm_multi()` to generate a data table with simulated values for correlated scores:
@@ -248,6 +256,32 @@ dat <- faux::rnorm_multi(
     varnames = c("A", "B")
   )
 ```
+
+You can also do this using the `MASS::mvrnorm` function, but `faux::rnorm_multi` is easier when you have more variables to simulate.
+
+
+```r
+# make the correlation matrix
+cormat <- matrix(c(   1, AB_r,
+                   AB_r,    1), 
+             nrow = 2, byrow = TRUE)
+
+# make a corresponding matrix of the variance 
+# (multiply the SDs for each cell)
+varmat <- matrix(c(A_sd * A_sd, A_sd * B_sd,
+                   A_sd * B_sd, B_sd * B_sd), 
+             nrow = 2, byrow = TRUE) 
+
+# create correlated variables with the specified parameters
+S <- MASS::mvrnorm(n = sub_n, 
+                   mu = c(A_mean, B_mean), 
+                   Sigma = cormat * varmat)
+dat <- data.frame(
+  A = S[, 1],
+  B = S[, 2]
+)
+```
+
 
 ### Check your data
 
@@ -275,16 +309,16 @@ Now check your data; `faux` has a function `get_params()` that gives you the cor
    <td style="text-align:right;"> 100 </td>
    <td style="text-align:left;"> A </td>
    <td style="text-align:right;"> 1.00 </td>
-   <td style="text-align:right;"> 0.51 </td>
-   <td style="text-align:right;"> 9.81 </td>
-   <td style="text-align:right;"> 2.29 </td>
+   <td style="text-align:right;"> 0.54 </td>
+   <td style="text-align:right;"> 9.47 </td>
+   <td style="text-align:right;"> 2.68 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 100 </td>
    <td style="text-align:left;"> B </td>
-   <td style="text-align:right;"> 0.51 </td>
+   <td style="text-align:right;"> 0.54 </td>
    <td style="text-align:right;"> 1.00 </td>
-   <td style="text-align:right;"> 10.81 </td>
+   <td style="text-align:right;"> 10.65 </td>
    <td style="text-align:right;"> 2.57 </td>
   </tr>
 </tbody>
@@ -304,13 +338,13 @@ t.test(dat$A, dat$B, paired = TRUE)
 ## 	Paired t-test
 ## 
 ## data:  dat$A and dat$B
-## t = -4.1238, df = 99, p-value = 7.761e-05
+## t = -4.6924, df = 99, p-value = 8.674e-06
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.479129 -0.518129
+##  -1.6762660 -0.6799322
 ## sample estimates:
 ## mean of the differences 
-##              -0.9986288
+##               -1.178099
 ```
 
 ### Function
@@ -346,12 +380,12 @@ Run 1000 simulations and graph the results.
 
 
 ```r
-simulation <- map_df(1:1000, ~paired_sim(100, 10, 11, 2.5, 2.5, .5))
+mysim_p <- map_df(1:1000, ~paired_sim(100, 10, 11, 2.5, 2.5, .5))
 ```
 
 
 ```r
-simulation %>%
+mysim_p %>%
   gather(stat, value, t:estimate) %>%
   ggplot() + 
   geom_density(aes(value, color = stat), show.legend = FALSE) +
@@ -366,7 +400,7 @@ simulation %>%
 
 ```r
 alpha <- 0.05
-power <- mean(simulation$p < alpha)
+power <- mean(mysim_p$p < alpha)
 ```
 
 Your power for the parameters above is 0.984.
@@ -502,18 +536,18 @@ Then you can use the `get_params` function to check this looks correct (remove t
   <tr>
    <td style="text-align:right;"> 100 </td>
    <td style="text-align:left;"> A </td>
-   <td style="text-align:right;"> 1.0 </td>
-   <td style="text-align:right;"> 0.4 </td>
-   <td style="text-align:right;"> 10.01 </td>
-   <td style="text-align:right;"> 2.25 </td>
+   <td style="text-align:right;"> 1.00 </td>
+   <td style="text-align:right;"> 0.42 </td>
+   <td style="text-align:right;"> 10.46 </td>
+   <td style="text-align:right;"> 2.53 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 100 </td>
    <td style="text-align:left;"> B </td>
-   <td style="text-align:right;"> 0.4 </td>
-   <td style="text-align:right;"> 1.0 </td>
-   <td style="text-align:right;"> 11.25 </td>
-   <td style="text-align:right;"> 2.18 </td>
+   <td style="text-align:right;"> 0.42 </td>
+   <td style="text-align:right;"> 1.00 </td>
+   <td style="text-align:right;"> 10.78 </td>
+   <td style="text-align:right;"> 2.68 </td>
   </tr>
 </tbody>
 </table>
@@ -532,13 +566,13 @@ t.test(dat_wide$A, dat_wide$B, paired = TRUE)
 ## 	Paired t-test
 ## 
 ## data:  dat_wide$A and dat_wide$B
-## t = -5.135, df = 99, p-value = 1.414e-06
+## t = -1.1408, df = 99, p-value = 0.2567
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.7258516 -0.7638154
+##  -0.8812060  0.2378312
 ## sample estimates:
 ## mean of the differences 
-##               -1.244834
+##              -0.3216874
 ```
 
 Or in the long format:
@@ -553,16 +587,16 @@ t.test(score ~ condition, dat, paired = TRUE)
 ## 	Paired t-test
 ## 
 ## data:  score by condition
-## t = -5.135, df = 99, p-value = 1.414e-06
+## t = -1.1408, df = 99, p-value = 0.2567
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.7258516 -0.7638154
+##  -0.8812060  0.2378312
 ## sample estimates:
 ## mean of the differences 
-##               -1.244834
+##              -0.3216874
 ```
 
-You can analyse the data with ANOVA using the `aov_4()` function from `afex`.
+You can analyse the data with ANOVA using the `aov_4()` function from `afex`. (Notice how the F-value is the square of the t-value above.)
 
 
 ```r
@@ -573,8 +607,8 @@ afex::aov_4(score ~ (condition.e | sub_id), data = dat)
 ## Anova Table (Type 3 tests)
 ## 
 ## Response: score
-##        Effect    df  MSE         F ges p.value
-## 1 condition.e 1, 99 2.94 26.37 *** .07  <.0001
+##        Effect    df  MSE    F  ges p.value
+## 1 condition.e 1, 99 3.98 1.30 .004     .26
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 ```
@@ -601,27 +635,27 @@ broom.mixed::tidy(lmem, effects = "fixed")%>%
    <th style="text-align:right;"> std.error </th>
    <th style="text-align:right;"> statistic </th>
    <th style="text-align:right;"> df </th>
-   <th style="text-align:left;"> p.value </th>
+   <th style="text-align:right;"> p.value </th>
   </tr>
  </thead>
 <tbody>
   <tr>
    <td style="text-align:left;"> fixed </td>
    <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 10.631 </td>
-   <td style="text-align:right;"> 0.185 </td>
-   <td style="text-align:right;"> 57.310 </td>
+   <td style="text-align:right;"> 10.621 </td>
+   <td style="text-align:right;"> 0.219 </td>
+   <td style="text-align:right;"> 48.454 </td>
    <td style="text-align:right;"> 99 </td>
-   <td style="text-align:left;"> 9.78e-78 </td>
+   <td style="text-align:right;"> 0.000 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> fixed </td>
    <td style="text-align:left;"> condition.e </td>
-   <td style="text-align:right;"> 1.245 </td>
-   <td style="text-align:right;"> 0.242 </td>
-   <td style="text-align:right;"> 5.135 </td>
+   <td style="text-align:right;"> 0.322 </td>
+   <td style="text-align:right;"> 0.282 </td>
+   <td style="text-align:right;"> 1.141 </td>
    <td style="text-align:right;"> 99 </td>
-   <td style="text-align:left;"> 1.41e-06 </td>
+   <td style="text-align:right;"> 0.257 </td>
   </tr>
 </tbody>
 </table>
@@ -692,17 +726,17 @@ sim_paired_data(100, 10, 12, 2.5, 2.5, .5) %>%
    <td style="text-align:right;"> 100 </td>
    <td style="text-align:left;"> A </td>
    <td style="text-align:right;"> 1.00 </td>
-   <td style="text-align:right;"> 0.56 </td>
+   <td style="text-align:right;"> 0.44 </td>
    <td style="text-align:right;"> 10.12 </td>
-   <td style="text-align:right;"> 2.57 </td>
+   <td style="text-align:right;"> 2.24 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 100 </td>
    <td style="text-align:left;"> B </td>
-   <td style="text-align:right;"> 0.56 </td>
+   <td style="text-align:right;"> 0.44 </td>
    <td style="text-align:right;"> 1.00 </td>
-   <td style="text-align:right;"> 11.58 </td>
-   <td style="text-align:right;"> 2.78 </td>
+   <td style="text-align:right;"> 12.07 </td>
+   <td style="text-align:right;"> 2.17 </td>
   </tr>
 </tbody>
 </table>
@@ -740,7 +774,7 @@ sim_paired_data(10000, 0, 0.5, 1, 1, .25) %>%
    <td style="text-align:right;"> 1.00 </td>
    <td style="text-align:right;"> 0.24 </td>
    <td style="text-align:right;"> 0.01 </td>
-   <td style="text-align:right;"> 1.00 </td>
+   <td style="text-align:right;"> 1.01 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 10000 </td>
@@ -748,7 +782,7 @@ sim_paired_data(10000, 0, 0.5, 1, 1, .25) %>%
    <td style="text-align:right;"> 0.24 </td>
    <td style="text-align:right;"> 1.00 </td>
    <td style="text-align:right;"> 0.49 </td>
-   <td style="text-align:right;"> 1.01 </td>
+   <td style="text-align:right;"> 1.00 </td>
   </tr>
 </tbody>
 </table>
@@ -904,7 +938,7 @@ int2dist()
 
 
 ```r
-int2dist(102.5, 5, 0.708, 0.708)
+int2dist(102.5, 5, 7.08, 7.08)
 ```
 
 
@@ -926,11 +960,11 @@ int2dist(102.5, 5, 0.708, 0.708)
   </tr>
   <tr>
    <td style="text-align:left;"> A_sd </td>
-   <td style="text-align:right;"> 1.001 </td>
+   <td style="text-align:right;"> 10.013 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> B_sd </td>
-   <td style="text-align:right;"> 1.001 </td>
+   <td style="text-align:right;"> 10.013 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> AB_r </td>
