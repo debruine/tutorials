@@ -1,21 +1,13 @@
-# Simulating Mixed Effects {#sim_lmer}
+---
+title: "Simulating Mixed Effects Stub File"
+author: "Lisa DeBruine"
+---
 
-I'm going to walk through one example of simulating a dataset with random effects. 
-
-Download an RMarkdown file for this lesson [with code](R/04_sim_lmer_code.Rmd) or [without code](R/04_sim_lmer_stub.Rmd).
-
-I'll generate data for a Stroop task where people (`subjects`) say the colour of  colour words (`stimuli`) shown in each of two versions (`congruent` and `incongruent`). Subjects are in one of two conditions (`hard` and `easy`). The dependent variable (`DV`) is reaction time. 
-
-* congruent: <span style="color: red;">RED</span>, <span style="color: orange;">ORANGE</span>, <span style="color: #ead21e;">YELLOW</span>, <span style="color: green;">GREEN</span>, <span style="color: blue;">BLUE</span>, <span style="color: purple;">PURPLE</span>
-* incongruent: <span style="color: #ead21e;">RED</span>, <span style="color: green;">ORANGE</span>, <span style="color: blue;">YELLOW</span>, <span style="color: purple;">GREEN</span>, <span style="color: red;">BLUE</span>, <span style="color: orange;">PURPLE</span>
+Generate data for a Stroop task where people (`subjects`) say the colour of  colour words (`stimuli`) shown in each of two versions (`congruent` and `incongruent`). Subjects are in one of two conditions (`hard` and `easy`). The dependent variable (`DV`) is reaction time. 
 
 We expect people to have faster reaction times for congruent stimuli than incongruent stimuli (main effect of version) and to be faster in the easy condition than the hard condition (main effect of condition). We'll look at some different interaction patterns below. 
 
 ## Setup
-
-We'll use the `tidyverse` to manipulate data frames and `lmerTest` (which includes `lmer`) to run the mixed effects models. I also like to set the `scipen` and `digits` options to get rid of scientific notation in lmer output.
-
-When you're simulating data, you should start your script by setting a seed. You can use any number you like, this just makes sure that you get the same results every time you run the script. (Thanks for reminding me to add and explain this, [Tim Morris](https://twitter.com/tmorris_mrc)!)
 
 ```{r setup, message=FALSE}
 library(tidyverse) # for data wrangling, pipes, and good dataviz
@@ -28,13 +20,10 @@ options("scipen"=10, "digits"=4) # control scientific notation
 set.seed(8675309) # Jenny, I've got your number
 ```
 
-```{block, type="warning"}
-If you are running repeated simulations (e.g., for a power calculation), make sure you never use `set.seed` inside of a function that creates random numbers, or the function will always give you the exact same numbers.
-```
 
 ## Random intercepts
 
-### Subjects {#rint-subjects}
+### Subjects
 
 First, we need to generate a sample of subjects. Each subject will have slightly faster or slower reaction times on average; this is their random intercept (`sub_i`). We'll model it from a normal distribution with a mean of 0 and SD of 100ms. 
 
@@ -52,21 +41,6 @@ sub <- tibble(
 )
 ```
 
-```{block, type="info"}
-If you already have [pilot data](/data/pilot_data.csv), you can estimate a realistic SD for the subjects' random intercepts using the following code.
-```
-
-```{r calc-sub-sd, eval = FALSE}
-
-pilot_data <- read_csv("pilot_data.csv")
-pilot_mod <- lmer(dv ~ 1 + (1 | sub_id) + (1 | stim_id), data = pilot_data)
-
-sub_sd <- VarCorr(pilot_mod) %>% 
-  as.data.frame() %>%
-  filter(grp == "sub_id") %>% 
-  pull(sdcor)
-
-```
 
 I like to check my simulations at every step with a graph. We expect subjects in  `hard` and `easy` conditions to have approximately equal intercepts.
 
@@ -75,7 +49,7 @@ ggplot(sub, aes(sub_i, color = sub_cond)) +
   geom_density()
 ```
 
-### Stimuli {#rint-stimuli}
+### Stimuli
 
 Now, we generate a sample of stimuli. Each stimulus will have slightly faster or slower reaction times on average; this is their random intercept (`stim_i`). We'll model it from a normal distribution with a mean of 0 and SD of 50ms (it seems reasonable to expect less variability between words than people for this task). Stimulus version (`congruent` vs `incongruent`) is a within-stimulus variable, so we don't need to add it here.
 
@@ -91,21 +65,6 @@ stim <- tibble(
 
 ```
 
-```{block, type="info"}
-If you want to simulate data using the exact stimuli you already have pilot data for, you can calculate their random intercepts using the following code and use that instead of generating a random sample with the same SD.</p>
-```
-
-```{r exact-stim, eval = FALSE}
-
-pilot_data <- read_csv("pilot_data.csv")
-pilot_mod <- lmer(dv ~ 1 + (1 | sub_id) + (1 | stim_id), data = pilot_data)
-
-stim <- ranef(pilot_mod)$stim_id %>%
-  as_tibble(rownames = 'stim_id') %>%
-  rename(stim_i = `(Intercept)`)
-
-```
-
 
 Plot the random intercepts to double-check they look like you expect.
 
@@ -114,7 +73,7 @@ ggplot(stim, aes(stim_i)) +
   geom_density()
 ```
 
-### Trials {#rint-trials}
+### Trials
 
 Now we put the subjects and stimuli together. In this study, all subjects respond to all stimuli in both upright and inverted versions, but subjects are in only one condition. The function `crossing` gives you a data frame with all possible combinations of the arguments. Add the data specific to each subject and stimulus by left joining the `sub` and `stim` data frames.
 
@@ -128,15 +87,14 @@ trials <- crossing(
   left_join(stim, by = "stim_id")   # includes the intercept for each stimulus
 ```
 
-`r trials %>% filter(sub_id < 3, stim_id < 3) %>% knitr::kable(caption="Subject- and stimulus-specific random intercepts for 2 subjects and 2 stimuli")`
 
-## Calculate DV {#rint-dv}
+## Calculate DV 
 
 Now we can calculate the DV by adding together an overall intercept (mean RT for all trials), the subject-specific intercept, the stimulus-specific intercept, the effect of subject condition, the interaction between condition and version (set to 0 for this first example), the effect of stimulus version, and an error term. 
 
 ### Fixed effects
 
-We set these effects in raw units (ms) and [effect-code](https://debruine.github.io/posts/coding-schemes.html) the subject condition and stimulus version. It's usually easiest to interpret if you recode the level that you predict will be larger as +0.5 and the level you predict will be smaller as -0.5. So when we set the effect of subject condition (`sub_cond_eff`) to 50, that means the average difference between the easy and hard condition is 50ms. `Easy` is effect-coded as -0.5 and `hard` is effect-coded as +0.5, which means that trials in the easy condition have -0.5 \* 50ms (i.e., -25ms) added to their reaction time, while trials in the hard condition have +0.5 \* 50ms (i.e., +25ms) added to their reaction time.
+We set these effects in raw units (ms) and effect-code the subject condition and stimulus version. It's usually easiest to interpret if you recode the level that you predict will be larger as +0.5 and the level you predict will be smaller as -0.5. So when we set the effect of subject condition (`sub_cond_eff`) to 50, that means the average difference between the easy and hard condition is 50ms. `Easy` is effect-coded as -0.5 and `hard` is effect-coded as +0.5, which means that trials in the easy condition have -0.5 \* 50ms (i.e., -25ms) added to their reaction time, while trials in the hard condition have +0.5 \* 50ms (i.e., +25ms) added to their reaction time.
 
 ```{r sim-dv-vars}
 # set variables to use in calculations below
@@ -147,19 +105,6 @@ cond_version_ixn <-  0  # interaction between version and condition
 error_sd         <- 25  # residual (error) SD
 ```
 
-```{block, type="info"}
-We set the error SD fairly low here so that it's easier to see how the parameters we set map onto the analysis output. You can calculate a realistic error SD from pilot data with the code below.
-```
-
-```{r calc-error-sd, eval = FALSE}
-pilot_data <- read_csv("pilot_data.csv")
-pilot_mod <- lmer(dv ~ 1 + (1 | sub_id) + (1 | stim_id), data = pilot_data)
-
-error_sd <- VarCorr(pilot_mod) %>% 
-  as.data.frame() %>%
-  filter(grp == "Residual") %>% 
-  pull(sdcor)
-```
 
 The code chunk below effect-codes the condition and version factors (important for the analysis below), generates an error term for each trial, and generates the DV.
 
@@ -189,36 +134,6 @@ ggplot(dat, aes(sub_cond, dv, color = stim_version)) +
   geom_boxplot(width = 0.2, position = position_dodge(width = 0.9))
 ```
 
-Let's take a concrete example.
-
-`r dat %>% filter(sub_id == 1, stim_id == 1, stim_version == "congruent") %>% knitr::kable(caption="Subject 1's reaction time to stimulus 1 in the congruent condition")`
-
-The DV is equal to the grand intercept (`r grand_i`) plus the subject's intercept (`r sub$sub_i[1]`) plus the stimulus' intercept (`r stim$stim_i[1]`) plus the effect code for the subject's condition (`r sub$sub_cond[1]` = -0.5) times the effect size for subject condition (`r sub_cond_eff`) plus the effect code for stimulus version (congruent = -0.5) times the effect size for stimulus version (`r stim_version_eff`) plus some random error (`r dat$err[1]`).
-
-`r grand_i` + `r sub$sub_i[1]` + `r stim$stim_i[1]` + (-0.5 \* `r sub_cond_eff`) + (-0.5 \* `r stim_version_eff`) + `r dat$err[1]` = `r dat$dv[1]`
-
-
-```{r calc-dv, include = F}
-# function for calculating the difference between the means of two groups
-mean_diff <- function(dat, dv, groupby) {
-  dat %>%
-    select(grp = one_of(groupby), dv = one_of(dv)) %>%
-    group_by(grp) %>%
-    summarise(m = mean(dv)) %>%
-    ungroup() %>%
-    spread(grp, m) %>%
-    rename_at(1:2, ~ c("hard", "easy")) %>%
-    mutate(eff = hard - easy) %>%
-    pull(eff) %>%
-    round(1)
-}
-
-sim_grand_i <- mean(dat$dv) %>% round(1)
-sim_cond_eff <- mean_diff(dat, "dv", "sub_cond")
-sim_version_eff <- mean_diff(dat, "dv", "stim_version")
-```
-
-In this simulated dataset, the grand intercept is `r sim_grand_i`, the mean difference between subject conditions is `r sim_cond_eff`, and the mean difference between stimulus versions is `r sim_version_eff`.
 
 ### Interactions
 
@@ -277,15 +192,6 @@ ggplot(dat, aes(sub_cond, dv, color = stim_version)) +
   geom_boxplot(width = 0.2, position = position_dodge(width = 0.9))
 ```
 
-Let's look at subject 1's reaction time to stimulus 1 in the congruent condition in more detail again.
-
-`r dat %>% filter(sub_id == 1, stim_id == 1, stim_version == "congruent") %>% knitr::kable(caption="Subject 1's reaction time to stimulus 1 in the congruent condition")`
-
-The DV is equal to the grand intercept (`r grand_i`) plus the subject's intercept (`r sub$sub_i[1]`) plus the stimulus' intercept (`r stim$stim_i[1]`) plus the effect code for the subject's condition (`r sub$sub_cond[1]` = -0.5) times the effect size for subject condition (`r sub_cond_eff`) plus the effect code for stimulus version (congruent = -0.5) times the effect size for stimulus version(`r stim_version_eff`) plus the effect code for the subject's condition (`r sub$sub_cond[1]` = -0.5) times the effect code for stimulus version (congruent = -0.5) times the effect size for the interaction (`r cond_version_ixn`) plus some random error (`r dat$err[1]`).
-
-`r grand_i` + `r sub$sub_i[1]` + `r stim$stim_i[1]` + (-0.5 \* `r sub_cond_eff`) + (-0.5 \* `r stim_version_eff`) + (-0.5 \* -0.5 \* `r cond_version_ixn`) + `r dat$err[1]` = `r dat$dv[1]`
-
-
 
 ```{r table-ixn, results='asis'}
 group_by(dat, sub_cond, stim_version) %>%
@@ -295,7 +201,7 @@ group_by(dat, sub_cond, stim_version) %>%
   knitr::kable()
 ```
 
-## Analysis {#rint-analysis}
+## Analysis
 
 New we will run a linear mixed effects model with `lmer` and look at the summary. 
 
@@ -310,40 +216,40 @@ mod.sum <- summary(mod)
 mod.sum
 ```
 
-### Sense checks {#rint-sense-checks}
+### Sense checks
 
-First, check that your groups make sense (`mod.sum$ngrps`). 
+First, check that your groups make sense. 
 
 * The number of obs should be the total number of trials analysed. 
-* `sub_id` should be what we set `sub_n` to above (`r sub_n`).
-* `stim_id` should be what we set `stim_n` to above (`r stim_n`).
+* `sub_id` should be what we set `sub_n` to above.
+* `stim_id` should be what we set `stim_n` to above.
 
-```{r mod-ngrps, echo = FALSE}
+```{r mod-ngrps}
 mod.sum$ngrps
 ```
 
-Next, look at the random effects (`mod.sum$varcor`). 
+Next, look at the random effects. 
 
-* The SD for `sub_id` should be near the `sub_sd` of `r sub_sd`.
-* The SD for `stim_id` should be near the `stim_sd` of `r stim_sd`. 
-* The residual SD should be near the `error_sd` of `r error_sd`.
+* The SD for `sub_id` should be near `sub_sd`.
+* The SD for `stim_id` should be near `stim_sd`. 
+* The residual SD should be near `error_sd`.
 
-```{r mod-varcor, echo = FALSE}
+```{r mod-varcor}
 mod.sum$varcor
 ```
 
-Finally, look at the fixed effects (`mod.sum$coefficients`). 
+Finally, look at the fixed effects. 
 
-* The estimate for the Intercept should be near the `grand_i` of `r grand_i`. 
-* The main effect of `sub_cond.e` should be near what we calculated for `sub_cond_eff` (`r sub_cond_eff`). 
-* The main effect of `stim_version.e` should be near what we calculated for `stim_version_eff` (`r stim_version_eff`)
-* The interaction between `sub_cond.e`:`stim_version.e` should be near what we calculated for `cond_version_ixn` (`r cond_version_ixn`).
+* The estimate for the Intercept should be near the `grand_i`. 
+* The main effect of `sub_cond.e` should be near what we calculated for `sub_cond_eff`.
+* The main effect of `stim_version.e` should be near what we calculated for `stim_version_eff`.
+* The interaction between `sub_cond.e`:`stim_version.e` should be near what we calculated for `cond_version_ixn`.
 
-```{r mod-coef, echo = FALSE}
+```{r mod-coef}
 mod.sum$coefficients
 ```
 
-### Random effects {#rint-ranef}
+### Random effects
 
 Plot the subject intercepts from our code above (`sub$sub_i`) against the subject intercepts calculcated by `lmer` (`ranef(mod)$sub_id`).
 
@@ -476,7 +382,7 @@ cond_version_ixn <-  0  # interaction between version and condition
 error_sd         <- 25  # residual (error) SD
 ```
 
-### Subjects {#rslope-subjects}
+### Subjects
 
 In addition to generating a random intercept for each subject, now we will also generate a random slope for any within-subject factors. The only within-subject factor in this design is `stim_version`. The main effect of `stim_version` is set to 50 above, but different subjects will show variation in the size of this effect. That's what the random slope captures. We'll set `sub_version_sd` below to the SD of this variation and use this to calculate the random slope (`sub_version_slope`) for each subject.
 
@@ -511,11 +417,12 @@ ggplot(sub, aes(sub_i, sub_version_slope, color = sub_cond)) +
 ```
 
 
-### Stimuli {#rslope-stimuli}
+### Stimuli
 
 In addition to generating a random intercept for each stimulus, we will also generate a random slope for any within-stimulus factors. Both `stim_version` and `sub_condition` are within-stimulus factors (i.e., all stimuli are seen in both `congruent` and `incongruent` versions and both `easy` and `hard` conditions). So the main effects of version and condition (and their interaction) will vary depending on the stimulus.
 
 They will also be correlated, but in a more complex way than above. You need to set the correlations for all pairs of slopes and intercept. Let's set the correlation between the random intercept and each of the slopes to -0.4 and the slopes all correlate with each other +0.2 (You could set each of the six correlations separately if you want, though). 
+
 
 ```{r rslope-sim-stimuli}
 
@@ -554,7 +461,7 @@ GGally::ggpairs(stim, columns = 1:4,
 ```
 
 
-### Trials {#rslope-trials}
+### Trials
 
 Now we put the subjects and stimuli together in the same way as before.
 
@@ -568,9 +475,8 @@ trials <- crossing(
   left_join(stim, by = "stim_id")   # includes the intercept and slopes for each stimulus
 ```
 
-`r trials %>% filter(sub_id < 3, stim_id < 3) %>% knitr::kable(caption="Subject- and stimulus-specific random intercepts and slopes for 2 subjects and 2 stimuli")`
 
-## Calculate DV {#rslope-dv}
+## Calculate DV
 
 Now we can calculate the DV by adding together an overall intercept (mean RT for all trials), the subject-specific intercept, the stimulus-specific intercept, the effect of subject condition, the stimulus-specific slope for condition, the effect of stimulus version, the stimulus-specific slope for version, the subject-specific slope for condition, the interaction between condition and version (set to 0 for this example), the stimulus-specific slope for the interaction between condition and version, and an error term. 
 
@@ -604,13 +510,10 @@ ggplot(dat, aes(sub_cond, dv, color = stim_version)) +
   geom_boxplot(width = 0.2, position = position_dodge(width = 0.9))
 ```
 
-## Analysis {#rslope-analysis}
+## Analysis 
 
 New we'll run a linear mixed effects model with `lmer` and look at the summary. You specify random slopes by adding the within-level effects to the random intercept specifications. Since the only within-subject factor is version, the random effects specification for subjects is `(1 + stim_version.e | sub_id)`. Since both condition and version are within-stimuli factors, the random effects specification for stimuli is `(1 + stim_version.e*sub_cond.e | stim_id)`.
 
-```{block, type="info"}
-[Keep It Maximal](http://talklab.psy.gla.ac.uk/KeepItMaximalR2.pdf) is a great paper on how and why to set random slopes *maximally* like this.
-```
 
 This model will take a lot longer to run than one without random slopes specified.
 
@@ -625,51 +528,51 @@ mod.sum <- summary(mod)
 mod.sum
 ```
 
-### Sense checks {#rslope-sense-checks}
+### Sense checks
 
-First, check that your groups make sense (`mod.sum$ngrps`). 
+First, check that your groups make sense.
 
 * `sub_id` = `sub_n` (`r sub_n`)
 * `stim_id` = `stim_n` (`r stim_n`)
 
-```{r rslope-mod-ngrps, echo = FALSE}
+```{r rslope-mod-ngrps}
 mod.sum$ngrps
 ```
 
-Next, look at the SDs for the random effects (`mod.sum$varcor`). 
+Next, look at the SDs for the random effects. 
 
 * Group:`sub_id`
-   * `(Intercept)` ~= `sub_sd` (`r sub_sd`)
-   * `stim_version.e` ~= `sub_version_sd` (`r sub_version_sd`)
+   * `(Intercept)` ~= `sub_sd`
+   * `stim_version.e` ~= `sub_version_sd`
 * Group: `stim_id`
-   * `(Intercept)` ~= `stim_sd` (`r stim_sd`)
-   * `stim_version.e` ~= `stim_version_sd` (`r stim_version_sd`)
-   * `sub_cond.e` ~= `stim_cond_sd` (`r stim_cond_sd`)
-   * `stim_version.e:sub_cond.e` ~= `stim_cond_version_sd` (`r stim_cond_version_sd`)
-* Residual ~= `error_sd` (`r error_sd`)
+   * `(Intercept)` ~= `stim_sd`
+   * `stim_version.e` ~= `stim_version_sd` 
+   * `sub_cond.e` ~= `stim_cond_sd` 
+   * `stim_version.e:sub_cond.e` ~= `stim_cond_version_sd`
+* Residual ~= `error_sd`
 
-```{r rslope-mod-varcor, echo = FALSE}
+```{r rslope-mod-varcor}
 mod.sum$varcor
 ```
 
-The correlations are a bit more difficult to parse. The first column under `Corr` shows the correlation between the random slope for that row and the random intercept. So for `stim_version.e` under `sub_id`, the correlation should be close to `sub_i_version_cor` (`r sub_i_version_cor`). For all three random slopes under `stim_id`, the correlation with the random intercept should be near `stim_i_cor` (`r stim_i_cor`) and their correlations with each other should be near `stim_s_cor` (`r stim_s_cor`).
+The correlations are a bit more difficult to parse. The first column under `Corr` shows the correlation between the random slope for that row and the random intercept. So for `stim_version.e` under `sub_id`, the correlation should be close to `sub_i_version_cor`. For all three random slopes under `stim_id`, the correlation with the random intercept should be near `stim_i_cor` and their correlations with each other should be near `stim_s_cor`.
 
-```{r rslope-mod-varcor2, echo = FALSE}
+```{r rslope-mod-varcor2}
 mod.sum$varcor
 ```
 
-Finally, look at the fixed effects (`mod.sum$coefficients`). 
+Finally, look at the fixed effects.
 
-* `(Intercept)` ~= `grand_i` (`r grand_i`)
-* `sub_cond.e` ~= `sub_cond_eff` (`r sub_cond_eff`)
-* `stim_version.e` ~= `stim_version_eff` (`r stim_version_eff`)
-* `sub_cond.e`:`stim_version.e` ~= `cond_version_ixn` (`r cond_version_ixn`)
+* `(Intercept)` ~= `grand_i`
+* `sub_cond.e` ~= `sub_cond_eff`
+* `stim_version.e` ~= `stim_version_eff`
+* `sub_cond.e`:`stim_version.e` ~= `cond_version_ixn`
 
-```{r rslope-mod-coef, echo = FALSE}
+```{r rslope-mod-coef}
 mod.sum$coefficients
 ```
 
-### Random effects {#rslope-ranef}
+### Random effects
 
 Plot the subject intercepts and slopes from our code above (`sub$sub_i`) against the subject intercepts and slopes calculcated by `lmer` (`ranef(mod)$sub_id`).
 
@@ -705,7 +608,7 @@ ranef(mod)$stim_id %>%
                 progress = FALSE)
 ```
 
-## Function {#rslope-function}
+## Function
 
 You can put the code above in a function so you can run it more easily and change the parameters. I removed the plot and set the argument defaults to the same as the example above, but you can set them to other patterns.
 
@@ -805,13 +708,13 @@ sim_lmer <- function( sub_n = 200,
 
 Run the function with the default values.
 
-```{r rslope-sim-lmer-default, eval=FALSE}
+```{r rslope-sim-lmer-default}
 sim_lmer()
 ```
 
 Try changing some variables to simulate null effects.
 
-```{r rslope-sim-lmer-null, eval=FALSE}
+```{r rslope-sim-lmer-null}
 sim_lmer(hard_congr = 0,
          hard_incon = 0,
          easy_congr = 0,

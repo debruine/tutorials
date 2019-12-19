@@ -1,7 +1,11 @@
 
 # Simulating Mixed Effects {#sim_lmer}
 
-I'm going to walk through one example of simulating a dataset with random effects. I'll generate data for a Stroop task where people (`subjects`) say the colour of  colour words (`stimuli`) shown in each of two versions (`congruent` and `incongruent`). Subjects are in one of two conditions (`hard` and `easy`). The dependent variable (`DV`) is reaction time. 
+I'm going to walk through one example of simulating a dataset with random effects. 
+
+Download an RMarkdown file for this lesson [with code](R/04_sim_lmer_code.Rmd) or [without code](R/04_sim_lmer_stub.Rmd).
+
+I'll generate data for a Stroop task where people (`subjects`) say the colour of  colour words (`stimuli`) shown in each of two versions (`congruent` and `incongruent`). Subjects are in one of two conditions (`hard` and `easy`). The dependent variable (`DV`) is reaction time. 
 
 * congruent: <span style="color: red;">RED</span>, <span style="color: orange;">ORANGE</span>, <span style="color: #ead21e;">YELLOW</span>, <span style="color: green;">GREEN</span>, <span style="color: blue;">BLUE</span>, <span style="color: purple;">PURPLE</span>
 * incongruent: <span style="color: #ead21e;">RED</span>, <span style="color: green;">ORANGE</span>, <span style="color: blue;">YELLOW</span>, <span style="color: purple;">GREEN</span>, <span style="color: red;">BLUE</span>, <span style="color: orange;">PURPLE</span>
@@ -125,11 +129,11 @@ ggplot(stim, aes(stim_i)) +
 
 ### Trials {#rint-trials}
 
-Now we put the subjects and stimuli together. In this study, all subjects respond to all stimuli in both upright and inverted versions, but subjects are in only one condition. The function `expand.grid` gives you a data frame with all possible combinations of the arguments. Add the data specific to each subject and stimulus by left joining the `sub` and `stim` data frames.
+Now we put the subjects and stimuli together. In this study, all subjects respond to all stimuli in both upright and inverted versions, but subjects are in only one condition. The function `crossing` gives you a data frame with all possible combinations of the arguments. Add the data specific to each subject and stimulus by left joining the `sub` and `stim` data frames.
 
 
 ```r
-trials <- expand.grid(
+trials <- crossing(
   sub_id = sub$sub_id, # get subject IDs from the sub data table
   stim_id = stim$stim_id, # get stimulus IDs from the stim data table
   stim_version = c("congruent", "incongruent") # all subjects see both congruent and incongruent versions of all stimuli
@@ -140,17 +144,17 @@ trials <- expand.grid(
 
 
 
-Table: (\#tab:expand-grid)Subject- and stimulus-specific random intercepts for 2 subjects and 2 stimuli
+Table: (\#tab:crossing)Subject- and stimulus-specific random intercepts for 2 subjects and 2 stimuli
 
  sub_id   stim_id  stim_version     sub_i  sub_cond    stim_i
 -------  --------  -------------  -------  ---------  -------
       1         1  congruent       -99.66  easy        -4.418
-      2         1  congruent        72.18  easy        -4.418
-      1         2  congruent       -99.66  easy         4.057
-      2         2  congruent        72.18  easy         4.057
       1         1  incongruent     -99.66  easy        -4.418
-      2         1  incongruent      72.18  easy        -4.418
+      1         2  congruent       -99.66  easy         4.057
       1         2  incongruent     -99.66  easy         4.057
+      2         1  congruent        72.18  easy        -4.418
+      2         1  incongruent      72.18  easy        -4.418
+      2         2  congruent        72.18  easy         4.057
       2         2  incongruent      72.18  easy         4.057
 
 
@@ -241,7 +245,7 @@ The DV is equal to the grand intercept (400) plus the subject's intercept (-99.6
 
 
 
-In this simulated dataset, the grand intercept is 401.6, the mean difference between subject conditions is 60.2, and the mean difference between stimulus versions is -49.5.
+In this simulated dataset, the grand intercept is 401.6, the mean difference between subject conditions is 60.8, and the mean difference between stimulus versions is -49.7.
 
 ### Interactions
 
@@ -338,8 +342,8 @@ group_by(dat, sub_cond, stim_version) %>%
 
 sub_cond    congruent   incongruent
 ---------  ----------  ------------
-easy           -42.54         57.56
-hard           -28.16         20.89
+easy           -42.49         57.10
+hard           -28.55         21.68
 
 ## Analysis {#rint-analysis}
 
@@ -363,25 +367,25 @@ mod.sum
 ## Formula: dv ~ sub_cond.e * stim_version.e + (1 | sub_id) + (1 | stim_id)
 ##    Data: dat
 ## 
-## REML criterion at convergence: 187441
+## REML criterion at convergence: 187453
 ## 
 ## Scaled residuals: 
 ##    Min     1Q Median     3Q    Max 
-## -3.777 -0.664 -0.001  0.661  3.617 
+## -3.760 -0.663  0.006  0.659  3.714 
 ## 
 ## Random effects:
 ##  Groups   Name        Variance Std.Dev.
-##  sub_id   (Intercept) 9180     95.8    
-##  stim_id  (Intercept) 3070     55.4    
+##  sub_id   (Intercept) 9185     95.8    
+##  stim_id  (Intercept) 3069     55.4    
 ##  Residual              629     25.1    
 ## Number of obs: 20000, groups:  sub_id, 200; stim_id, 50
 ## 
 ## Fixed effects:
 ##                            Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)                 401.937     10.360   131.411   38.80   <2e-16 ***
-## sub_cond.e                   11.146     13.555   198.000    0.82     0.41    
-## stim_version.e               74.574      0.355 19749.000  210.31   <2e-16 ***
-## sub_cond.e:stim_version.e    51.053      0.709 19749.000   71.99   <2e-16 ***
+## (Intercept)                 401.937     10.360   131.461   38.80   <2e-16 ***
+## sub_cond.e                   10.737     13.558   197.968    0.79     0.43    
+## stim_version.e               74.908      0.355 19749.013  211.19   <2e-16 ***
+## sub_cond.e:stim_version.e    49.357      0.709 19749.013   69.57   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -409,7 +413,7 @@ First, check that your groups make sense (`mod.sum$ngrps`).
 Next, look at the random effects (`mod.sum$varcor`). 
 
 * The SD for `sub_id` should be near the `sub_sd` of 100.
-* The SD for `stim_id` should be near the `stim_sd` off 50. 
+* The SD for `stim_id` should be near the `stim_sd` of 50. 
 * The residual SD should be near the `error_sd` of 25.
 
 
@@ -430,10 +434,10 @@ Finally, look at the fixed effects (`mod.sum$coefficients`).
 
 ```
 ##                           Estimate Std. Error      df  t value  Pr(>|t|)
-## (Intercept)                 401.94    10.3598   131.4  38.7979 7.766e-74
-## sub_cond.e                   11.15    13.5547   198.0   0.8223 4.119e-01
-## stim_version.e               74.57     0.3546 19749.0 210.3088 0.000e+00
-## sub_cond.e:stim_version.e    51.05     0.7092 19749.0  71.9876 0.000e+00
+## (Intercept)                 401.94    10.3599   131.5  38.7972 7.475e-74
+## sub_cond.e                   10.74    13.5581   198.0   0.7919 4.294e-01
+## stim_version.e               74.91     0.3547 19749.0 211.1856 0.000e+00
+## sub_cond.e:stim_version.e    49.36     0.7094 19749.0  69.5750 0.000e+00
 ```
 
 ### Random effects {#rint-ranef}
@@ -518,7 +522,7 @@ sim_lmer <- function( sub_n = 200,
   cond_version_ixn <- (easy_incon - easy_congr) -
                       (hard_incon - hard_congr) 
   
-  dat <- expand.grid(
+  dat <- crossing(
     sub_id = sub$sub_id,
     stim_id = stim$stim_id,
     stim_version = c("congruent", "incongruent")
@@ -562,25 +566,25 @@ sim_lmer()
 ## Formula: dv ~ sub_cond.e * stim_version.e + (1 | sub_id) + (1 | stim_id)
 ##    Data: dat
 ## 
-## REML criterion at convergence: 187457
+## REML criterion at convergence: 187436
 ## 
 ## Scaled residuals: 
 ##    Min     1Q Median     3Q    Max 
-## -4.389 -0.676 -0.004  0.674  4.581 
+## -4.317 -0.673  0.001  0.662  4.808 
 ## 
 ## Random effects:
 ##  Groups   Name        Variance Std.Dev.
-##  sub_id   (Intercept) 8855     94.1    
-##  stim_id  (Intercept) 2659     51.6    
-##  Residual              630     25.1    
+##  sub_id   (Intercept) 8822     93.9    
+##  stim_id  (Intercept) 2680     51.8    
+##  Residual              629     25.1    
 ## Number of obs: 20000, groups:  sub_id, 200; stim_id, 50
 ## 
 ## Fixed effects:
 ##                            Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)                 390.831      9.873   140.402   39.58   <2e-16 ***
-## sub_cond.e                  -12.626     13.313   197.996   -0.95     0.34    
-## stim_version.e               75.093      0.355 19749.001  211.61   <2e-16 ***
-## sub_cond.e:stim_version.e    50.586      0.710 19749.001   71.28   <2e-16 ***
+## (Intercept)                 390.831      9.886   139.375   39.53   <2e-16 ***
+## sub_cond.e                  -12.415     13.287   197.999   -0.93     0.35    
+## stim_version.e               74.822      0.355 19749.001  210.96   <2e-16 ***
+## sub_cond.e:stim_version.e    49.649      0.709 19749.001   69.99   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -602,35 +606,30 @@ sim_lmer(hard_congr = 0,
 ```
 
 ```
-## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
-## Model failed to converge with max|grad| = 0.00336514 (tol = 0.002, component 1)
-```
-
-```
 ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
 ## lmerModLmerTest]
 ## Formula: dv ~ sub_cond.e * stim_version.e + (1 | sub_id) + (1 | stim_id)
 ##    Data: dat
 ## 
-## REML criterion at convergence: 187296
+## REML criterion at convergence: 187254
 ## 
 ## Scaled residuals: 
 ##    Min     1Q Median     3Q    Max 
-## -4.140 -0.662 -0.003  0.670  4.115 
+## -4.147 -0.663  0.000  0.669  3.997 
 ## 
 ## Random effects:
 ##  Groups   Name        Variance Std.Dev.
-##  sub_id   (Intercept) 11700    108.2   
-##  stim_id  (Intercept)  2692     51.9   
-##  Residual               623     25.0   
+##  sub_id   (Intercept) 11708    108.2   
+##  stim_id  (Intercept)  2721     52.2   
+##  Residual               621     24.9   
 ## Number of obs: 20000, groups:  sub_id, 200; stim_id, 50
 ## 
 ## Fixed effects:
-##                            Estimate Std. Error        df t value Pr(>|t|)    
-## (Intercept)                 407.692     10.601   165.095   38.46   <2e-16 ***
-## sub_cond.e                   -7.251     15.301   197.982   -0.47    0.636    
-## stim_version.e               -0.888      0.353 19748.994   -2.52    0.012 *  
-## sub_cond.e:stim_version.e    -0.849      0.706 19748.994   -1.20    0.229    
+##                             Estimate Std. Error         df t value Pr(>|t|)    
+## (Intercept)                 407.6919    10.6293   164.0377   38.36   <2e-16 ***
+## sub_cond.e                   -7.7499    15.3061   197.9969   -0.51     0.61    
+## stim_version.e               -0.0676     0.3525 19749.0010   -0.19     0.85    
+## sub_cond.e:stim_version.e     0.5561     0.7051 19749.0010    0.79     0.43    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -638,9 +637,7 @@ sim_lmer(hard_congr = 0,
 ##             (Intr) sb_cn. stm_v.
 ## sub_cond.e  0.000               
 ## stim_versn. 0.000  0.000        
-## sb_cnd.:s_. 0.000  0.000  0.000 
-## convergence code: 0
-## Model failed to converge with max|grad| = 0.00336514 (tol = 0.002, component 1)
+## sb_cnd.:s_. 0.000  0.000  0.000
 ```
 
 ## Random slopes
@@ -668,8 +665,6 @@ In addition to generating a random intercept for each subject, now we will also 
 
 Also, it's likely that the variation between subjects in the size of the effect of version is related in some way to between-subject variation in the intercept. So we want the random intercept and slope to be correlated. Here, we'll simulate a case where subjects who have slower (larger) reaction times across the board show a smaller effect of condition, so we set `sub_i_version_cor` below to a negative number (-0.2).
 
-I'm writing a package that has functions to easily create correlated variables for simulations.  The function `rnorm_multi` generates `n` observations of `vars` variables with `mu` means and `sd` standard deviations with `cors` specific correlations. You can learn more about this function at my [Simulating Multiple Vectors](rnorm_multi) tutorial. You can use `devtools::install_github("debruine/faux")` to install the package.
-
 The code below creates two variables (`sub_i`, `sub_version_slope`) that are correlated with r = -0.2, means of 0, and SDs equal to what we set `sub_sd` above and `sub_version_sd` below.
 
 
@@ -677,10 +672,10 @@ The code below creates two variables (`sub_i`, `sub_version_slope`) that are cor
 sub_version_sd <- 20
 sub_i_version_cor <- -0.2
 
-sub <- rnorm_multi(
+sub <- faux::rnorm_multi(
   n = sub_n, 
   vars = 2, 
-  cors = sub_i_version_cor,
+  r = sub_i_version_cor,
   mu = 0, # means of random intercepts and slopes are always 0
   sd = c(sub_sd, sub_version_sd),
   varnames = c("sub_i", "sub_version_slope")
@@ -689,11 +684,6 @@ sub <- rnorm_multi(
     sub_id = 1:sub_n,
     sub_cond = rep(c("easy","hard"), each = sub_n/2) # between-subjects factor
   )
-```
-
-```
-## Warning in rnorm_multi(n = sub_n, vars = 2, cors = sub_i_version_cor, mu = 0, :
-## cors is deprecated, please use r
 ```
 
 Plot to double-check it looks sensible.
@@ -717,10 +707,6 @@ In addition to generating a random intercept for each stimulus, we will also gen
 
 They will also be correlated, but in a more complex way than above. You need to set the correlations for all pairs of slopes and intercept. Let's set the correlation between the random intercept and each of the slopes to -0.4 and the slopes all correlate with each other +0.2 (You could set each of the six correlations separately if you want, though). 
 
-<div class="info">
-<p>See the <a href="https://debruine.github.io/posts/rnorm_multi">Simulating Multiple Vectors</a> tutorial for other ways to set the correlations.</p>
-</div>
-
 
 ```r
 stim_version_sd <- 10 # SD for the stimuli's random slope for stim_version
@@ -736,7 +722,7 @@ stim_cors <- c(stim_i_cor, stim_i_cor, stim_i_cor,
 stim <- rnorm_multi(
   n = stim_n, 
   vars = 4, 
-  cors = stim_cors, 
+  r = stim_cors, 
   mu = 0, # means of random intercepts and slopes are always 0
   sd = c(stim_sd, stim_version_sd, stim_cond_sd, stim_cond_version_sd),
   varnames = c("stim_i", "stim_version_slope", "stim_cond_slope", "stim_cond_version_slope")
@@ -744,11 +730,6 @@ stim <- rnorm_multi(
   mutate(
     stim_id = 1:stim_n
   )
-```
-
-```
-## Warning in rnorm_multi(n = stim_n, vars = 4, cors = stim_cors, mu = 0, sd =
-## c(stim_sd, : cors is deprecated, please use r
 ```
 
 Here, we're simulating different SDs for different effects, so our plot should reflect this. The graph below uses the ``ggpairs` function fromt he `GGally` package to quickly visualise correlated variables.
@@ -772,7 +753,7 @@ Now we put the subjects and stimuli together in the same way as before.
 
 
 ```r
-trials <- expand.grid(
+trials <- crossing(
   sub_id = sub$sub_id, # get subject IDs from the sub data table
   stim_id = stim$stim_id, # get stimulus IDs from the stim data table
   stim_version = c("congruent", "incongruent") # all subjects see both congruent and incongruent versions of all stimuli
@@ -783,17 +764,17 @@ trials <- expand.grid(
 
 
 
-Table: (\#tab:rslope-expand-grid)Subject- and stimulus-specific random intercepts and slopes for 2 subjects and 2 stimuli
+Table: (\#tab:rslope-crossing)Subject- and stimulus-specific random intercepts and slopes for 2 subjects and 2 stimuli
 
  sub_id   stim_id  stim_version     sub_i   sub_version_slope  sub_cond    stim_i   stim_version_slope   stim_cond_slope   stim_cond_version_slope
 -------  --------  -------------  -------  ------------------  ---------  -------  -------------------  ----------------  ------------------------
       1         1  congruent       -63.15              -23.61  easy         11.54              -0.0276             28.62                     7.068
-      2         1  congruent        98.23               -2.32  easy         11.54              -0.0276             28.62                     7.068
-      1         2  congruent       -63.15              -23.61  easy        -14.00               1.4777            -26.67                    -1.602
-      2         2  congruent        98.23               -2.32  easy        -14.00               1.4777            -26.67                    -1.602
       1         1  incongruent     -63.15              -23.61  easy         11.54              -0.0276             28.62                     7.068
-      2         1  incongruent      98.23               -2.32  easy         11.54              -0.0276             28.62                     7.068
+      1         2  congruent       -63.15              -23.61  easy        -14.00               1.4777            -26.67                    -1.602
       1         2  incongruent     -63.15              -23.61  easy        -14.00               1.4777            -26.67                    -1.602
+      2         1  congruent        98.23               -2.32  easy         11.54              -0.0276             28.62                     7.068
+      2         1  incongruent      98.23               -2.32  easy         11.54              -0.0276             28.62                     7.068
+      2         2  congruent        98.23               -2.32  easy        -14.00               1.4777            -26.67                    -1.602
       2         2  incongruent      98.23               -2.32  easy        -14.00               1.4777            -26.67                    -1.602
 
 
@@ -858,7 +839,7 @@ mod <- lmer(dv ~ sub_cond.e * stim_version.e +
 
 ```
 ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
-## Model failed to converge with max|grad| = 0.0132569 (tol = 0.002, component 1)
+## Model failed to converge with max|grad| = 0.00958044 (tol = 0.002, component 1)
 ```
 
 ```r
@@ -874,39 +855,39 @@ mod.sum
 ##     (1 + stim_version.e * sub_cond.e | stim_id)
 ##    Data: dat
 ## 
-## REML criterion at convergence: 188357
+## REML criterion at convergence: 188385
 ## 
 ## Scaled residuals: 
 ##    Min     1Q Median     3Q    Max 
-## -4.799 -0.661 -0.007  0.657  3.788 
+## -4.729 -0.661 -0.007  0.666  3.937 
 ## 
 ## Random effects:
 ##  Groups   Name                      Variance Std.Dev. Corr             
-##  sub_id   (Intercept)               9842.1   99.21                     
-##           stim_version.e             317.3   17.81    -0.07            
-##  stim_id  (Intercept)               2485.4   49.85                     
-##           stim_version.e              93.5    9.67    -0.56            
-##           sub_cond.e                 646.6   25.43    -0.25  0.08      
-##           stim_version.e:sub_cond.e  269.3   16.41    -0.39  0.32  0.58
-##  Residual                            627.3   25.05                     
+##  sub_id   (Intercept)               9871.5   99.36                     
+##           stim_version.e             326.0   18.06    -0.07            
+##  stim_id  (Intercept)               2468.3   49.68                     
+##           stim_version.e              85.3    9.23    -0.46            
+##           sub_cond.e                 688.5   26.24    -0.25  0.08      
+##           stim_version.e:sub_cond.e  269.6   16.42    -0.44  0.27  0.55
+##  Residual                            627.8   25.06                     
 ## Number of obs: 20000, groups:  sub_id, 200; stim_id, 50
 ## 
 ## Fixed effects:
 ##                           Estimate Std. Error     df t value Pr(>|t|)    
-## (Intercept)                 406.39       9.95 156.06   40.85  < 2e-16 ***
-## sub_cond.e                   61.29      14.49 220.86    4.23 0.000034 ***
-## stim_version.e               49.29       1.89 133.47   26.04  < 2e-16 ***
-## sub_cond.e:stim_version.e    -2.04       3.50 158.43   -0.58     0.56    
+## (Intercept)                 406.39       9.94 157.01   40.89  < 2e-16 ***
+## sub_cond.e                   61.72      14.54 221.91    4.25 0.000032 ***
+## stim_version.e               49.91       1.86 142.77   26.83  < 2e-16 ***
+## sub_cond.e:stim_version.e    -2.35       3.52 161.06   -0.67     0.51    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Correlation of Fixed Effects:
 ##             (Intr) sb_cn. stm_v.
-## sub_cond.e  -0.044              
-## stim_versn. -0.322  0.014       
-## sb_cnd.:s_. -0.181  0.045  0.155
+## sub_cond.e  -0.045              
+## stim_versn. -0.264  0.013       
+## sb_cnd.:s_. -0.204  0.044  0.123
 ## convergence code: 0
-## Model failed to converge with max|grad| = 0.0132569 (tol = 0.002, component 1)
+## Model failed to converge with max|grad| = 0.00958044 (tol = 0.002, component 1)
 ```
 
 ### Sense checks {#rslope-sense-checks}
@@ -937,13 +918,13 @@ Next, look at the SDs for the random effects (`mod.sum$varcor`).
 
 ```
 ##  Groups   Name                      Std.Dev. Corr             
-##  sub_id   (Intercept)               99.21                     
-##           stim_version.e            17.81    -0.07            
-##  stim_id  (Intercept)               49.85                     
-##           stim_version.e             9.67    -0.56            
-##           sub_cond.e                25.43    -0.25  0.08      
-##           stim_version.e:sub_cond.e 16.41    -0.39  0.32  0.58
-##  Residual                           25.05
+##  sub_id   (Intercept)               99.36                     
+##           stim_version.e            18.06    -0.07            
+##  stim_id  (Intercept)               49.68                     
+##           stim_version.e             9.23    -0.46            
+##           sub_cond.e                26.24    -0.25  0.08      
+##           stim_version.e:sub_cond.e 16.42    -0.44  0.27  0.55
+##  Residual                           25.06
 ```
 
 The correlations are a bit more difficult to parse. The first column under `Corr` shows the correlation between the random slope for that row and the random intercept. So for `stim_version.e` under `sub_id`, the correlation should be close to `sub_i_version_cor` (-0.2). For all three random slopes under `stim_id`, the correlation with the random intercept should be near `stim_i_cor` (-0.4) and their correlations with each other should be near `stim_s_cor` (0.2).
@@ -951,13 +932,13 @@ The correlations are a bit more difficult to parse. The first column under `Corr
 
 ```
 ##  Groups   Name                      Std.Dev. Corr             
-##  sub_id   (Intercept)               99.21                     
-##           stim_version.e            17.81    -0.07            
-##  stim_id  (Intercept)               49.85                     
-##           stim_version.e             9.67    -0.56            
-##           sub_cond.e                25.43    -0.25  0.08      
-##           stim_version.e:sub_cond.e 16.41    -0.39  0.32  0.58
-##  Residual                           25.05
+##  sub_id   (Intercept)               99.36                     
+##           stim_version.e            18.06    -0.07            
+##  stim_id  (Intercept)               49.68                     
+##           stim_version.e             9.23    -0.46            
+##           sub_cond.e                26.24    -0.25  0.08      
+##           stim_version.e:sub_cond.e 16.42    -0.44  0.27  0.55
+##  Residual                           25.06
 ```
 
 Finally, look at the fixed effects (`mod.sum$coefficients`). 
@@ -970,10 +951,10 @@ Finally, look at the fixed effects (`mod.sum$coefficients`).
 
 ```
 ##                           Estimate Std. Error    df t value  Pr(>|t|)
-## (Intercept)                406.393      9.947 156.1  40.854 3.083e-85
-## sub_cond.e                  61.291     14.488 220.9   4.231 3.417e-05
-## stim_version.e              49.289      1.893 133.5  26.039 3.660e-54
-## sub_cond.e:stim_version.e   -2.043      3.498 158.4  -0.584 5.600e-01
+## (Intercept)                406.393      9.938 157.0 40.8945 1.274e-85
+## sub_cond.e                  61.722     14.537 221.9  4.2458 3.203e-05
+## stim_version.e              49.914      1.860 142.8 26.8297 1.252e-57
+## sub_cond.e:stim_version.e   -2.352      3.524 161.1 -0.6675 5.054e-01
 ```
 
 ### Random effects {#rslope-ranef}
@@ -1085,7 +1066,7 @@ sim_lmer <- function( sub_n = 200,
   cond_version_ixn <- (easy_incon - easy_congr) -
                       (hard_incon - hard_congr) 
   
-  trials <- expand.grid(
+  trials <- crossing(
     sub_id = sub$sub_id, # get subject IDs from the sub data table
     stim_id = stim$stim_id, # get stimulus IDs from the stim data table
     stim_version = c("congruent", "incongruent") # all subjects see both congruent and incongruent versions of all stimuli

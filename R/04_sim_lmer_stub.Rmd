@@ -1,0 +1,413 @@
+---
+title: "Simulating Mixed Effects Stub File"
+author: "Lisa DeBruine"
+---
+
+Generate data for a Stroop task where people (`subjects`) say the colour of  colour words (`stimuli`) shown in each of two versions (`congruent` and `incongruent`). Subjects are in one of two conditions (`hard` and `easy`). The dependent variable (`DV`) is reaction time. 
+
+We expect people to have faster reaction times for congruent stimuli than incongruent stimuli (main effect of version) and to be faster in the easy condition than the hard condition (main effect of condition). We'll look at some different interaction patterns below. 
+
+## Setup
+
+```{r setup, message=FALSE}
+library(tidyverse) # for data wrangling, pipes, and good dataviz
+library(lmerTest)  # for mixed effect models
+library(GGally)    # makes it easy to plot relationships between variables
+# devtools::install_github("debruine/faux")
+library(faux)      # for simulating correlated variables
+
+options("scipen"=10, "digits"=4) # control scientific notation
+set.seed(8675309) # Jenny, I've got your number
+```
+
+
+## Random intercepts
+
+### Subjects
+
+First, we need to generate a sample of subjects. Each subject will have slightly faster or slower reaction times on average; this is their random intercept (`sub_i`). We'll model it from a normal distribution with a mean of 0 and SD of 100ms. 
+
+We also add between-subject variables here. Each subject is in only one condition, so assign half `easy` and half `hard`. Set the number of subjects as `sub_n` at the beginning so you can change this in the future with only one edit.
+
+
+```{r sim-subject}
+sub_n  <- NULL # number of subjects in this simulation
+sub_sd <- NULL # SD for the subjects' random intercept
+
+sub <- NULL
+```
+
+
+I like to check my simulations at every step with a graph. We expect subjects in  `hard` and `easy` conditions to have approximately equal intercepts.
+
+```{r plot-subject, fig.cap="Double-check subject intercepts"}
+ggplot()
+```
+
+### Stimuli
+
+Now, we generate a sample of stimuli. Each stimulus will have slightly faster or slower reaction times on average; this is their random intercept (`stim_i`). We'll model it from a normal distribution with a mean of 0 and SD of 50ms (it seems reasonable to expect less variability between words than people for this task). Stimulus version (`congruent` vs `incongruent`) is a within-stimulus variable, so we don't need to add it here.
+
+```{r rint-sim-stimuli}
+
+stim_n  <- NULL # number of stimuli in this simulation
+stim_sd <- NULL # SD for the stimuli's random intercept
+
+stim <- NULL
+
+```
+
+
+Plot the random intercepts to double-check they look like you expect.
+
+```{r plot-stimuli, fig.cap="Double-check stimulus intercepts"}
+ggplot()
+```
+
+### Trials
+
+Now we put the subjects and stimuli together. In this study, all subjects respond to all stimuli in both upright and inverted versions, but subjects are in only one condition. The function `crossing` gives you a data frame with all possible combinations of the arguments. Add the data specific to each subject and stimulus by left joining the `sub` and `stim` data frames.
+
+```{r crossing}
+trials <- NULL
+```
+
+
+## Calculate DV 
+
+Now we can calculate the DV by adding together an overall intercept (mean RT for all trials), the subject-specific intercept, the stimulus-specific intercept, the effect of subject condition, the interaction between condition and version (set to 0 for this first example), the effect of stimulus version, and an error term. 
+
+### Fixed effects
+
+We set these effects in raw units (ms) and effect-code the subject condition and stimulus version. It's usually easiest to interpret if you recode the level that you predict will be larger as +0.5 and the level you predict will be smaller as -0.5. So when we set the effect of subject condition (`sub_cond_eff`) to 50, that means the average difference between the easy and hard condition is 50ms. `Easy` is effect-coded as -0.5 and `hard` is effect-coded as +0.5, which means that trials in the easy condition have -0.5 \* 50ms (i.e., -25ms) added to their reaction time, while trials in the hard condition have +0.5 \* 50ms (i.e., +25ms) added to their reaction time.
+
+```{r sim-dv-vars}
+# set variables to use in calculations below
+grand_i          <- NULL # overall mean DV
+sub_cond_eff     <- NULL  # mean difference between conditions: hard - easy
+stim_version_eff <- NULL  # mean difference between versions: incongruent - congruent
+cond_version_ixn <- NULL  # interaction between version and condition
+error_sd         <- NULL  # residual (error) SD
+```
+
+
+The code chunk below effect-codes the condition and version factors (important for the analysis below), generates an error term for each trial, and generates the DV.
+
+```{r sim-dv}
+dat <- NULL
+
+```
+
+As always, graph to make sure you've simulated the general pattern you expected.
+
+```{r plot-dv, fig.cap="Double-check the simulated pattern"}
+ggplot()
+```
+
+
+### Interactions
+
+If you want to simulate an interaction, it can be tricky to figure out what to set the main effects and interaction effect to. It can be easier to think about the simple main effects for each cell. Create four new variables and set them to the deviations from the overall mean you'd expect for each condition (so they should add up to 0). Here, we're simulating a small effect of version in the hard condition (50ms difference) and double that effect of version in the easy condition (100ms difference).
+
+```{r sim-simple-main-effects}
+# set variables to use in calculations below
+grand_i    <- NULL
+hard_congr <- NULL
+hard_incon <- NULL
+easy_congr <- NULL
+easy_incon <- NULL
+error_sd   <- NULL
+```
+
+Use the code below to transform the simple main effects above into main effects and interactions for use in the equations below.
+
+````{r sim-effect-calc}
+# calculate main effects and interactions from simple effects above
+
+# mean difference between easy and hard conditions
+sub_cond_eff     <- NULL
+# mean difference between incongruent and congruent versions
+stim_version_eff <- NULL 
+# interaction between version and condition
+cond_version_ixn <- NULL
+                    
+```
+
+Then generate the DV the same way we did above, but also add the interaction effect multiplied by the effect-coded subject condition and stimulus version.
+
+```{r sim-ixn}
+dat <- NULL
+
+```
+
+```{r plot-ixn, fig.cap="Double-check the interaction between condition and version"}
+ggplot()
+```
+
+
+## Analysis
+
+New we will run a linear mixed effects model with `lmer` and look at the summary. 
+
+```{r lmer}
+mod <- NULL
+
+mod.sum <- NULL
+
+```
+
+### Sense checks
+
+First, check that your groups make sense. 
+
+* The number of obs should be the total number of trials analysed. 
+* `sub_id` should be what we set `sub_n` to above.
+* `stim_id` should be what we set `stim_n` to above.
+
+```{r mod-ngrps}
+
+```
+
+Next, look at the random effects. 
+
+* The SD for `sub_id` should be near `sub_sd`.
+* The SD for `stim_id` should be near `stim_sd`. 
+* The residual SD should be near `error_sd`.
+
+```{r mod-varcor}
+
+```
+
+Finally, look at the fixed effects. 
+
+* The estimate for the Intercept should be near the `grand_i`. 
+* The main effect of `sub_cond.e` should be near what we calculated for `sub_cond_eff`.
+* The main effect of `stim_version.e` should be near what we calculated for `stim_version_eff`.
+* The interaction between `sub_cond.e`:`stim_version.e` should be near what we calculated for `cond_version_ixn`.
+
+```{r mod-coef}
+
+```
+
+### Random effects
+
+Plot the subject intercepts from our code above (`sub$sub_i`) against the subject intercepts calculcated by `lmer` (`ranef(mod)$sub_id`).
+
+```{r plot-sub-ranef, fig.cap = "Compare simulated subject random intercepts to those from the model"}
+
+```
+
+Plot the stimulus intercepts from our code above (`stim$stim_i`) against the stimulus intercepts calculcated by `lmer` (`ranef(mod)$stim_id`).
+
+```{r plot-stim-ranef, fig.cap = "Compare simulated stimulus random intercepts to those from the model"}
+
+```
+
+
+## Function {#rint-function}
+
+You can put the code above in a function so you can run it more easily and change the parameters. I removed the plot and set the argument defaults to the same as the example above, but you can set them to other patterns.
+
+```{r sim-function}
+sim_lmer <- function() {}
+```
+
+Run the function with the default values.
+
+```{r sim-lmer-default}
+sim_lmer()
+```
+
+Try changing some variables to simulate null effects.
+
+```{r sim-lmer-changes}
+
+```
+
+## Random slopes
+
+In the example so far we've ignored random variation among subjects or stimuli in the size of the fixed effects (i.e., **random slopes**). 
+
+First, let's reset the parameters we set above.
+
+```{r}
+sub_n            <- NULL # number of subjects in this simulation
+sub_sd           <- NULL # SD for the subjects' random intercept
+stim_n           <- NULL  # number of stimuli in this simulation
+stim_sd          <- NULL  # SD for the stimuli's random intercept
+grand_i          <- NULL # overall mean DV
+sub_cond_eff     <- NULL  # mean difference between conditions: hard - easy
+stim_version_eff <- NULL  # mean difference between versions: incongruent - congruent
+cond_version_ixn <- NULL  # interaction between version and condition
+error_sd         <- NULL  # residual (error) SD
+```
+
+### Subjects
+
+In addition to generating a random intercept for each subject, now we will also generate a random slope for any within-subject factors. The only within-subject factor in this design is `stim_version`. The main effect of `stim_version` is set to 50 above, but different subjects will show variation in the size of this effect. That's what the random slope captures. We'll set `sub_version_sd` below to the SD of this variation and use this to calculate the random slope (`sub_version_slope`) for each subject.
+
+Also, it's likely that the variation between subjects in the size of the effect of version is related in some way to between-subject variation in the intercept. So we want the random intercept and slope to be correlated. Here, we'll simulate a case where subjects who have slower (larger) reaction times across the board show a smaller effect of condition, so we set `sub_i_version_cor` below to a negative number (-0.2).
+
+The code below creates two variables (`sub_i`, `sub_version_slope`) that are correlated with r = -0.2, means of 0, and SDs equal to what we set `sub_sd` above and `sub_version_sd` below.
+
+```{r sim-subject-cor}
+sub_version_sd <- NULL
+sub_i_version_cor <- NULL
+
+sub <- NULL
+```
+
+Plot to double-check it looks sensible.
+
+```{r plot-subject-slope-cor, fig.width=12, fig.height=8, fig.cap="Double-check slope-intercept correlations"}
+ggplot()
+```
+
+
+### Stimuli
+
+In addition to generating a random intercept for each stimulus, we will also generate a random slope for any within-stimulus factors. Both `stim_version` and `sub_condition` are within-stimulus factors (i.e., all stimuli are seen in both `congruent` and `incongruent` versions and both `easy` and `hard` conditions). So the main effects of version and condition (and their interaction) will vary depending on the stimulus.
+
+They will also be correlated, but in a more complex way than above. You need to set the correlations for all pairs of slopes and intercept. Let's set the correlation between the random intercept and each of the slopes to -0.4 and the slopes all correlate with each other +0.2 (You could set each of the six correlations separately if you want, though). 
+
+
+```{r rslope-sim-stimuli}
+
+stim_version_sd <- NULL # SD for the stimuli's random slope for stim_version
+stim_cond_sd <- NULL # SD for the stimuli's random slope for sub_cond
+stim_cond_version_sd <- NULL # SD for the stimuli's random slope for sub_cond:stim_version
+stim_i_cor <- NULL # correlations between intercept and slopes
+stim_s_cor <- NULL # correlations among slopes
+
+# specify correlations for rnorm_multi (one of several methods)
+stim_cors <- NULL
+
+stim <- NULL
+
+```
+
+Here, we're simulating different SDs for different effects, so our plot should reflect this. The graph below uses the ``ggpairs` function fromt he `GGally` package to quickly visualise correlated variables.
+
+```{r plot-stim-slope-cor, fig.width = 8, fig.height = 8, fig.cap="Double-check slope-intercept correlations"}
+
+
+```
+
+
+### Trials
+
+Now we put the subjects and stimuli together in the same way as before.
+
+```{r rslope-crossing}
+trials <- NULL
+```
+
+
+## Calculate DV
+
+Now we can calculate the DV by adding together an overall intercept (mean RT for all trials), the subject-specific intercept, the stimulus-specific intercept, the effect of subject condition, the stimulus-specific slope for condition, the effect of stimulus version, the stimulus-specific slope for version, the subject-specific slope for condition, the interaction between condition and version (set to 0 for this example), the stimulus-specific slope for the interaction between condition and version, and an error term. 
+
+```{r rslope-sim-dv}
+dat <- NULL
+
+```
+
+As always, graph to make sure you've simulated the general pattern you expected.
+
+```{r rslope-plot-dv, fig.cap="Double-check the simulated pattern"}
+ggplot(dat)
+```
+
+## Analysis 
+
+New we'll run a linear mixed effects model with `lmer` and look at the summary. You specify random slopes by adding the within-level effects to the random intercept specifications. Since the only within-subject factor is version, the random effects specification for subjects is `(1 + stim_version.e | sub_id)`. Since both condition and version are within-stimuli factors, the random effects specification for stimuli is `(1 + stim_version.e*sub_cond.e | stim_id)`.
+
+
+This model will take a lot longer to run than one without random slopes specified.
+
+```{r rslope-lmer}
+mod <- NULL
+
+mod.sum <- NULL
+
+mod.sum
+```
+
+### Sense checks
+
+First, check that your groups make sense.
+
+* `sub_id` = `sub_n` (`r sub_n`)
+* `stim_id` = `stim_n` (`r stim_n`)
+
+```{r rslope-mod-ngrps}
+
+```
+
+Next, look at the SDs for the random effects. 
+
+* Group:`sub_id`
+   * `(Intercept)` ~= `sub_sd`
+   * `stim_version.e` ~= `sub_version_sd`
+* Group: `stim_id`
+   * `(Intercept)` ~= `stim_sd`
+   * `stim_version.e` ~= `stim_version_sd` 
+   * `sub_cond.e` ~= `stim_cond_sd` 
+   * `stim_version.e:sub_cond.e` ~= `stim_cond_version_sd`
+* Residual ~= `error_sd`
+
+```{r rslope-mod-varcor}
+
+```
+
+The correlations are a bit more difficult to parse. The first column under `Corr` shows the correlation between the random slope for that row and the random intercept. So for `stim_version.e` under `sub_id`, the correlation should be close to `sub_i_version_cor`. For all three random slopes under `stim_id`, the correlation with the random intercept should be near `stim_i_cor` and their correlations with each other should be near `stim_s_cor`.
+
+```{r rslope-mod-varcor2}
+
+```
+
+Finally, look at the fixed effects.
+
+* `(Intercept)` ~= `grand_i`
+* `sub_cond.e` ~= `sub_cond_eff`
+* `stim_version.e` ~= `stim_version_eff`
+* `sub_cond.e`:`stim_version.e` ~= `cond_version_ixn`
+
+```{r rslope-mod-coef}
+
+```
+
+### Random effects
+
+Plot the subject intercepts and slopes from our code above (`sub$sub_i`) against the subject intercepts and slopes calculcated by `lmer` (`ranef(mod)$sub_id`).
+
+```{r rslope-plot-sub-ranef, fig.width = 8, fig.height = 8, fig.cap = "Compare simulated subject random effects to those from the model"}
+
+```
+
+Plot the stimulus intercepts and slopes from our code above (`stim$stim_i`) against the stimulus intercepts and slopes calculcated by `lmer` (`ranef(mod)$stim_id`).
+
+```{r rslope-plot-stim-ranef, fig.width = 16, fig.height = 16, fig.cap = "Compare simulated stimulus random effects to those from the model"}
+
+```
+
+## Function
+
+You can put the code above in a function so you can run it more easily and change the parameters. I removed the plot and set the argument defaults to the same as the example above, but you can set them to other patterns.
+
+```{r rslope-sim-function}
+sim_lmer <- function() {}
+```
+
+
+Run the function with the default values.
+
+```{r rslope-sim-lmer-default}
+sim_lmer()
+```
+
+Try changing some variables to simulate null effects.
+
+```{r rslope-sim-lmer-null}
+
+```
