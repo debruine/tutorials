@@ -1,4 +1,3 @@
-
 # Webpages
 
 ## Learning objectives
@@ -75,6 +74,7 @@ This file contains instructions for copying files from your private GitLab repos
     Choose `New File > R Markdown...` from the `File` menu
     ![](images/new_rmarkdown.png)
 2. Replace all of the default text with the following text:
+
     ```
     ---
     title: "My Website Name"
