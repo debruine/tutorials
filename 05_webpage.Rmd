@@ -33,6 +33,7 @@ This is where you can set options like whether to show a table of contents and w
 1. Make a new file
     Choose `New File > Text File` from the `File` menu
 2. Put the following text in the file:
+
     ```
     name: "mywebpage"  
     author: "YOUR NAME"  
@@ -44,6 +45,7 @@ This is where you can set options like whether to show a table of contents and w
     navbar:  
       title: "My First Webpage"  
     ```
+    
 3. Save the file as `_site.yml` (do not change the name)
 
 ### Site script (only for GitLab)
@@ -53,6 +55,7 @@ This file contains instructions for copying files from your private GitLab repos
 1. Make a new file 
     Choose `New File > Text File` from the `File` menu
 2. Put the following text in the file:
+
     ```
     pages:
       stage: deploy
@@ -66,6 +69,7 @@ This file contains instructions for copying files from your private GitLab repos
       only:
       - master
     ```
+    
 3. Save the file as `.gitlab-ci.yml` (do not change the name)
 
 ### Main page

@@ -281,22 +281,40 @@ Make sure to replace <code>USERNAME</code> with your GitHub or GitLab username a
 <h3><span class="header-section-number">5.2.2</span> Site header</h3>
 <p>This is where you can set options like whether to show a table of contents and what the navigation bar will look like. We’ll edit this later to add a section menu.</p>
 <ol style="list-style-type: decimal">
-<li>Make a new file
-Choose <code>New File &gt; Text File</code> from the <code>File</code> menu</li>
-<li>Put the following text in the file:
-<code>name: "mywebpage"    author: "YOUR NAME"    output_dir: "docs"    output:      html_document:        self_contained: no        theme: flatly    navbar:      title: "My First Webpage"</code></li>
-<li>Save the file as <code>_site.yml</code> (do not change the name)</li>
+<li><p>Make a new file
+Choose <code>New File &gt; Text File</code> from the <code>File</code> menu</p></li>
+<li><p>Put the following text in the file:</p>
+<pre><code>name: &quot;mywebpage&quot;  
+author: &quot;YOUR NAME&quot;  
+output_dir: &quot;docs&quot;  
+output:  
+  html_document:  
+    self_contained: no  
+    theme: flatly  
+navbar:  
+  title: &quot;My First Webpage&quot;  </code></pre></li>
+<li><p>Save the file as <code>_site.yml</code> (do not change the name)</p></li>
 </ol>
 </div>
 <div id="site-script-only-for-gitlab" class="section level3">
 <h3><span class="header-section-number">5.2.3</span> Site script (only for GitLab)</h3>
 <p>This file contains instructions for copying files from your private GitLab repository to the public web resources. You don’t need it for a GitHub website because all the files are public.</p>
 <ol style="list-style-type: decimal">
-<li>Make a new file
-Choose <code>New File &gt; Text File</code> from the <code>File</code> menu</li>
-<li>Put the following text in the file:
-<code>pages:    stage: deploy    script:    - mkdir .public    - cp -r docs/* .public    - mv .public public    artifacts:      paths:      - public    only:    - master</code></li>
-<li>Save the file as <code>.gitlab-ci.yml</code> (do not change the name)</li>
+<li><p>Make a new file
+Choose <code>New File &gt; Text File</code> from the <code>File</code> menu</p></li>
+<li><p>Put the following text in the file:</p>
+<pre><code>pages:
+  stage: deploy
+  script:
+  - mkdir .public
+  - cp -r docs/* .public
+  - mv .public public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master</code></pre></li>
+<li><p>Save the file as <code>.gitlab-ci.yml</code> (do not change the name)</p></li>
 </ol>
 </div>
 <div id="main-page" class="section level3">
