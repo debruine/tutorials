@@ -1,4 +1,3 @@
-
 # Simulating Data {#sim_data}
 
 This tutorial details a few ways I simulate data. I'll be using some functions from my [`faux` package](https://debruine.github.io/faux/) to make it easier to generate sets of variables with specific correlations.
@@ -71,6 +70,10 @@ summary_dat <- dat %>%
   summarise(n = n() ,
             mean = mean(score),
             sd = sd(score))
+```
+
+```
+## `summarise()` ungrouping output (override with `.groups` argument)
 ```
 
 
@@ -286,12 +289,6 @@ dat <- data.frame(
 ### Check your data
 
 Now check your data; `faux` has a function `get_params()` that gives you the correlation table, means, and SDs for each numeric column in a data table.
-
-
-```
-## Warning: All elements of `...` must be named.
-## Did you want `multisim_data = c(A, B)`?
-```
 
 <table>
  <thead>
@@ -515,12 +512,6 @@ dat_wide <- dat %>%
 
 Then you can use the `get_params` function to check this looks correct (remove the subject ID to leave it out of the table, since it's numeric).
 
-
-```
-## Warning: All elements of `...` must be named.
-## Did you want `multisim_data = c(A, B)`?
-```
-
 <table>
  <thead>
   <tr>
@@ -608,7 +599,7 @@ afex::aov_4(score ~ (condition.e | sub_id), data = dat)
 ## 
 ## Response: score
 ##        Effect    df  MSE    F  ges p.value
-## 1 condition.e 1, 99 3.98 1.30 .004     .26
+## 1 condition.e 1, 99 3.98 1.30 .004    .257
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 ```
@@ -705,11 +696,6 @@ sim_paired_data(100, 10, 12, 2.5, 2.5, .5) %>%
   kable()
 ```
 
-```
-## Warning: All elements of `...` must be named.
-## Did you want `multisim_data = c(A, B)`?
-```
-
 <table>
  <thead>
   <tr>
@@ -749,11 +735,6 @@ sim_paired_data(10000, 0, 0.5, 1, 1, .25) %>%
   select(-sub_id) %>%
   faux::get_params() %>% 
   kable()
-```
-
-```
-## Warning: All elements of `...` must be named.
-## Did you want `multisim_data = c(A, B)`?
 ```
 
 <table>

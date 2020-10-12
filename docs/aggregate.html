@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 What’s wrong with aggregating data? | Tutorials</title>
   <meta name="description" content="Tutorial materials" />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 What’s wrong with aggregating data? | Tutorials" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Lisa DeBruine" />
 
 
-<meta name="date" content="2019-12-14" />
+<meta name="date" content="2020-10-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,12 +48,15 @@
 
 
 
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -61,14 +65,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -77,9 +83,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -208,7 +214,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="sim-lmer.html"><a href="sim-lmer.html"><i class="fa fa-check"></i><b>4</b> Simulating Mixed Effects</a><ul>
-<li class="chapter" data-level="4.1" data-path="sim-lmer.html"><a href="sim-lmer.html#setup-1"><i class="fa fa-check"></i><b>4.1</b> Setup</a></li>
+<li class="chapter" data-level="4.1" data-path="packages.html"><a href="packages.html#setup"><i class="fa fa-check"></i><b>4.1</b> Setup</a></li>
 <li class="chapter" data-level="4.2" data-path="sim-lmer.html"><a href="sim-lmer.html#random-intercepts"><i class="fa fa-check"></i><b>4.2</b> Random intercepts</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-subjects"><i class="fa fa-check"></i><b>4.2.1</b> Subjects</a></li>
 <li class="chapter" data-level="4.2.2" data-path="sim-lmer.html"><a href="sim-lmer.html#rint-stimuli"><i class="fa fa-check"></i><b>4.2.2</b> Stimuli</a></li>
@@ -236,7 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.9" data-path="sim-lmer.html"><a href="sim-lmer.html#rslope-function"><i class="fa fa-check"></i><b>4.9</b> Function</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="webpages.html"><a href="webpages.html"><i class="fa fa-check"></i><b>5</b> Webpages</a><ul>
-<li class="chapter" data-level="5.1" data-path="webpages.html"><a href="webpages.html#learning-objectives-1"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="5.1" data-path="packages.html"><a href="packages.html#learning-objectives"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="5.2" data-path="webpages.html"><a href="webpages.html#webpage-create"><i class="fa fa-check"></i><b>5.2</b> Create a webpage</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="webpages.html"><a href="webpages.html#create-a-project"><i class="fa fa-check"></i><b>5.2.1</b> Create a project</a></li>
 <li class="chapter" data-level="5.2.2" data-path="webpages.html"><a href="webpages.html#site-header"><i class="fa fa-check"></i><b>5.2.2</b> Site header</a></li>
@@ -307,123 +313,127 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="aggregate" class="section level1">
 <h1><span class="header-section-number">Chapter 2</span> What’s wrong with aggregating data?</h1>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="kw">library</span>(lmerTest)</a>
-<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="kw">library</span>(faux) <span class="co">#devtools::install_github(&quot;debruine/faux&quot;)</span></a>
-<a class="sourceLine" id="cb36-4" data-line-number="4"><span class="kw">set.seed</span>(<span class="dv">90210</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="aggregate.html#cb36-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb36-2"><a href="aggregate.html#cb36-2"></a><span class="kw">library</span>(lmerTest)</span>
+<span id="cb36-3"><a href="aggregate.html#cb36-3"></a><span class="kw">library</span>(faux) <span class="co">#devtools::install_github(&quot;debruine/faux&quot;)</span></span>
+<span id="cb36-4"><a href="aggregate.html#cb36-4"></a><span class="kw">set.seed</span>(<span class="dv">90210</span>)</span></code></pre></div>
 <p>Imagine you want to find out if Armenian women born on an even-numbered day are taller than women born on an odd-numbered day. (I’ve chosen Armenian women because they’re the first row in <a href="https://doi.org/10.1371/journal.pone.0018962">this paper</a>.)</p>
 <p>First, let’s simulate a group of 20 women born on even-numbered days and 20 women born on odd-numbered days.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">stim_n &lt;-<span class="st"> </span><span class="dv">20</span></a>
-<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="co"># height stats from https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0018962</span></a>
-<a class="sourceLine" id="cb37-3" data-line-number="3">height_m &lt;-<span class="st"> </span><span class="fl">158.1</span></a>
-<a class="sourceLine" id="cb37-4" data-line-number="4">height_sd &lt;-<span class="st"> </span><span class="fl">5.7</span></a>
-<a class="sourceLine" id="cb37-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb37-6" data-line-number="6">stim &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb37-7" data-line-number="7">  <span class="dt">stim_id =</span> <span class="dv">1</span><span class="op">:</span>(stim_n<span class="op">*</span><span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb37-8" data-line-number="8">  <span class="dt">birthday =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;odd&quot;</span>, <span class="st">&quot;even&quot;</span>), stim_n),</a>
-<a class="sourceLine" id="cb37-9" data-line-number="9">  <span class="dt">height =</span> <span class="kw">rnorm</span>(stim_n<span class="op">*</span><span class="dv">2</span>, height_m, height_sd)</a>
-<a class="sourceLine" id="cb37-10" data-line-number="10">)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="aggregate.html#cb37-1"></a>stim_n &lt;-<span class="st"> </span><span class="dv">20</span></span>
+<span id="cb37-2"><a href="aggregate.html#cb37-2"></a><span class="co"># height stats from https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0018962</span></span>
+<span id="cb37-3"><a href="aggregate.html#cb37-3"></a>height_m &lt;-<span class="st"> </span><span class="fl">158.1</span></span>
+<span id="cb37-4"><a href="aggregate.html#cb37-4"></a>height_sd &lt;-<span class="st"> </span><span class="fl">5.7</span></span>
+<span id="cb37-5"><a href="aggregate.html#cb37-5"></a></span>
+<span id="cb37-6"><a href="aggregate.html#cb37-6"></a>stim &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb37-7"><a href="aggregate.html#cb37-7"></a>  <span class="dt">stim_id =</span> <span class="dv">1</span><span class="op">:</span>(stim_n<span class="op">*</span><span class="dv">2</span>),</span>
+<span id="cb37-8"><a href="aggregate.html#cb37-8"></a>  <span class="dt">birthday =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;odd&quot;</span>, <span class="st">&quot;even&quot;</span>), stim_n),</span>
+<span id="cb37-9"><a href="aggregate.html#cb37-9"></a>  <span class="dt">height =</span> <span class="kw">rnorm</span>(stim_n<span class="op">*</span><span class="dv">2</span>, height_m, height_sd)</span>
+<span id="cb37-10"><a href="aggregate.html#cb37-10"></a>)</span></code></pre></div>
 <p>You can alternatively simulate this using a function from the <a href="https://debruine.github.io/faux/">faux</a> package I’m developing.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">stim &lt;-<span class="st"> </span><span class="kw">sim_design</span>(<span class="dt">between =</span> <span class="kw">list</span>(<span class="dt">birthday =</span> <span class="kw">c</span>(<span class="st">&quot;odd&quot;</span>, <span class="st">&quot;even&quot;</span>)),</a>
-<a class="sourceLine" id="cb38-2" data-line-number="2">                   <span class="dt">n =</span> stim_n, <span class="dt">mu =</span> height_m, <span class="dt">sd =</span> height_sd, </a>
-<a class="sourceLine" id="cb38-3" data-line-number="3">                   <span class="dt">id =</span> <span class="st">&quot;stim_id&quot;</span>, <span class="dt">dv =</span> <span class="st">&quot;height&quot;</span>, <span class="dt">seed =</span> <span class="dv">90210</span>, <span class="dt">plot =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
-<img src="02_aggregate_files/figure-html/unnamed-chunk-4-1.png" alt="**CAPTION THIS FIGURE!!**" width="100%" />
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="aggregate.html#cb38-1"></a>stim &lt;-<span class="st"> </span><span class="kw">sim_design</span>(<span class="dt">between =</span> <span class="kw">list</span>(<span class="dt">birthday =</span> <span class="kw">c</span>(<span class="st">&quot;odd&quot;</span>, <span class="st">&quot;even&quot;</span>)),</span>
+<span id="cb38-2"><a href="aggregate.html#cb38-2"></a>                   <span class="dt">n =</span> stim_n, <span class="dt">mu =</span> height_m, <span class="dt">sd =</span> height_sd, </span>
+<span id="cb38-3"><a href="aggregate.html#cb38-3"></a>                   <span class="dt">id =</span> <span class="st">&quot;stim_id&quot;</span>, <span class="dt">dv =</span> <span class="st">&quot;height&quot;</span>, <span class="dt">seed =</span> <span class="dv">90210</span>, <span class="dt">plot =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## Warning in sim_design(between = list(birthday = c(&quot;odd&quot;, &quot;even&quot;)), n = stim_n, :
+## The seed argument is deprecated. Please set seed using set.seed() instead</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
+<img src="02_aggregate_files/figure-html/unnamed-chunk-3-1.png" alt="**CAPTION THIS FIGURE!!**" width="100%" />
 <p class="caption">
 Figure 2.1: <strong>CAPTION THIS FIGURE!!</strong>
 </p>
 </div>
-<p>Obviously, the oddness of date of birth is not going to have any effect on women’s actual height and a two-sample t-test confirms this. However, there is a small difference between the means of the groups just due to chance (2.73 cm).</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">t.test</span>(stim<span class="op">$</span>height <span class="op">~</span><span class="st"> </span>stim<span class="op">$</span>birthday)</a></code></pre></div>
+<p>Obviously, the oddness of date of birth is not going to have any effect on women’s actual height and a two-sample t-test confirms this. However, there is a small difference between the means of the groups just due to chance (1.89 cm).</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="aggregate.html#cb41-1"></a><span class="kw">t.test</span>(stim<span class="op">$</span>height <span class="op">~</span><span class="st"> </span>stim<span class="op">$</span>birthday)</span></code></pre></div>
 <pre><code>## 
-##  Welch Two Sample t-test
+## 	Welch Two Sample t-test
 ## 
 ## data:  stim$height by stim$birthday
-## t = 1.4959, df = 31.748, p-value = 0.1446
+## t = 0.84149, df = 32.455, p-value = 0.4062
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -0.9883711  6.4472358
+##  -2.688091  6.476042
 ## sample estimates:
 ##  mean in group odd mean in group even 
-##           157.7036           154.9742</code></pre>
+##           159.5433           157.6493</code></pre>
 <div id="measurement-with-error" class="section level3">
 <h3><span class="header-section-number">2.0.1</span> Measurement with Error</h3>
 <p>But what if we don’t measure height from each women once, but have a few different raters estimate it? The raters will each have their own bias, systematically overestimating or underestimating height on average. Let’s simulate 20 raters who have biases with an SD of 2 cm.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">rater_n &lt;-<span class="st"> </span><span class="dv">20</span></a>
-<a class="sourceLine" id="cb41-2" data-line-number="2">rater_bias_sd &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb41-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb41-4" data-line-number="4">rater &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb41-5" data-line-number="5">  <span class="dt">rater_id =</span> <span class="dv">1</span><span class="op">:</span>rater_n,</a>
-<a class="sourceLine" id="cb41-6" data-line-number="6">  <span class="dt">rater_bias =</span> <span class="kw">rnorm</span>(rater_n, <span class="dv">0</span>, rater_bias_sd)</a>
-<a class="sourceLine" id="cb41-7" data-line-number="7">)</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="aggregate.html#cb43-1"></a>rater_n &lt;-<span class="st"> </span><span class="dv">20</span></span>
+<span id="cb43-2"><a href="aggregate.html#cb43-2"></a>rater_bias_sd &lt;-<span class="st"> </span><span class="dv">2</span></span>
+<span id="cb43-3"><a href="aggregate.html#cb43-3"></a></span>
+<span id="cb43-4"><a href="aggregate.html#cb43-4"></a>rater &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb43-5"><a href="aggregate.html#cb43-5"></a>  <span class="dt">rater_id =</span> <span class="dv">1</span><span class="op">:</span>rater_n,</span>
+<span id="cb43-6"><a href="aggregate.html#cb43-6"></a>  <span class="dt">rater_bias =</span> <span class="kw">rnorm</span>(rater_n, <span class="dv">0</span>, rater_bias_sd)</span>
+<span id="cb43-7"><a href="aggregate.html#cb43-7"></a>)</span></code></pre></div>
 <p>Again, you can also set up the simulated raters using faux’s <code>sim_design()</code> function.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">rater &lt;-<span class="st"> </span><span class="kw">sim_design</span>(<span class="dt">n =</span> rater_n, <span class="dt">sd =</span> rater_bias_sd, </a>
-<a class="sourceLine" id="cb42-2" data-line-number="2">                    <span class="dt">dv =</span> <span class="st">&quot;rater_bias&quot;</span>, <span class="dt">id =</span> <span class="st">&quot;rater_id&quot;</span>, </a>
-<a class="sourceLine" id="cb42-3" data-line-number="3">                    <span class="dt">seed =</span> <span class="dv">101</span>, <span class="dt">plot =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
-<img src="02_aggregate_files/figure-html/unnamed-chunk-8-1.png" alt="**CAPTION THIS FIGURE!!**" width="100%" />
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="aggregate.html#cb44-1"></a>rater &lt;-<span class="st"> </span><span class="kw">sim_design</span>(<span class="dt">n =</span> rater_n, <span class="dt">sd =</span> rater_bias_sd, </span>
+<span id="cb44-2"><a href="aggregate.html#cb44-2"></a>                    <span class="dt">dv =</span> <span class="st">&quot;rater_bias&quot;</span>, <span class="dt">id =</span> <span class="st">&quot;rater_id&quot;</span>, </span>
+<span id="cb44-3"><a href="aggregate.html#cb44-3"></a>                    <span class="dt">seed =</span> <span class="dv">101</span>, <span class="dt">plot =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
+<img src="02_aggregate_files/figure-html/unnamed-chunk-7-1.png" alt="**CAPTION THIS FIGURE!!**" width="100%" />
 <p class="caption">
 Figure 2.2: <strong>CAPTION THIS FIGURE!!</strong>
 </p>
 </div>
 <p>New we can get each rater to estimate the height of each woman. Their estimate is the woman’s actual height, plus the rater’s bias, plus some error (sampled from a normal distribution with a mean of 0 and an SD of 4 cm, since estimating height is hard).</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">dat &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(</a>
-<a class="sourceLine" id="cb43-2" data-line-number="2">  <span class="dt">rater_id =</span> rater<span class="op">$</span>rater_id,</a>
-<a class="sourceLine" id="cb43-3" data-line-number="3">  <span class="dt">stim_id =</span> stim<span class="op">$</span>stim_id</a>
-<a class="sourceLine" id="cb43-4" data-line-number="4">) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb43-5" data-line-number="5"><span class="st">  </span><span class="kw">left_join</span>(rater, <span class="dt">by =</span> <span class="st">&quot;rater_id&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb43-6" data-line-number="6"><span class="st">  </span><span class="kw">left_join</span>(stim, <span class="dt">by =</span> <span class="st">&quot;stim_id&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb43-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb43-8" data-line-number="8">    <span class="dt">error =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, <span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb43-9" data-line-number="9">    <span class="dt">estimate =</span> height <span class="op">+</span><span class="st"> </span>rater_bias <span class="op">+</span><span class="st"> </span>error</a>
-<a class="sourceLine" id="cb43-10" data-line-number="10">  )</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="aggregate.html#cb45-1"></a>dat &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(</span>
+<span id="cb45-2"><a href="aggregate.html#cb45-2"></a>  <span class="dt">rater_id =</span> rater<span class="op">$</span>rater_id,</span>
+<span id="cb45-3"><a href="aggregate.html#cb45-3"></a>  <span class="dt">stim_id =</span> stim<span class="op">$</span>stim_id</span>
+<span id="cb45-4"><a href="aggregate.html#cb45-4"></a>) <span class="op">%&gt;%</span></span>
+<span id="cb45-5"><a href="aggregate.html#cb45-5"></a><span class="st">  </span><span class="kw">left_join</span>(rater, <span class="dt">by =</span> <span class="st">&quot;rater_id&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb45-6"><a href="aggregate.html#cb45-6"></a><span class="st">  </span><span class="kw">left_join</span>(stim, <span class="dt">by =</span> <span class="st">&quot;stim_id&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb45-7"><a href="aggregate.html#cb45-7"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb45-8"><a href="aggregate.html#cb45-8"></a>    <span class="dt">error =</span> <span class="kw">rnorm</span>(<span class="kw">nrow</span>(.), <span class="dv">0</span>, <span class="dv">4</span>),</span>
+<span id="cb45-9"><a href="aggregate.html#cb45-9"></a>    <span class="dt">estimate =</span> height <span class="op">+</span><span class="st"> </span>rater_bias <span class="op">+</span><span class="st"> </span>error</span>
+<span id="cb45-10"><a href="aggregate.html#cb45-10"></a>  )</span></code></pre></div>
 </div>
 <div id="aggregating-by-stimuli" class="section level3">
 <h3><span class="header-section-number">2.0.2</span> Aggregating by stimuli</h3>
 <p>You can aggregate by stimuli, that is, average the 20 raters’ estimate for each stimulus. You now have 40 mean estimates that are fairly well-correlated with the women’s actual heights.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">dat_agg_by_stim &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(stim_id, birthday, height) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_estimate =</span> <span class="kw">mean</span>(estimate))</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
-<img src="02_aggregate_files/figure-html/unnamed-chunk-11-1.png" alt="**CAPTION THIS FIGURE!!**" width="100%" />
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="aggregate.html#cb46-1"></a>dat_agg_by_stim &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></span>
+<span id="cb46-2"><a href="aggregate.html#cb46-2"></a><span class="st">  </span><span class="kw">group_by</span>(stim_id, birthday, height) <span class="op">%&gt;%</span></span>
+<span id="cb46-3"><a href="aggregate.html#cb46-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_estimate =</span> <span class="kw">mean</span>(estimate))</span></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;stim_id&#39;, &#39;birthday&#39; (override with `.groups` argument)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
+<img src="02_aggregate_files/figure-html/unnamed-chunk-10-1.png" alt="**CAPTION THIS FIGURE!!**" width="100%" />
 <p class="caption">
 Figure 2.3: <strong>CAPTION THIS FIGURE!!</strong>
 </p>
 </div>
 <p>You get pretty much the same result when you compare these mean estimates between the groups of women with odd and even birthdays.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">t.test</span>(dat_agg_by_stim<span class="op">$</span>mean_estimate <span class="op">~</span><span class="st"> </span>dat_agg_by_stim<span class="op">$</span>birthday)</a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="aggregate.html#cb48-1"></a><span class="kw">t.test</span>(dat_agg_by_stim<span class="op">$</span>mean_estimate <span class="op">~</span><span class="st"> </span>dat_agg_by_stim<span class="op">$</span>birthday)</span></code></pre></div>
 <pre><code>## 
-##  Welch Two Sample t-test
+## 	Welch Two Sample t-test
 ## 
 ## data:  dat_agg_by_stim$mean_estimate by dat_agg_by_stim$birthday
-## t = 1.7225, df = 32.893, p-value = 0.09436
+## t = 0.76274, df = 31.863, p-value = 0.4512
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -0.5794833  6.9732793
+##  -2.917085  6.408535
 ## sample estimates:
 ##  mean in group odd mean in group even 
-##           157.4442           154.2473</code></pre>
+##           159.2072           157.4615</code></pre>
 </div>
 <div id="aggregating-by-raters" class="section level3">
 <h3><span class="header-section-number">2.0.3</span> Aggregating by raters</h3>
 <p>Alternatively, you can aggregate by raters, that is, average the 20 odd-group estimates and 20 even-group estimates for each rater. Now raters are your unit of analysis, so you’ve increased your power by having 20 raters and a within-subject design (each rater estimates heights for both odd- and even-birthday groups).</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">dat_agg_by_rater &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(rater_id, birthday) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb47-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_estimate =</span> <span class="kw">mean</span>(estimate)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb47-4" data-line-number="4"><span class="st">  </span><span class="kw">spread</span>(birthday, mean_estimate)</a>
-<a class="sourceLine" id="cb47-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb47-6" data-line-number="6"><span class="kw">t.test</span>(dat_agg_by_rater<span class="op">$</span>odd, dat_agg_by_rater<span class="op">$</span>even, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="aggregate.html#cb50-1"></a>dat_agg_by_rater &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></span>
+<span id="cb50-2"><a href="aggregate.html#cb50-2"></a><span class="st">  </span><span class="kw">group_by</span>(rater_id, birthday) <span class="op">%&gt;%</span></span>
+<span id="cb50-3"><a href="aggregate.html#cb50-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_estimate =</span> <span class="kw">mean</span>(estimate)) <span class="op">%&gt;%</span></span>
+<span id="cb50-4"><a href="aggregate.html#cb50-4"></a><span class="st">  </span><span class="kw">spread</span>(birthday, mean_estimate)</span></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;rater_id&#39; (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="aggregate.html#cb52-1"></a><span class="kw">t.test</span>(dat_agg_by_rater<span class="op">$</span>odd, dat_agg_by_rater<span class="op">$</span>even, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
-##  Paired t-test
+## 	Paired t-test
 ## 
 ## data:  dat_agg_by_rater$odd and dat_agg_by_rater$even
-## t = 10.572, df = 19, p-value = 2.131e-09
+## t = 11.664, df = 19, p-value = 4.179e-10
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  2.564008 3.829787
+##  1.432469 2.058980
 ## sample estimates:
 ## mean of the differences 
-##                3.196898</code></pre>
+##                1.745725</code></pre>
 <p>Now the difference between the odd- and even-birthday groups is highly significant! What’s going is that you now have a relatively accurate estimate of the difference between the 20 women in the odd-birthday group and the 20 women in the even-birthday group. Since raters are the unit of analysis, this effect is likely to generalise to the larger population of potential raters, but only when they are rating <strong>these exact stimuli</strong>. Your conclusions cannot generalise beyond the stimulus set used here.</p>
 <p>While this seems like an obvious problem when the question is whether Armenian women with odd birthdays are taller or shorter than Armenian women with even birthdays, the problem is not so obvious for other questions, like whether boxers who won their last match have more masculine faces than boxers who lost their last match. The point of this tutorial isn’t to call out any particular studies (I’ve certainly done this wrong myself plenty of times in the past), but to illustrate the enormous problem with this method and to explain the solution.</p>
 </div>
@@ -431,47 +441,47 @@ Figure 2.3: <strong>CAPTION THIS FIGURE!!</strong>
 <h3><span class="header-section-number">2.0.4</span> Mixed Effect Model</h3>
 <p>In the particular case above, we’re only interested in the between-stimulus main effect of birthday oddness. Therefore, aggregating by stimuli doesn’t inflate your false positive rate, while aggregating by rater does. However, other designs might have increased false positives for aggregating by stimuli but not by rater, or when aggregating by either.</p>
 <p>A mixed effects model avoids the problems of aggregation completely by modelling random variation for both the stimuli and raters, as well as random variation in the size of within-group effects. You can generalise the conclusions of a mixed effects model to both the population of raters and the population of stimuli. (I <a href="https://debruine.github.io/posts/coding-schemes/">effect code</a> the <code>birthday</code> variable to make interpretation of the effects easier).</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co"># effect-code birthday</span></a>
-<a class="sourceLine" id="cb49-2" data-line-number="2">dat<span class="op">$</span>birthday.e &lt;-<span class="st"> </span><span class="kw">recode</span>(dat<span class="op">$</span>birthday, <span class="st">&quot;odd&quot;</span> =<span class="st"> </span><span class="fl">0.5</span>, <span class="st">&quot;even&quot;</span> =<span class="st"> </span><span class="fl">-0.5</span>)</a>
-<a class="sourceLine" id="cb49-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb49-4" data-line-number="4">mod &lt;-<span class="st"> </span><span class="kw">lmer</span>(estimate <span class="op">~</span><span class="st"> </span>birthday.e <span class="op">+</span></a>
-<a class="sourceLine" id="cb49-5" data-line-number="5"><span class="st">              </span><span class="co"># random slope for effect of birthday, random intercept for rater bias</span></a>
-<a class="sourceLine" id="cb49-6" data-line-number="6"><span class="st">              </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>birthday.e <span class="op">|</span><span class="st"> </span>rater_id) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb49-7" data-line-number="7"><span class="st">              </span><span class="co"># random intercept for variation in stim height</span></a>
-<a class="sourceLine" id="cb49-8" data-line-number="8"><span class="st">              </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>stim_id), </a>
-<a class="sourceLine" id="cb49-9" data-line-number="9">            <span class="dt">data =</span> dat)</a>
-<a class="sourceLine" id="cb49-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb49-11" data-line-number="11"><span class="kw">summary</span>(mod)</a></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="aggregate.html#cb54-1"></a><span class="co"># effect-code birthday</span></span>
+<span id="cb54-2"><a href="aggregate.html#cb54-2"></a>dat<span class="op">$</span>birthday.e &lt;-<span class="st"> </span><span class="kw">recode</span>(dat<span class="op">$</span>birthday, <span class="st">&quot;odd&quot;</span> =<span class="st"> </span><span class="fl">0.5</span>, <span class="st">&quot;even&quot;</span> =<span class="st"> </span><span class="fl">-0.5</span>)</span>
+<span id="cb54-3"><a href="aggregate.html#cb54-3"></a></span>
+<span id="cb54-4"><a href="aggregate.html#cb54-4"></a>mod &lt;-<span class="st"> </span><span class="kw">lmer</span>(estimate <span class="op">~</span><span class="st"> </span>birthday.e <span class="op">+</span></span>
+<span id="cb54-5"><a href="aggregate.html#cb54-5"></a><span class="st">              </span><span class="co"># random slope for effect of birthday, random intercept for rater bias</span></span>
+<span id="cb54-6"><a href="aggregate.html#cb54-6"></a><span class="st">              </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>birthday.e <span class="op">|</span><span class="st"> </span>rater_id) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb54-7"><a href="aggregate.html#cb54-7"></a><span class="st">              </span><span class="co"># random intercept for variation in stim height</span></span>
+<span id="cb54-8"><a href="aggregate.html#cb54-8"></a><span class="st">              </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>stim_id), </span>
+<span id="cb54-9"><a href="aggregate.html#cb54-9"></a>            <span class="dt">data =</span> dat)</span>
+<span id="cb54-10"><a href="aggregate.html#cb54-10"></a></span>
+<span id="cb54-11"><a href="aggregate.html#cb54-11"></a><span class="kw">summary</span>(mod)</span></code></pre></div>
 <pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
 ## lmerModLmerTest]
 ## Formula: estimate ~ birthday.e + (1 + birthday.e | rater_id) + (1 | stim_id)
 ##    Data: dat
 ## 
-## REML criterion at convergence: 4663.9
+## REML criterion at convergence: 18223.8
 ## 
 ## Scaled residuals: 
-##      Min       1Q   Median       3Q      Max 
-## -2.81564 -0.65108  0.01132  0.67334  2.57077 
+##     Min      1Q  Median      3Q     Max 
+## -3.3799 -0.6699 -0.0107  0.6512  3.3528 
 ## 
 ## Random effects:
-##  Groups   Name        Variance Std.Dev. Corr 
-##  stim_id  (Intercept) 33.6592  5.8017        
-##  rater_id (Intercept)  3.0802  1.7551        
-##           birthday.e   0.2528  0.5028   -0.55
-##  Residual             15.7552  3.9693        
-## Number of obs: 800, groups:  stim_id, 40; rater_id, 20
+##  Groups   Name        Variance Std.Dev. Corr
+##  stim_id  (Intercept) 52.18699 7.2241       
+##  rater_id (Intercept)  2.84478 1.6866       
+##           birthday.e   0.04953 0.2226   0.13
+##  Residual             15.94272 3.9928       
+## Number of obs: 3200, groups:  stim_id, 40; rater_id, 20
 ## 
 ## Fixed effects:
 ##             Estimate Std. Error      df t value Pr(&gt;|t|)    
-## (Intercept)  155.846      1.008  48.827 154.676   &lt;2e-16 ***
-## birthday.e     3.197      1.859  38.221   1.719   0.0936 .  
+## (Intercept)  158.334      1.205  45.548 131.404   &lt;2e-16 ***
+## birthday.e     1.746      2.289  38.032   0.763     0.45    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Correlation of Fixed Effects:
 ##            (Intr)
-## birthday.e -0.013</code></pre>
-<p>The estimate for <code>(Intercept)</code> is just the mean height estimate (155.85 cm) and the estimate for <code>birthday.e</code> is the mean difference between the odd and even birthday groups (3.2 cm).</p>
+## birthday.e 0.001</code></pre>
+<p>The estimate for <code>(Intercept)</code> is just the mean height estimate (158.33 cm) and the estimate for <code>birthday.e</code> is the mean difference between the odd and even birthday groups (1.75 cm).</p>
 
 </div>
 </div>
@@ -571,11 +581,13 @@ window.onload = function() {
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -583,12 +595,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -600,6 +612,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

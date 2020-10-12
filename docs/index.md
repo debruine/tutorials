@@ -1,8 +1,7 @@
-
 --- 
 title: "Tutorials"
 author: "Lisa DeBruine"
-date: "2019-12-14"
+date: "2020-10-12"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]

@@ -15,16 +15,21 @@
 ### Create a project 
 
 1. Choose `New Project...` from the `File` menu (don't save any workspaces)
-2. Choose the `Version Control` option
-    If you don't have this option, [set up git](#setup-git) using the instructions in Appendix \@ref(#setup-git).
-3. Choose the `Git` option to clone a project from a git repository
-4. Set the `Repository URL` 
-    This will look something like `ssh://git@github.com/USERNAME/mywebpage.git` or `git@gitlab.com:USERNAME/mywebpage.git`. 
-    Make sure to replace `USERNAME` with your GitHub or GitLab username and 
-    `mywebpage` with the name of your project if you didn't use that name.
+2. If you can't or don't want to install git, make a local website
+    * Choose `New Directory` > `New Project...` 
+    * Set your project name to "mywebpage"
+    ![Create New Project](images/new_project.png)
     
-    ![](images/clone_git.png)
-5. Type in your SSH passphrase
+3. If setting up a github or gitlab site, choose the `Version Control` option
+    * If you don't have this option, [set up git](#setup-git) using the instructions in Appendix \@ref(#setup-git).
+    * Choose the `Git` option to clone a project from a git repository
+    * Set the `Repository URL` 
+        This will look something like `https://github.com/USERAME/mywebpage`, `ssh://git@github.com/USERNAME/mywebpage.git` or `git@gitlab.com:USERNAME/mywebpage.git`. 
+        Make sure to replace `USERNAME` with your GitHub or GitLab username and 
+        `mywebpage` with the name of your project if you didn't use that name.
+        
+        ![Clone Git Repository](images/clone_git.png)
+    * Type in your SSH passphrase if using the SSH option, or your github username and password if prompted
 
 ### Site header
 
@@ -230,28 +235,30 @@ However, the basics of css are easy to learn and it's best to just start playing
 ### Change global fonts and colours
 
 ```
-html {
+body {
   font-size: 2em;
   font-family: "Times New Roman";
   color: white;
-  background-color: hsl(360, 100%, 20%);
+  background-color: #660000;
 }
 ```
 
 <style>
-  #html-example * {
+  #body-example * {
     font-size: 2em;
     font-family: "Times New Roman";
     color: white;
-    background-color: hsl(300, 100%, 20%);
+    background-color: #660000;
   }
 </style>
 
-<div id="html-example">
+<div id="body-example">
 
-This will make all the text on your website twice as large, a different font, and change the text and background colours.
+This will make the text on your website larger, a different font, and change the text and background colours.
 
 </div>
+
+The theme you're using might have css that blocks the styles you're trying to change. You can add `!important` before the end colon to override that.
     
 ### Change certain elements
 

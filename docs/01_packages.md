@@ -1,4 +1,3 @@
-
 # R package with unit tests {#packages}
 
 ## Learning objectives
@@ -206,7 +205,7 @@ Put your cursor somewhere on the first line of your function and choose **`Inser
 
 <div class="figure" style="text-align: center">
 <img src="images/roxygen.png" alt="Insert Roxygen Skeleton" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-7)Insert Roxygen Skeleton</p>
+<p class="caption">(\#fig:unnamed-chunk-6)Insert Roxygen Skeleton</p>
 </div>
 
 It will insert the following documentation before your function.
@@ -496,14 +495,14 @@ Now set up a github access token with `usethis::browse_github_pat()`. Your web b
 
 <div class="figure" style="text-align: center">
 <img src="images/github_new_token.png" alt="Authorise a github token so you can create new github repositories from RStudio" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-13)Authorise a github token so you can create new github repositories from RStudio</p>
+<p class="caption">(\#fig:unnamed-chunk-12)Authorise a github token so you can create new github repositories from RStudio</p>
 </div>
 
 Copy your token (the whited-out bit in the image below).
 
 <div class="figure" style="text-align: center">
 <img src="images/github_copy_token.png" alt="Copy your github token" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-14)Copy your github token</p>
+<p class="caption">(\#fig:unnamed-chunk-13)Copy your github token</p>
 </div>
 
 Type `usethis::edit_r_environ()` in the RStudio console pane. A new file called `.Renviron` will appear in the source pane. Add the following line to it (replace **`<YOUR-TOKEN>`** with your copied token).
@@ -533,7 +532,7 @@ If you choose the affirmative response (not always #2), you'll see some messages
 
 <div class="figure" style="text-align: center">
 <img src="images/github_demoproj.png" alt="Your new github repository" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-15)Your new github repository</p>
+<p class="caption">(\#fig:unnamed-chunk-14)Your new github repository</p>
 </div>
 
 ### Set up website
@@ -542,7 +541,7 @@ Click on the **`Settings`** tab and scroll down to **GitHub Pages**. Set the Sou
 
 <div class="figure" style="text-align: center">
 <img src="images/github_pages.png" alt="Enable GitHub Pages" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-16)Enable GitHub Pages</p>
+<p class="caption">(\#fig:unnamed-chunk-15)Enable GitHub Pages</p>
 </div>
 
 ### Install your package from GitHub
@@ -661,15 +660,15 @@ report_p <- function(p, digits = 3) {
 
 
 
-term                                                                                                                    definition                                                                   
-----------------------------------------------------------------------------------------------------------------------  -----------------------------------------------------------------------------
-<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/a#argument'>argument</a>                 A variable that provides input to a function.                                
-<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/c#character'>character</a>               A data type representing strings of text.                                    
-<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/f#function.'>function </a>               A named section of code that can be reused.                                  
-<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/g#git'>git</a>                           One type of version control software.                                        
-<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/g#github'>github</a>                     A cloud-based service for storing and sharing your version controlled files. 
-<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/p#package'>package</a>                   A group of R functions.                                                      
-<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/p#project'>project</a>                   A way to organise related files in RStudio                                   
-<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/v#version.control'>version control</a>   A way to save a record of changes to your files.                             
+|term                                                                                                                  |definition                                                                   |
+|:---------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------|
+|<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/a#argument'>argument</a>               |A variable that provides input to a function.                                |
+|<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/c#character'>character</a>             |A data type representing strings of text.                                    |
+|<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/f#function.'>function </a>             |A named section of code that can be reused.                                  |
+|<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/g#git'>git</a>                         |One type of version control software.                                        |
+|<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/g#github'>github</a>                   |A cloud-based service for storing and sharing your version controlled files. |
+|<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/p#package'>package</a>                 |A group of R functions.                                                      |
+|<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/p#project'>project</a>                 |A way to organise related files in RStudio                                   |
+|<a class='glossary' target='_blank' href='https://psyteachr.github.io/glossary/v#version.control'>version control</a> |A way to save a record of changes to your files.                             |
 
 

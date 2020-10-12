@@ -1,4 +1,3 @@
-
 # Installing `R` {#installing-r}
 
 Installing R and RStudio is usually straightforward. The sections below explain how and [there is a helpful YouTube video here](https://www.youtube.com/watch?v=lVKMsaWju8w).

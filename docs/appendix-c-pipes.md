@@ -1,4 +1,3 @@
-
 # Pipes
 
 <img src="images/pipe_sticker.png" style="width: 200px; float: right;">
@@ -43,18 +42,18 @@ data <- rename(data_spread, A_mean = A, B_mean = B)
 
 
 
- id       A_mean      B_mean
----  -----------  ----------
-  1   -0.4464921   2.5246053
-  2    0.5900183   0.8016557
-  3    0.2736021   3.2385659
-  4    1.4449611   3.2024066
-  5    1.8757566   1.9265737
-  6    0.6361268   1.7969225
-  7    1.6030328   2.7160427
-  8    0.4738872   0.7561289
-  9    0.6492605   1.0277858
- 10    0.3882043   2.6437604
+| id|     A_mean|   B_mean|
+|--:|----------:|--------:|
+|  1|  1.2398255| 2.382446|
+|  2|  1.0066241| 3.308491|
+|  3| -1.8157000| 1.943312|
+|  4|  1.2681610| 2.471445|
+|  5| -0.4569080| 1.599282|
+|  6|  1.3114160| 2.257000|
+|  7| -0.1808072| 2.720368|
+|  8|  0.4192558| 2.803504|
+|  9|  0.1375845| 2.706159|
+| 10| -0.6958031| 1.294647|
 
 
 
@@ -91,6 +90,10 @@ data <- rename(
   A_mean = A, B_mean = B)
 ```
 
+```
+## `summarise()` regrouping output by 'id' (override with `.groups` argument)
+```
+
 The pipe lets you "pipe" the result of each function into the next function, allowing you to put your code in a logical order without creating too many extra objects.
 
 
@@ -109,6 +112,10 @@ data <- tibble(
   summarise(mean = mean(value)) %>%
   spread(var, mean) %>%
   rename(A_mean = A, B_mean = B)
+```
+
+```
+## `summarise()` regrouping output by 'id' (override with `.groups` argument)
 ```
 
 You can read this code from top to bottom as follows:

@@ -1,4 +1,3 @@
-
 # Git and GitHub {#setup-git}
 
 There are many reasons to use version control. Git is one option and it is well-integrated into RStudio. GitHub is a free service to store your version controlled projects in the cloud and (optionally) share them with others.
